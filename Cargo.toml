@@ -4,11 +4,11 @@ members = ["crates/*"]
 
 [workspace.package]
 edition = "2021"
-version = "0.1.0"
+version = "0.1.1"
 license = "UNLICENSED"
 publish = false
 
 [workspace.dependencies]
-nuah-kernel = { git = "https://github.com/addaui/nuah", tag = "v0.4.0" }
-nuah-adapters = { git = "https://github.com/addaui/nuah", tag = "v0.4.0" }
+nuah-kernel = { git = "https://github.com/addaui/nuah", tag = "v0.4.1" }
+nuah-adapters = { git = "https://github.com/addaui/nuah", tag = "v0.4.1" }
 serde_json = "1.0.154"
