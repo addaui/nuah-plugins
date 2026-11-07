@@ -1,0 +1,302 @@
+{
+  "nuah": "0.4",
+  "plugins": [
+    {
+      "crate": "nuah-appearance",
+      "defines": [],
+      "description": "The customizer: a person's own changes to a theme preset, checked against the token schema (ADR 0028)",
+      "fills": null,
+      "id": "appearance",
+      "kind": "plugin",
+      "name": "Appearance",
+      "operations": [
+        "appearance.get",
+        "appearance.reset",
+        "appearance.save",
+        "appearance.schema"
+      ],
+      "provides": [
+        {
+          "extension_point": "prefs.item",
+          "optional": true,
+          "priority": 0
+        }
+      ],
+      "requires": {
+        "capabilities": [
+          "emit"
+        ],
+        "extension_points": [],
+        "plugins": [],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
+      "crate": "nuah-metric-prometheus",
+      "defines": [],
+      "description": "Answers Prometheus scrapes (GET /metrics) on a port of its own",
+      "fills": "metric",
+      "id": "metric-prometheus",
+      "kind": "adapter",
+      "name": "Prometheus metrics",
+      "operations": [],
+      "provides": [],
+      "requires": {
+        "capabilities": [
+          "serve"
+        ],
+        "extension_points": [],
+        "plugins": [],
+        "ports": []
+      },
+      "settings_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "listen": {
+            "description": "Address to listen on (127.0.0.1:9464 when absent)",
+            "minLength": 3,
+            "type": "string",
+            "x-apply": "service",
+            "x-tier": "bootstrap"
+          },
+          "token": {
+            "description": "Require `Authorization: Bearer <token>` (give it as a reference, {\"$env\": \"NAME\"}, to keep it out of the Profile)",
+            "minLength": 8,
+            "type": "string",
+            "x-apply": "service",
+            "x-secret": true,
+            "x-tier": "operator"
+          }
+        },
+        "type": "object"
+      },
+      "version": "0.1.0"
+    },
+    {
+      "crate": "nuah-prefs",
+      "defines": [
+        "prefs.item"
+      ],
+      "description": "Per-person choices; each plugin declares its own (prefs.item) and this one stores and checks them",
+      "fills": null,
+      "id": "prefs",
+      "kind": "plugin",
+      "name": "Preferences",
+      "operations": [
+        "prefs.get",
+        "prefs.schema",
+        "prefs.set"
+      ],
+      "provides": [
+        {
+          "extension_point": "prefs.item",
+          "optional": false,
+          "priority": 0
+        }
+      ],
+      "requires": {
+        "capabilities": [
+          "emit"
+        ],
+        "extension_points": [
+          "prefs.item"
+        ],
+        "plugins": [],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.3.0"
+    },
+    {
+      "crate": "nuah-appearance",
+      "defines": [],
+      "description": "pastel, puffy, round",
+      "fills": null,
+      "id": "theme-clay-pop",
+      "kind": "theme",
+      "name": "Clay Pop",
+      "operations": [],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [
+          "appearance"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.3.0"
+    },
+    {
+      "crate": "nuah-appearance",
+      "defines": [],
+      "description": "serif, ink, crop marks",
+      "fills": null,
+      "id": "theme-editorial-paper",
+      "kind": "theme",
+      "name": "Editorial Paper",
+      "operations": [],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [
+          "appearance"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.3.0"
+    },
+    {
+      "crate": "nuah-appearance",
+      "defines": [],
+      "description": "layered shadows, tinted edges",
+      "fills": null,
+      "id": "theme-elite-ledger",
+      "kind": "theme",
+      "name": "Elite Ledger",
+      "operations": [],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [
+          "appearance"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.3.0"
+    },
+    {
+      "crate": "nuah-appearance",
+      "defines": [],
+      "description": "frosted panels over orbit rings",
+      "fills": null,
+      "id": "theme-glass-orbit",
+      "kind": "theme",
+      "name": "Glass Orbit",
+      "operations": [],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [
+          "appearance"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.3.0"
+    },
+    {
+      "crate": "nuah-appearance",
+      "defines": [],
+      "description": "thick edges, hard shadow",
+      "fills": null,
+      "id": "theme-neo-brutal",
+      "kind": "theme",
+      "name": "Neo Brutal",
+      "operations": [],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [
+          "appearance"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.3.0"
+    },
+    {
+      "crate": "nuah-appearance",
+      "defines": [],
+      "description": "near-black glass, neutral, the default",
+      "fills": null,
+      "id": "theme-phantom-onyx",
+      "kind": "theme",
+      "name": "Phantom Onyx",
+      "operations": [],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [
+          "appearance"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.3.0"
+    },
+    {
+      "crate": "nuah-appearance",
+      "defines": [],
+      "description": "warm, clay, pill buttons (default)",
+      "fills": null,
+      "id": "theme-soft-studio",
+      "kind": "theme",
+      "name": "Soft Studio",
+      "operations": [],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [
+          "appearance"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.3.0"
+    },
+    {
+      "crate": "nuah-appearance",
+      "defines": [],
+      "description": "rules, red, no softness",
+      "fills": null,
+      "id": "theme-swiss-grid",
+      "kind": "theme",
+      "name": "Swiss Grid",
+      "operations": [],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [
+          "appearance"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.3.0"
+    },
+    {
+      "crate": "nuah-appearance",
+      "defines": [],
+      "description": "mono, dashed, dense",
+      "fills": null,
+      "id": "theme-terminal",
+      "kind": "theme",
+      "name": "Terminal",
+      "operations": [],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [
+          "appearance"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.3.0"
+    }
+  ]
+}

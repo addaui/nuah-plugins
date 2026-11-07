@@ -1,0 +1,14 @@
+[package]
+name = "registry"
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+nuah-kernel = { workspace = true }
+nuah-adapters = { workspace = true }
+nuah-prefs = { path = "../nuah-prefs" }
+nuah-appearance = { path = "../nuah-appearance" }
+nuah-metric-prometheus = { path = "../nuah-metric-prometheus" }
+serde_json = { workspace = true }

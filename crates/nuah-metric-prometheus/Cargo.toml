@@ -1,0 +1,13 @@
+[package]
+name = "nuah-metric-prometheus"
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+nuah-kernel = { workspace = true }
+serde_json = { workspace = true }
+
+[dev-dependencies]
+nuah-adapters = { workspace = true }
