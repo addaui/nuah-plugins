@@ -28,6 +28,12 @@ pub fn render(s: &Snapshot) -> String {
         }
     }
     fn num(v: f64) -> String {
+        if v.is_nan() {
+            return "NaN".into();
+        }
+        if v.is_infinite() {
+            return if v > 0.0 { "+Inf".into() } else { "-Inf".into() };
+        }
         if v.fract() == 0.0 && v.abs() < 1e15 {
             format!("{}", v as i64)
         } else {
@@ -128,6 +134,11 @@ impl Service for Running {
     }
 }
 
+/// Compare without stopping at the first difference.
+fn same(a: &str, b: &str) -> bool {
+    a.len() == b.len() && a.bytes().zip(b.bytes()).fold(0u8, |d, (x, y)| d | (x ^ y)) == 0
+}
+
 fn reply(mut c: TcpStream, status: &str, extra: &str, body: &str) {
     let head = format!("HTTP/1.1 {status}\r\n{extra}Content-Length: {}\r\nConnection: close\r\n\r\n", body.len());
     let _ = c.write_all(head.as_bytes());
@@ -138,6 +149,7 @@ fn reply(mut c: TcpStream, status: &str, extra: &str, body: &str) {
 fn answer(mut c: TcpStream, core: &Core, token: Option<&str>) {
     let _ = c.set_nonblocking(false);
     let _ = c.set_read_timeout(Some(Duration::from_secs(2)));
+    let _ = c.set_write_timeout(Some(Duration::from_secs(2)));
     let mut head = Vec::new();
     let started = Instant::now();
     let mut buf = [0u8; 1024];
@@ -158,8 +170,12 @@ fn answer(mut c: TcpStream, core: &Core, token: Option<&str>) {
         return reply(c, "404 Not Found", "", "");
     }
     if let Some(t) = token {
-        let given = text.lines().find_map(|l| l.strip_prefix("Authorization: Bearer ").or_else(|| l.strip_prefix("authorization: Bearer "))).map(str::trim);
-        if given != Some(t) {
+        let given = text.lines().find_map(|l| {
+            let (name, value) = l.split_once(':')?;
+            let value = value.trim();
+            (name.eq_ignore_ascii_case("authorization") && value.len() > 7 && value[..7].eq_ignore_ascii_case("bearer ")).then(|| value[7..].trim())
+        });
+        if !given.is_some_and(|g| same(g, t)) {
             return reply(c, "401 Unauthorized", "WWW-Authenticate: Bearer\r\n", "");
         }
     }

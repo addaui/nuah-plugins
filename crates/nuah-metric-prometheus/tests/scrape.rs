@@ -55,6 +55,12 @@ fn a_token_is_required_when_one_is_set() {
     assert!(get(&addr, "/metrics", None).starts_with("HTTP/1.1 401"));
     assert!(get(&addr, "/metrics", Some("wrong-token")).starts_with("HTTP/1.1 401"));
     assert!(get(&addr, "/metrics", Some("s3cret-token")).starts_with("HTTP/1.1 200"));
+    let mut c = std::net::TcpStream::connect(&addr).unwrap();
+    c.set_read_timeout(Some(Duration::from_secs(3))).unwrap();
+    c.write_all(b"GET /metrics HTTP/1.1\r\nHost: x\r\nauthorization: BEARER s3cret-token\r\n\r\n").unwrap();
+    let mut out = String::new();
+    let _ = c.read_to_string(&mut out);
+    assert!(out.starts_with("HTTP/1.1 200"), "header name and scheme are case-insensitive: {out}");
     services.stop();
 }
 

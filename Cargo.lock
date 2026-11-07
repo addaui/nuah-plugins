@@ -246,7 +246,7 @@ checksum = "cf8baf1c55e62ffcace7a9f06f4bd9cd3f0c4beb022d3b367256b91b87513d98"
 [[package]]
 name = "nuah-adapters"
 version = "0.3.0"
-source = "git+https://github.com/addaui/nuah?tag=v0.4.0#60664ef94d868eb2d7bb98d66696660930760c86"
+source = "git+https://github.com/addaui/nuah?tag=v0.4.0#951c98075b7cbd0f2bdd8395ab78929a52bb87d7"
 dependencies = [
  "argon2",
  "nuah-kernel",
@@ -271,7 +271,7 @@ dependencies = [
 [[package]]
 name = "nuah-kernel"
 version = "0.3.0"
-source = "git+https://github.com/addaui/nuah?tag=v0.4.0#60664ef94d868eb2d7bb98d66696660930760c86"
+source = "git+https://github.com/addaui/nuah?tag=v0.4.0#951c98075b7cbd0f2bdd8395ab78929a52bb87d7"
 dependencies = [
  "serde",
  "serde_json",

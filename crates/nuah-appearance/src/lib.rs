@@ -160,8 +160,13 @@ pub fn validate_overrides(input: &Value) -> Result<Map<String, Value>> {
     Ok(out)
 }
 
+/// The stored overrides that still pass; one that no longer does (the schema changed) is dropped, the rest stay.
+pub fn keep_valid(stored: &Value) -> Map<String, Value> {
+    stored.as_object().map(|o| o.iter().filter_map(|(k, v)| validate_overrides(&json!({ k: v })).ok()).flatten().collect()).unwrap_or_default()
+}
+
 fn em(s: &str) -> bool {
-    s == "0" || s.strip_suffix("em").is_some_and(|n| n.parse::<f64>().is_ok())
+    s == "0" || s.strip_suffix("em").is_some_and(|n| n.parse::<f64>().is_ok_and(f64::is_finite))
 }
 
 /// A theme preset must be complete: every colour, every token, every signature flag.
@@ -283,7 +288,7 @@ impl Plugin for Appearance {
             let me = tx.who().subject.clone();
             let body = tx.get(OVERRIDES, &me)?.map(|d| d.body).unwrap_or(json!({}));
             // a stored token that no longer validates (the schema changed) is dropped on read
-            let kept = validate_overrides(&body["overrides"]).unwrap_or_default();
+            let kept = keep_valid(&body["overrides"]);
             Ok(json!({"overrides": kept}))
         });
         b.op("appearance.save", |tx, i| {
@@ -332,6 +337,14 @@ mod tests {
         ] {
             assert!(validate_overrides(&bad).is_err(), "{bad}");
         }
+    }
+
+    #[test]
+    fn one_stale_token_does_not_take_the_others_with_it() {
+        let kept = keep_valid(&json!({"r": 5, "removed_token": 1, "material": "glass", "dark:r": 3}));
+        assert_eq!(kept.len(), 2);
+        assert!(kept.contains_key("r") && kept.contains_key("material"));
+        assert!(!em("infem") && !em("NaNem") && em("0.5em") && em("0"));
     }
 
     #[test]
