@@ -1,5 +1,5 @@
 {
-  "nuah": "0.4",
+  "nuah": "0.5",
   "plugins": [
     {
       "crate": "nuah-appearance",

@@ -46,5 +46,5 @@ pub fn index() -> Value {
         })
         .collect();
     entries.sort_by(|a, b| a["id"].as_str().cmp(&b["id"].as_str()));
-    json!({"nuah": "0.4", "plugins": entries})
+    json!({"nuah": "0.5", "plugins": entries})
 }
