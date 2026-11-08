@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 //! The customizer: what a person may change about how a product looks, and where that choice is kept.
 //! A theme preset (a data plugin, `presets.json`) is a full token set; a person's overrides are sparse.
 //! The Core only validates and stores them; the Face derives every shade and shadow (ADR 0028).

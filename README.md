@@ -20,10 +20,13 @@ cargo test --workspace
 cargo run -p registry > registry.json
 ```
 
+## License
+
+[Apache License 2.0](LICENSE), the same as Nuah. To contribute, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## TODO
 
 - [ ] Publish the documentation
-- [ ] Choose a license (currently `UNLICENSED`)
 - [ ] `nuah-ui`: the framework-free package that turns tokens into CSS and draws the customizer panel
 - [ ] OTLP adapter for logs, traces, metrics and heartbeats
 - [ ] Postgres database adapter

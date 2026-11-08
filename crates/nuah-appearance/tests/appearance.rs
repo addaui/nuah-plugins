@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 //! The appearance, prefs and theme plugins running together in a Core that has no product around it.
 
 use nuah_adapters::*;

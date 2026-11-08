@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 //! `registry.json` is what `registry::index()` says, and every plugin in it passes the checks a plugin must.
 
 use nuah_kernel::setup::settings_annotation_problems;

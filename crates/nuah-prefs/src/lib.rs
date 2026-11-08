@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 //! Per-person preferences. A plugin that owns a preference declares it by providing `prefs.item`; this plugin
 //! stores and checks the choices. It knows no product: the items it declares itself are the common ones
 //! (language, calendar, avatar colour, confirm before deleting).

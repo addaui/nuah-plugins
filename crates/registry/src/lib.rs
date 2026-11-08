@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 //! The index of first-party plugins: what each one is, fills, defines, needs and how it is configured.
 //! The setup wizard and the console read it to show what could be added; `registry.json` at the root of
 //! the repository is this function's output (a test keeps them equal).

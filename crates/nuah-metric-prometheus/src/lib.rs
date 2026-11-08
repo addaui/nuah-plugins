@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 //! The `metric-prometheus` Adapter: lets Prometheus scrape the Core's counters, gauges and histograms.
 //!
 //! It answers `GET /metrics` on a port of its own (default `127.0.0.1:9464`), never on the application's
