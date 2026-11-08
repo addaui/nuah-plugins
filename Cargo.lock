@@ -467,8 +467,8 @@ dependencies = [
 
 [[package]]
 name = "nuah-adapters"
-version = "0.6.0"
-source = "git+https://github.com/addaui/nuah?tag=v0.6.0#1045ece330ea09fcfb40e5ae0974018f13ff0ae7"
+version = "0.7.0"
+source = "git+https://github.com/addaui/nuah?tag=v0.7.0#a71e07de6e65d0a6cb3dfd5409610def69878f2e"
 dependencies = [
  "argon2",
  "nuah-kernel",
@@ -486,7 +486,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-appearance"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -496,8 +496,8 @@ dependencies = [
 
 [[package]]
 name = "nuah-kernel"
-version = "0.6.0"
-source = "git+https://github.com/addaui/nuah?tag=v0.6.0#1045ece330ea09fcfb40e5ae0974018f13ff0ae7"
+version = "0.7.0"
+source = "git+https://github.com/addaui/nuah?tag=v0.7.0#a71e07de6e65d0a6cb3dfd5409610def69878f2e"
 dependencies = [
  "serde",
  "serde_json",
@@ -507,7 +507,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-metric-prometheus"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -516,7 +516,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-prefs"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -753,7 +753,7 @@ dependencies = [
 
 [[package]]
 name = "registry"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "nuah-adapters",
  "nuah-appearance",
