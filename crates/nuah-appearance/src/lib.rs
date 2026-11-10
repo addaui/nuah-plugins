@@ -259,7 +259,7 @@ pub struct Appearance;
 impl Plugin for Appearance {
     fn manifest(&self) -> Manifest {
         manifest(json!({
-            "id": "appearance", "version": "0.1.0", "name": "Appearance", "namespaces": ["appearance"],
+            "id": "@nuah/appearance", "version": "0.1.0", "name": "Appearance", "namespaces": ["appearance"],
             "description": "The customizer: a person's own changes to a theme preset, checked against the token schema (ADR 0028)",
             "requires": {"capabilities": ["emit"]},
             "provides": [{"extension_point": "prefs.item", "optional": true}],
@@ -361,7 +361,7 @@ mod tests {
 pub struct Theme(pub String, pub String, pub String, pub Value);
 impl Plugin for Theme {
     fn manifest(&self) -> Manifest {
-        manifest(json!({"id": &self.0, "version": "0.3.0", "name": &self.1, "runtime": "data", "requires": {"plugins": ["appearance"]}, "theme": &self.3, "description": &self.2}))
+        manifest(json!({"id": &self.0, "version": "0.3.0", "name": &self.1, "runtime": "data", "requires": {"plugins": ["@nuah/appearance"]}, "theme": &self.3, "description": &self.2}))
     }
 }
 
@@ -369,7 +369,7 @@ impl Plugin for Theme {
 pub fn themes() -> Vec<Theme> {
     let all: Vec<Value> = serde_json::from_str(include_str!("../presets.json")).expect("presets.json is valid");
     all.into_iter()
-        .map(|p| Theme(format!("theme-{}", p["id"].as_str().unwrap_or("")), p["name"].as_str().unwrap_or("").to_string(), p["tagline"].as_str().unwrap_or("").to_string(), p["theme"].clone()))
+        .map(|p| Theme(format!("@nuah/theme-{}", p["id"].as_str().unwrap_or("")), p["name"].as_str().unwrap_or("").to_string(), p["tagline"].as_str().unwrap_or("").to_string(), p["theme"].clone()))
         .collect()
 }
 

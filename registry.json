@@ -6,7 +6,7 @@
       "defines": [],
       "description": "The customizer: a person's own changes to a theme preset, checked against the token schema (ADR 0028)",
       "fills": null,
-      "id": "appearance",
+      "id": "@nuah/appearance",
       "kind": "plugin",
       "name": "Appearance",
       "operations": [
@@ -38,7 +38,7 @@
       "defines": [],
       "description": "Answers Prometheus scrapes (GET /metrics) on a port of its own",
       "fills": "metric",
-      "id": "metric-prometheus",
+      "id": "@nuah/metric-prometheus",
       "kind": "adapter",
       "name": "Prometheus metrics",
       "operations": [],
@@ -81,7 +81,7 @@
       ],
       "description": "Per-person choices; each plugin declares its own (prefs.item) and this one stores and checks them",
       "fills": null,
-      "id": "prefs",
+      "id": "@nuah/prefs",
       "kind": "plugin",
       "name": "Preferences",
       "operations": [
@@ -114,7 +114,7 @@
       "defines": [],
       "description": "pastel, puffy, round",
       "fills": null,
-      "id": "theme-clay-pop",
+      "id": "@nuah/theme-clay-pop",
       "kind": "theme",
       "name": "Clay Pop",
       "operations": [],
@@ -123,7 +123,7 @@
         "capabilities": [],
         "extension_points": [],
         "plugins": [
-          "appearance"
+          "@nuah/appearance"
         ],
         "ports": []
       },
@@ -135,7 +135,7 @@
       "defines": [],
       "description": "serif, ink, crop marks",
       "fills": null,
-      "id": "theme-editorial-paper",
+      "id": "@nuah/theme-editorial-paper",
       "kind": "theme",
       "name": "Editorial Paper",
       "operations": [],
@@ -144,7 +144,7 @@
         "capabilities": [],
         "extension_points": [],
         "plugins": [
-          "appearance"
+          "@nuah/appearance"
         ],
         "ports": []
       },
@@ -156,7 +156,7 @@
       "defines": [],
       "description": "layered shadows, tinted edges",
       "fills": null,
-      "id": "theme-elite-ledger",
+      "id": "@nuah/theme-elite-ledger",
       "kind": "theme",
       "name": "Elite Ledger",
       "operations": [],
@@ -165,7 +165,7 @@
         "capabilities": [],
         "extension_points": [],
         "plugins": [
-          "appearance"
+          "@nuah/appearance"
         ],
         "ports": []
       },
@@ -177,7 +177,7 @@
       "defines": [],
       "description": "frosted panels over orbit rings",
       "fills": null,
-      "id": "theme-glass-orbit",
+      "id": "@nuah/theme-glass-orbit",
       "kind": "theme",
       "name": "Glass Orbit",
       "operations": [],
@@ -186,7 +186,7 @@
         "capabilities": [],
         "extension_points": [],
         "plugins": [
-          "appearance"
+          "@nuah/appearance"
         ],
         "ports": []
       },
@@ -198,7 +198,7 @@
       "defines": [],
       "description": "thick edges, hard shadow",
       "fills": null,
-      "id": "theme-neo-brutal",
+      "id": "@nuah/theme-neo-brutal",
       "kind": "theme",
       "name": "Neo Brutal",
       "operations": [],
@@ -207,7 +207,7 @@
         "capabilities": [],
         "extension_points": [],
         "plugins": [
-          "appearance"
+          "@nuah/appearance"
         ],
         "ports": []
       },
@@ -219,7 +219,7 @@
       "defines": [],
       "description": "near-black glass, neutral, the default",
       "fills": null,
-      "id": "theme-phantom-onyx",
+      "id": "@nuah/theme-phantom-onyx",
       "kind": "theme",
       "name": "Phantom Onyx",
       "operations": [],
@@ -228,7 +228,7 @@
         "capabilities": [],
         "extension_points": [],
         "plugins": [
-          "appearance"
+          "@nuah/appearance"
         ],
         "ports": []
       },
@@ -240,7 +240,7 @@
       "defines": [],
       "description": "warm, clay, pill buttons (default)",
       "fills": null,
-      "id": "theme-soft-studio",
+      "id": "@nuah/theme-soft-studio",
       "kind": "theme",
       "name": "Soft Studio",
       "operations": [],
@@ -249,7 +249,7 @@
         "capabilities": [],
         "extension_points": [],
         "plugins": [
-          "appearance"
+          "@nuah/appearance"
         ],
         "ports": []
       },
@@ -261,7 +261,7 @@
       "defines": [],
       "description": "rules, red, no softness",
       "fills": null,
-      "id": "theme-swiss-grid",
+      "id": "@nuah/theme-swiss-grid",
       "kind": "theme",
       "name": "Swiss Grid",
       "operations": [],
@@ -270,7 +270,7 @@
         "capabilities": [],
         "extension_points": [],
         "plugins": [
-          "appearance"
+          "@nuah/appearance"
         ],
         "ports": []
       },
@@ -282,7 +282,7 @@
       "defines": [],
       "description": "mono, dashed, dense",
       "fills": null,
-      "id": "theme-terminal",
+      "id": "@nuah/theme-terminal",
       "kind": "theme",
       "name": "Terminal",
       "operations": [],
@@ -291,7 +291,7 @@
         "capabilities": [],
         "extension_points": [],
         "plugins": [
-          "appearance"
+          "@nuah/appearance"
         ],
         "ports": []
       },

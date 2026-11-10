@@ -25,9 +25,9 @@ fn core(settings: serde_json::Value) -> Core {
     let catalog = Catalog(vec![
         Arc::new(AdapterMemory) as Arc<dyn Plugin>, Arc::new(AuthLocal), Arc::new(PolicyAllowAll), Arc::new(StdClock), Arc::new(StdIds), Arc::new(MetricPrometheus),
     ]);
-    let mut profile = Profile { name: "t".into(), enabled: ["db-memory", "auth-local", "policy-allow-all", "clock-system", "ids-random", "metric-prometheus"].iter().map(|s| s.to_string()).collect(), ..Default::default() };
-    profile.grants.insert("metric-prometheus".into(), vec!["serve".into()]);
-    profile.settings.insert("metric-prometheus".into(), settings);
+    let mut profile = Profile { name: "t".into(), enabled: ["@nuah/db-memory", "@nuah/auth-local", "@nuah/policy-allow-all", "@nuah/clock-system", "@nuah/ids-random", "@nuah/metric-prometheus"].iter().map(|s| s.to_string()).collect(), ..Default::default() };
+    profile.grants.insert("@nuah/metric-prometheus".into(), vec!["serve".into()]);
+    profile.settings.insert("@nuah/metric-prometheus".into(), settings);
     Core::start(&Distribution { name: "t".into(), catalog, profile }).unwrap_or_else(|p| panic!("{p:#?}"))
 }
 

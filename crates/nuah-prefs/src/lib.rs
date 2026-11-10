@@ -32,7 +32,7 @@ pub struct Prefs;
 impl Plugin for Prefs {
     fn manifest(&self) -> Manifest {
         manifest(json!({
-            "id": "prefs", "version": "0.3.0", "name": "Preferences", "namespaces": ["prefs"],
+            "id": "@nuah/prefs", "version": "0.3.0", "name": "Preferences", "namespaces": ["prefs"],
             "description": "Per-person choices; each plugin declares its own (prefs.item) and this one stores and checks them",
             "requires": {"capabilities": ["emit"], "extension_points": ["prefs.item"]},
             "defines": {"extension_points": {"prefs.item": {"policy": "many",

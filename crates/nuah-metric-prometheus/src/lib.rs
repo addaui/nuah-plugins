@@ -72,7 +72,7 @@ pub fn render(s: &Snapshot) -> String {
 struct Pull;
 impl MetricAdapter for Pull {
     fn name(&self) -> &str {
-        "metric-prometheus"
+        "@nuah/metric-prometheus"
     }
     fn interval_secs(&self) -> u64 {
         0
@@ -85,7 +85,7 @@ pub struct MetricPrometheus;
 impl Plugin for MetricPrometheus {
     fn manifest(&self) -> Manifest {
         serde_json::from_value(json!({
-            "id": "metric-prometheus", "version": "0.1.0", "name": "Prometheus metrics", "fills": "metric",
+            "id": "@nuah/metric-prometheus", "version": "0.1.0", "name": "Prometheus metrics", "fills": "metric",
             "description": "Answers Prometheus scrapes (GET /metrics) on a port of its own",
             "requires": {"capabilities": ["serve"]},
             "settings_schema": {"type": "object", "additionalProperties": false, "properties": {
@@ -105,7 +105,7 @@ impl Plugin for MetricPrometheus {
         let listener = TcpListener::bind(&listen).map_err(|e| Error::internal(format!("cannot listen on {listen}: {e}")))?;
         listener.set_nonblocking(true).map_err(|e| Error::internal(e.to_string()))?;
         let addr = listener.local_addr().map(|a| a.to_string()).unwrap_or(listen);
-        ctx.core.log(Level::Info, "metric-prometheus", "metrics.listening", json!({"addr": addr}));
+        ctx.core.log(Level::Info, "@nuah/metric-prometheus", "metrics.listening", json!({"addr": addr}));
         let stop = Arc::new(AtomicBool::new(false));
         let (flag, core) = (stop.clone(), ctx.core.clone());
         let thread = std::thread::Builder::new()
