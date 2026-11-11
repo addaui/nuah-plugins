@@ -1,0 +1,22 @@
+{
+  "name": "@nuah/link-client",
+  "version": "0.1.0",
+  "description": "The typed client of the Nuah Link: operations, describe and Pulse over HTTP. No framework.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./query": "./src/query.ts"
+  },
+  "bin": { "nuah-link-gen": "./bin/nuah-link-gen.mjs" },
+  "scripts": { "test": "vitest run", "typecheck": "tsc --noEmit" },
+  "peerDependencies": { "@tanstack/query-core": "^5" },
+  "peerDependenciesMeta": { "@tanstack/query-core": { "optional": true } },
+  "devDependencies": {
+    "@tanstack/query-core": "^5",
+    "json-schema-to-typescript": "^15",
+    "typescript": "^5.9",
+    "vitest": "^3"
+  }
+}

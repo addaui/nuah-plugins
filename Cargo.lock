@@ -685,6 +685,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nuah-emoji"
+version = "0.2.0"
+dependencies = [
+ "nuah-adapters",
+ "nuah-kernel",
+ "nuah-prefs",
+ "serde_json",
+]
+
+[[package]]
 name = "nuah-kernel"
 version = "0.10.0"
 source = "git+https://github.com/addaui/nuah?tag=v0.10.0#34ddaa42a340cef1ea58d96b731a42520799ec62"
@@ -956,6 +966,7 @@ version = "0.2.0"
 dependencies = [
  "nuah-adapters",
  "nuah-appearance",
+ "nuah-emoji",
  "nuah-kernel",
  "nuah-metric-prometheus",
  "nuah-prefs",

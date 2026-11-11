@@ -10,5 +10,6 @@ nuah-kernel = { workspace = true }
 nuah-adapters = { workspace = true }
 nuah-prefs = { path = "../nuah-prefs" }
 nuah-appearance = { path = "../nuah-appearance" }
+nuah-emoji = { path = "../nuah-emoji" }
 nuah-metric-prometheus = { path = "../nuah-metric-prometheus" }
 serde_json = { workspace = true }

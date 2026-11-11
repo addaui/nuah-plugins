@@ -12,6 +12,7 @@ pub fn plugins() -> Vec<(&'static str, Arc<dyn Plugin>)> {
     let mut v: Vec<(&'static str, Arc<dyn Plugin>)> = vec![
         ("nuah-prefs", Arc::new(nuah_prefs::Prefs)),
         ("nuah-appearance", Arc::new(nuah_appearance::Appearance)),
+        ("nuah-emoji", Arc::new(nuah_emoji::Emoji)),
         ("nuah-metric-prometheus", Arc::new(nuah_metric_prometheus::MetricPrometheus)),
     ];
     for t in nuah_appearance::themes() {

@@ -1,0 +1,11 @@
+{
+  "name": "@nuah/theme-engine",
+  "version": "0.1.0",
+  "description": "The customizer's engine: a theme preset plus a person's overrides become CSS custom properties. No framework.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "private": true,
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "test": "vitest run", "typecheck": "tsc --noEmit" },
+  "devDependencies": { "typescript": "^5.9", "vitest": "^3", "jsdom": "^26" }
+}

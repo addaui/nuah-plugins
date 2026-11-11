@@ -34,6 +34,46 @@
       "version": "0.1.0"
     },
     {
+      "crate": "nuah-emoji",
+      "defines": [
+        "emoji.set"
+      ],
+      "description": "Which picture set shows the emoji: the device's own, a look from a font, or a set a plugin ships",
+      "fills": null,
+      "id": "@nuah/emoji",
+      "kind": "plugin",
+      "name": "Emoji",
+      "operations": [
+        "emoji.asset",
+        "emoji.catalog",
+        "emoji.sets"
+      ],
+      "provides": [
+        {
+          "extension_point": "emoji.set",
+          "optional": true,
+          "priority": 0
+        },
+        {
+          "extension_point": "prefs.item",
+          "optional": true,
+          "priority": 0
+        }
+      ],
+      "requires": {
+        "capabilities": [
+          "call"
+        ],
+        "extension_points": [
+          "emoji.set"
+        ],
+        "plugins": [],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
       "crate": "nuah-metric-prometheus",
       "defines": [],
       "description": "Answers Prometheus scrapes (GET /metrics) on a port of its own",
@@ -138,6 +178,27 @@
       "id": "@nuah/theme-editorial-paper",
       "kind": "theme",
       "name": "Editorial Paper",
+      "operations": [],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [
+          "@nuah/appearance"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.3.0"
+    },
+    {
+      "crate": "nuah-appearance",
+      "defines": [],
+      "description": "one raised workspace over a recessed plane, no floating cards",
+      "fills": null,
+      "id": "@nuah/theme-elevated",
+      "kind": "theme",
+      "name": "Elevated",
       "operations": [],
       "provides": [],
       "requires": {
