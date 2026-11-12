@@ -194,7 +194,7 @@
     {
       "crate": "nuah-appearance",
       "defines": [],
-      "description": "one raised workspace over a recessed plane, no floating cards",
+      "description": "one raised workspace over a recessed plane, no floating cards (default)",
       "fills": null,
       "id": "@nuah/theme-elevated",
       "kind": "theme",
@@ -278,7 +278,7 @@
     {
       "crate": "nuah-appearance",
       "defines": [],
-      "description": "near-black glass, neutral, the default",
+      "description": "near-black glass, neutral",
       "fills": null,
       "id": "@nuah/theme-phantom-onyx",
       "kind": "theme",

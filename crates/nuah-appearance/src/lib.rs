@@ -283,7 +283,7 @@ impl Plugin for Appearance {
         // The choices a person makes in the preferences window (when `prefs` is on): which preset, light or dark, how dense.
         b.provide("prefs.item", |_tx, _i| {
             Ok(json!({"items": [
-                json!({"key": "theme", "group": "appearance", "type": "string", "default": "phantom-onyx", "label": lbl("Theme", "السمة")}),
+                json!({"key": "theme", "group": "appearance", "type": "string", "default": "elevated", "label": lbl("Theme", "السمة")}),
                 json!({"key": "scheme", "group": "appearance", "type": "choice", "default": "auto", "label": lbl("Mode", "الوضع"), "choices": choices(&[("auto", "Follow the device", "حسب الجهاز"), ("light", "Light", "فاتح"), ("dark", "Dark", "داكن")])}),
                 json!({"key": "density", "group": "appearance", "type": "choice", "default": "comfortable", "label": lbl("Density", "الكثافة"), "choices": choices(&[("comfortable", "Comfortable", "مريح"), ("compact", "Compact", "مضغوط")])}),
             ]}))
@@ -324,7 +324,7 @@ mod tests {
     fn every_preset_is_complete_and_valid() {
         let all: Vec<Value> = serde_json::from_str(include_str!("../presets.json")).unwrap();
         assert!(all.len() >= 9);
-        assert_eq!(all[0]["id"], "phantom-onyx", "the default preset comes first");
+        assert_eq!(all[0]["id"], "elevated", "the default preset comes first");
         for p in &all {
             validate_preset(&p["theme"]).unwrap_or_else(|e| panic!("{}: {e:?}", p["id"]));
         }

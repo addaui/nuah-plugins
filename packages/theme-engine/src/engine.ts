@@ -107,7 +107,7 @@ export function tokens(T: Resolved, preset: Preset): Record<string, string> {
     "--glass": al(pal.surface), "--glass-side": al(pal.side), "--p-high": pal.warn, "--p-urgent": pal.danger,
     "--r-lg": R.r + "px", "--r-md": R.card + "px", "--r-sm": Math.min(R.btn, 12) + "px", "--r-btn": R.btn + "px", "--r-chip": R.chip + "px",
     "--bw": g("bw") + "px", "--bstyle": mat === "terminal" ? "dashed" : "solid", "--bc": glass ? (dark ? "rgba(255,255,255,.12)" : "rgba(255,255,255,.7)") : (mat === "brutal" || P.bcol === "text" ? pal.text : bcol),
-    "--shadow-1": sh.e2, "--shadow-card": sh.e1, "--shadow-2": sh.e3, "--shadow-btn": sh.eb, "--blur": blur + "px",
+    "--sh": dark ? "0,0,0" : pal.sh, "--shadow-1": sh.e2, "--shadow-card": sh.e1, "--shadow-2": sh.e3, "--shadow-btn": sh.eb, "--blur": blur + "px",
     "--gap": g("gap") + "px", "--frame": g("frame") + "px", "--d": String(density), "--fs": g("fs") + "px",
     "--font": ff(g("font")), "--head": ff(g("head")), "--hw": String(g("hw")), "--hls": P.hls, "--ls": P.ls, "--tt": g("tt"),
     "--bg-image": tex === "dots" ? `radial-gradient(${ln} 1.2px,transparent 1.4px)` : tex === "grid" ? `linear-gradient(${ln} 1px,transparent 1px),linear-gradient(90deg,${ln} 1px,transparent 1px)` : "none",
