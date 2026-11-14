@@ -74,6 +74,30 @@
       "version": "0.1.0"
     },
     {
+      "crate": "nuah-link-analyzer",
+      "defines": [],
+      "description": "Says what a web address is (a picture, a video, a page, a file) and, for a page, its title, summary and picture; hands over a picture's bytes. Makes outbound web requests through the net Port.",
+      "fills": null,
+      "id": "@nuah/link-analyzer",
+      "kind": "plugin",
+      "name": "Link analyzer",
+      "operations": [
+        "links.analyze",
+        "links.fetch"
+      ],
+      "provides": [],
+      "requires": {
+        "capabilities": [
+          "net"
+        ],
+        "extension_points": [],
+        "plugins": [],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
       "crate": "nuah-metric-prometheus",
       "defines": [],
       "description": "Answers Prometheus scrapes (GET /metrics) on a port of its own",
@@ -299,7 +323,7 @@
     {
       "crate": "nuah-appearance",
       "defines": [],
-      "description": "warm, clay, pill buttons (default)",
+      "description": "warm, clay, pill buttons",
       "fills": null,
       "id": "@nuah/theme-soft-studio",
       "kind": "theme",

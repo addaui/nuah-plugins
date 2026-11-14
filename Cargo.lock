@@ -706,6 +706,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "nuah-link-analyzer"
+version = "0.2.0"
+dependencies = [
+ "base64 0.22.1",
+ "nuah-adapters",
+ "nuah-kernel",
+ "parking_lot 0.12.5",
+ "serde_json",
+ "url",
+]
+
+[[package]]
 name = "nuah-metric-prometheus"
 version = "0.2.0"
 dependencies = [
@@ -968,6 +980,7 @@ dependencies = [
  "nuah-appearance",
  "nuah-emoji",
  "nuah-kernel",
+ "nuah-link-analyzer",
  "nuah-metric-prometheus",
  "nuah-prefs",
  "serde_json",

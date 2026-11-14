@@ -2,7 +2,7 @@
 export type JsonSchema = { [key: string]: unknown };
 
 export interface OperationDescription {
-  kind: "command" | "query";
+  kind: "command" | "query" | "outbound";
   description: string;
   input: JsonSchema;
   output: JsonSchema;
@@ -32,6 +32,6 @@ export interface Describe {
 export interface OperationTypes {
   input: unknown;
   output: unknown;
-  kind: "command" | "query";
+  kind: "command" | "query" | "outbound";
 }
 export type OperationMap = Record<string, OperationTypes>;
