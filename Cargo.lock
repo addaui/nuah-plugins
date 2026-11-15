@@ -656,7 +656,6 @@ dependencies = [
 [[package]]
 name = "nuah-adapters"
 version = "0.10.0"
-source = "git+https://github.com/addaui/nuah?tag=v0.10.0#34ddaa42a340cef1ea58d96b731a42520799ec62"
 dependencies = [
  "argon2",
  "nuah-kernel",
@@ -695,9 +694,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "nuah-gifs"
+version = "0.2.0"
+dependencies = [
+ "nuah-adapters",
+ "nuah-kernel",
+ "serde_json",
+]
+
+[[package]]
+name = "nuah-gifs-giphy"
+version = "0.2.0"
+dependencies = [
+ "nuah-adapters",
+ "nuah-gifs",
+ "nuah-kernel",
+ "serde_json",
+]
+
+[[package]]
 name = "nuah-kernel"
 version = "0.10.0"
-source = "git+https://github.com/addaui/nuah?tag=v0.10.0#34ddaa42a340cef1ea58d96b731a42520799ec62"
 dependencies = [
  "serde",
  "serde_json",
@@ -979,6 +996,8 @@ dependencies = [
  "nuah-adapters",
  "nuah-appearance",
  "nuah-emoji",
+ "nuah-gifs",
+ "nuah-gifs-giphy",
  "nuah-kernel",
  "nuah-link-analyzer",
  "nuah-metric-prometheus",

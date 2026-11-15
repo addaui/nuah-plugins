@@ -74,6 +74,87 @@
       "version": "0.1.0"
     },
     {
+      "crate": "nuah-gifs",
+      "defines": [
+        "gifs.provider"
+      ],
+      "description": "Where a Face finds GIFs: asks the enabled GIF provider plugin how to call it from the browser",
+      "fills": null,
+      "id": "@nuah/gifs",
+      "kind": "plugin",
+      "name": "GIFs",
+      "operations": [
+        "gifs.provider"
+      ],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [
+          "gifs.provider"
+        ],
+        "plugins": [],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
+      "crate": "nuah-gifs-giphy",
+      "defines": [],
+      "description": "GIPHY as the GIF source. The browser calls GIPHY itself, as GIPHY's rules ask; this plugin only describes the calls and allows the site.",
+      "fills": null,
+      "id": "@nuah/gifs-giphy",
+      "kind": "plugin",
+      "name": "GIPHY",
+      "operations": [],
+      "provides": [
+        {
+          "extension_point": "gifs.provider",
+          "optional": false,
+          "priority": 0
+        }
+      ],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [
+          "@nuah/gifs"
+        ],
+        "ports": []
+      },
+      "settings_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "api_key": {
+            "description": "From developers.giphy.com (a beta key allows 100 calls an hour). Without it people see only the GIFs they uploaded.",
+            "maxLength": 100,
+            "minLength": 8,
+            "title": "GIPHY API key",
+            "type": "string",
+            "x-apply": "live",
+            "x-secret": true,
+            "x-tier": "operator"
+          },
+          "rating": {
+            "default": "pg",
+            "description": "The most mature rating shown.",
+            "enum": [
+              "g",
+              "pg",
+              "pg-13",
+              "r"
+            ],
+            "title": "Content rating",
+            "type": "string",
+            "x-apply": "live",
+            "x-tier": "operator"
+          }
+        },
+        "type": "object"
+      },
+      "version": "0.1.0"
+    },
+    {
       "crate": "nuah-link-analyzer",
       "defines": [],
       "description": "Says what a web address is (a picture, a video, a page, a file) and, for a page, its title, summary and picture; hands over a picture's bytes. Makes outbound web requests through the net Port.",

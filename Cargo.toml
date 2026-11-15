@@ -13,3 +13,9 @@ nuah-kernel = { git = "https://github.com/addaui/nuah", tag = "v0.10.0" }
 nuah-adapters = { git = "https://github.com/addaui/nuah", tag = "v0.10.0" }
 serde_json = "1.0.154"
 
+
+# Not released yet: the manifest's `connect` (ADR 0072) is in the local Nuah, on the branch `plugin-connect-origins`. Remove this when Nuah is tagged
+# and the dependencies above move to that tag.
+[patch."https://github.com/addaui/nuah"]
+nuah-kernel = { path = "../nuah/crates/nuah-kernel" }
+nuah-adapters = { path = "../nuah/crates/nuah-adapters" }

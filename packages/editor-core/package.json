@@ -1,0 +1,11 @@
+{
+  "name": "@nuah/editor-core",
+  "version": "0.0.1",
+  "description": "PROTOTYPE (ADR 0074): the editor's document model, plugin registry, transactions and history. No DOM, no framework, no engine.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "private": true,
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "test": "vitest run", "typecheck": "tsc --noEmit" },
+  "devDependencies": { "typescript": "^5.9", "vitest": "^3" }
+}
