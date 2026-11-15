@@ -55,9 +55,9 @@ impl Plugin for GifsGiphy {
             "connect": ["https://api.giphy.com"],
             "images": ["https://media.giphy.com", "https://media0.giphy.com", "https://media1.giphy.com", "https://media2.giphy.com", "https://media3.giphy.com", "https://media4.giphy.com", "https://i.giphy.com"],
             "settings_schema": {"type": "object", "additionalProperties": false, "properties": {
-                "api_key": {"type": "string", "minLength": 8, "maxLength": 100, "title": "GIPHY API key", "x-secret": true, "x-tier": "operator", "x-apply": "live",
+                "api_key": {"type": "string", "minLength": 8, "maxLength": 100, "title": "GIPHY API key", "x-secret": true, "x-tier": "owner", "x-apply": "live",
                     "description": "From developers.giphy.com (a beta key allows 100 calls an hour). Without it people see only the GIFs they uploaded."},
-                "rating": {"type": "string", "enum": ["g", "pg", "pg-13", "r"], "default": "pg", "title": "Content rating", "x-tier": "operator", "x-apply": "live",
+                "rating": {"type": "string", "enum": ["g", "pg", "pg-13", "r"], "default": "pg", "title": "Content rating", "x-tier": "owner", "x-apply": "live",
                     "description": "The most mature rating shown."}
             }}
         })).expect("giphy manifest")

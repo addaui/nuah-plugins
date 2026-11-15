@@ -133,7 +133,7 @@
             "type": "string",
             "x-apply": "live",
             "x-secret": true,
-            "x-tier": "operator"
+            "x-tier": "owner"
           },
           "rating": {
             "default": "pg",
@@ -147,7 +147,7 @@
             "title": "Content rating",
             "type": "string",
             "x-apply": "live",
-            "x-tier": "operator"
+            "x-tier": "owner"
           }
         },
         "type": "object"
