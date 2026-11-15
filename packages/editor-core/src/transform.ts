@@ -20,7 +20,9 @@ export function applyStep(doc: Node, s: Step): Applied {
       const next = replaceAt(doc, s.path, (n) => {
         const attrs = { ...n.attrs };
         if (s.value === undefined) delete attrs[s.name]; else attrs[s.name] = s.value;
-        return { ...n, attrs };
+        // a node that had no attributes has none again after its only one is unset, so an undo gives back the same document
+        const { attrs: _, ...rest } = n;
+        return Object.keys(attrs).length ? { ...rest, attrs } : rest;
       });
       return { doc: next, inverse: { kind: "setAttr", path: s.path, name: s.name, value: old } };
     }

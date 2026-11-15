@@ -140,7 +140,25 @@ pub fn parse(html: &str, base: &url::Url) -> Value {
         .and_then(|i| base.join(decode(i.trim()).as_str()).ok())
         .filter(|u| u.scheme() == "https" && u.as_str().len() <= 500 && u.username().is_empty())
         .map(|u| u.to_string());
-    json!({"url": base.as_str(), "title": title.unwrap_or_else(|| base.host_str().unwrap_or("").to_string()), "description": description, "site": site, "image": image})
+    // The site's icon (ADR 0079): the first `<link rel="icon">` (or shortcut, or apple-touch) that is a picture a browser draws, else the conventional `/favicon.ico`.
+    let mut icon: Option<String> = None;
+    let mut at = 0;
+    while let Some(i) = hay[at..].find("<link") {
+        let start = at + i + 5;
+        let Some(end) = tag_end(&html[start..]) else { break };
+        let a = attrs(&html[start..start + end]);
+        at = start + end;
+        let rel = a.get("rel").map(|r| r.to_lowercase()).unwrap_or_default();
+        if !rel.split_whitespace().any(|w| w == "icon" || w == "apple-touch-icon") { continue; }
+        let Some(u) = a.get("href").and_then(|h| base.join(decode(h.trim()).as_str()).ok()) else { continue };
+        // a vector icon can carry script and is never fetched (see `raster`); the next link may be a bitmap
+        if u.scheme() == "https" && u.as_str().len() <= 500 && u.username().is_empty() && !u.path().to_lowercase().ends_with(".svg") {
+            icon = Some(u.to_string());
+            break;
+        }
+    }
+    let icon = icon.or_else(|| (base.scheme() == "https").then(|| base.join("/favicon.ico").ok()).flatten().map(|u| u.to_string()));
+    json!({"url": base.as_str(), "title": title.unwrap_or_else(|| base.host_str().unwrap_or("").to_string()), "description": description, "site": site, "image": image, "icon": icon})
 }
 
 
@@ -171,7 +189,7 @@ pub fn classify(media: &str) -> Kind {
 
 /// The pictures `links.fetch` will hand over: the ones every browser draws and that carry no script.
 pub fn raster(media: &str) -> bool {
-    matches!(media, "image/png" | "image/jpeg" | "image/gif" | "image/webp" | "image/avif")
+    matches!(media, "image/png" | "image/jpeg" | "image/gif" | "image/webp" | "image/avif" | "image/x-icon" | "image/vnd.microsoft.icon")
 }
 
 /// The last part of an address's path, for a name.
@@ -211,7 +229,7 @@ impl Plugin for LinkAnalyzer {
                 "links.analyze": {"kind": "outbound", "description": "What a public http/https address is: its type and content type, and for a page its title, summary, site and picture.",
                     "reasons": {"links.unavailable": "Nothing could be read from that address"},
                     "input": {"type":"object","required":["url"],"properties":{"url":{"type":"string","maxLength":2000}},"additionalProperties":false},
-                    "output": {"type":"object","required":["url","type"],"properties":{"url":{"type":"string"},"type":{"type":"string","enum":["image","video","page","file","unknown"]},"content_type":{"type":"string"},"size":{"type":["integer","null"]},"title":{"type":["string","null"]},"description":{"type":["string","null"]},"site":{"type":["string","null"]},"image":{"type":["string","null"]}}}},
+                    "output": {"type":"object","required":["url","type"],"properties":{"url":{"type":"string"},"type":{"type":"string","enum":["image","video","page","file","unknown"]},"content_type":{"type":"string"},"size":{"type":["integer","null"]},"title":{"type":["string","null"]},"description":{"type":["string","null"]},"site":{"type":["string","null"]},"image":{"type":["string","null"]},"icon":{"type":["string","null"]}}}},
                 "links.fetch": {"kind": "outbound", "description": "The bytes of a picture (PNG, JPEG, GIF, WebP or AVIF, at most 4 MiB) at a public address, base64.",
                     "reasons": {"links.unavailable": "Nothing could be read from that address", "links.not_an_image": "That address is not a picture this can hand over", "links.too_big": "That picture is larger than 4 MiB"},
                     "input": {"type":"object","required":["url"],"properties":{"url":{"type":"string","maxLength":2000}},"additionalProperties":false},
@@ -239,10 +257,10 @@ impl Plugin for LinkAnalyzer {
             let kind = classify(&media);
             let base = url::Url::parse(&resp.url).unwrap_or(url);
             let size = resp.header("content-length").and_then(|n| n.parse::<u64>().ok());
-            let mut out = json!({"url": base.as_str(), "type": kind.name(), "content_type": media, "size": size, "title": Value::Null, "description": Value::Null, "site": Value::Null, "image": Value::Null});
+            let mut out = json!({"url": base.as_str(), "type": kind.name(), "content_type": media, "size": size, "title": Value::Null, "description": Value::Null, "site": Value::Null, "image": Value::Null, "icon": Value::Null});
             if kind == Kind::Page {
                 let page = parse(&String::from_utf8_lossy(&resp.body), &base);
-                for k in ["title", "description", "site", "image"] {
+                for k in ["title", "description", "site", "image", "icon"] {
                     out[k] = page[k].clone();
                 }
             } else {
@@ -290,5 +308,26 @@ mod tests {
         assert_eq!(classify("application/pdf"), Kind::File);
         assert_eq!(classify("application/x-weird"), Kind::Unknown);
         assert!(raster("image/webp") && !raster("image/svg+xml"), "a picture that can carry script is never handed over");
+    }
+
+    fn icon_of(html: &str, at: &str) -> Option<String> {
+        parse(html, &url::Url::parse(at).unwrap())["icon"].as_str().map(String::from)
+    }
+    #[test]
+    fn the_site_icon_is_the_first_bitmap_link_else_the_conventional_file() {
+        let at = "https://www.example.com/a/b";
+        assert_eq!(icon_of(r#"<link rel="icon" href="/static/f.png">"#, at).as_deref(), Some("https://www.example.com/static/f.png"));
+        assert_eq!(icon_of(r#"<link rel="shortcut icon" href="f.ico">"#, at).as_deref(), Some("https://www.example.com/a/f.ico"));
+        assert_eq!(icon_of(r#"<LINK REL="Apple-Touch-Icon" HREF="//cdn.example.com/t.png">"#, at).as_deref(), Some("https://cdn.example.com/t.png"));
+        // a vector icon is skipped for the next bitmap; a stylesheet is not an icon
+        assert_eq!(icon_of(r#"<link rel="stylesheet" href="/s.css"><link rel="icon" href="/f.svg"><link rel="icon" href="/f.png">"#, at).as_deref(), Some("https://www.example.com/f.png"));
+        // nothing declared: the conventional place; plain http is never offered
+        assert_eq!(icon_of("<title>x</title>", at).as_deref(), Some("https://www.example.com/favicon.ico"));
+        assert_eq!(icon_of(r#"<link rel="icon" href="http://insecure.example/f.png">"#, "https://a.example/").as_deref(), Some("https://a.example/favicon.ico"));
+        assert_eq!(icon_of("<title>x</title>", "http://plain.example/"), None);
+    }
+    #[test]
+    fn an_icon_is_a_picture_the_core_will_hand_over() {
+        assert!(raster("image/x-icon") && raster("image/vnd.microsoft.icon") && !raster("image/svg+xml"));
     }
 }

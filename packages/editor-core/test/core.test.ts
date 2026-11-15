@@ -79,6 +79,12 @@ describe("transactions", () => {
     expect(textOf(r.doc)).not.toBe(textOf(d));
     expect(applyTransaction(r.doc, r.inverse).doc).toEqual(d);
   });
+  it("unsetting the only attribute leaves a node without attributes, so an undo restores the same document", () => {
+    const d: Node = { type: "doc", content: [{ type: "paragraph" }] };
+    const r = applyTransaction(d, { steps: [{ kind: "setAttr", path: [0], name: "align", value: "end" }] });
+    expect(r.doc.content![0]!.attrs).toEqual({ align: "end" });
+    expect(applyTransaction(r.doc, r.inverse).doc).toEqual(d);
+  });
   it("does not change the document it was given", () => {
     const d = page(), snap = JSON.stringify(d);
     applyStep(d, { kind: "setAttr", path: [1], name: "align", value: "center" });

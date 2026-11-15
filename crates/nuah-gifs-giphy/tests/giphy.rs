@@ -51,6 +51,8 @@ fn a_bad_rating_falls_back_and_the_browser_is_asked_to_allow_only_giphy() {
     assert_eq!(d["search"]["query"]["rating"], "pg");
     let m = GifsGiphy.manifest();
     assert_eq!(m.connect, Vec::<String>::new().into_iter().chain(["https://api.giphy.com".to_string()]).collect::<Vec<_>>());
+    // and to load pictures only from GIPHY's own media hosts (ADR 0077), each a valid origin
+    assert!(!m.images.is_empty() && m.images.iter().all(|o| o.ends_with(".giphy.com") && nuah_kernel::valid_connect_origin(o)), "{:?}", m.images);
 }
 
 #[test]

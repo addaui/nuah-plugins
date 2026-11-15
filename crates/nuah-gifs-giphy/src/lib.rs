@@ -53,6 +53,7 @@ impl Plugin for GifsGiphy {
             "requires": {"plugins": ["@nuah/gifs"]},
             "provides": [{"extension_point": "gifs.provider"}],
             "connect": ["https://api.giphy.com"],
+            "images": ["https://media.giphy.com", "https://media0.giphy.com", "https://media1.giphy.com", "https://media2.giphy.com", "https://media3.giphy.com", "https://media4.giphy.com", "https://i.giphy.com"],
             "settings_schema": {"type": "object", "additionalProperties": false, "properties": {
                 "api_key": {"type": "string", "minLength": 8, "maxLength": 100, "title": "GIPHY API key", "x-secret": true, "x-tier": "operator", "x-apply": "live",
                     "description": "From developers.giphy.com (a beta key allows 100 calls an hour). Without it people see only the GIFs they uploaded."},
