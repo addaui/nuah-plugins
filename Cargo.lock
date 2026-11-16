@@ -655,8 +655,8 @@ dependencies = [
 
 [[package]]
 name = "nuah-adapters"
-version = "0.14.0"
-source = "git+https://github.com/addaui/nuah?tag=v0.14.0#7f5aedb3b8c2c016e9b95c479a9480117265e26b"
+version = "0.14.1"
+source = "git+https://github.com/addaui/nuah?tag=v0.14.1#93f4406b0077e7b24e2473f9c48e1eeedf5e0c58"
 dependencies = [
  "argon2",
  "nuah-kernel",
@@ -676,7 +676,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-appearance"
-version = "0.6.0"
+version = "0.6.1"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -686,7 +686,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-emoji"
-version = "0.6.0"
+version = "0.6.1"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -696,7 +696,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-gifs"
-version = "0.6.0"
+version = "0.6.1"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -705,7 +705,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-gifs-giphy"
-version = "0.6.0"
+version = "0.6.1"
 dependencies = [
  "nuah-adapters",
  "nuah-gifs",
@@ -715,8 +715,8 @@ dependencies = [
 
 [[package]]
 name = "nuah-kernel"
-version = "0.14.0"
-source = "git+https://github.com/addaui/nuah?tag=v0.14.0#7f5aedb3b8c2c016e9b95c479a9480117265e26b"
+version = "0.14.1"
+source = "git+https://github.com/addaui/nuah?tag=v0.14.1#93f4406b0077e7b24e2473f9c48e1eeedf5e0c58"
 dependencies = [
  "serde",
  "serde_json",
@@ -726,7 +726,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-link-analyzer"
-version = "0.6.0"
+version = "0.6.1"
 dependencies = [
  "base64 0.22.1",
  "nuah-adapters",
@@ -738,7 +738,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-metric-prometheus"
-version = "0.6.0"
+version = "0.6.1"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -747,7 +747,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-prefs"
-version = "0.6.0"
+version = "0.6.1"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -993,7 +993,7 @@ dependencies = [
 
 [[package]]
 name = "registry"
-version = "0.6.0"
+version = "0.6.1"
 dependencies = [
  "nuah-adapters",
  "nuah-appearance",
