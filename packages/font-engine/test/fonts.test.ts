@@ -13,11 +13,11 @@ const readex = fam("readex", { scripts: ["arabic", "latin"], ui: "ar", faces: [
 const satoshi = fam("satoshi", { ui: "en", popular: 1 });
 
 function setup() {
-  const calls = { fetch: [] as string[], made: [] as { family: string; src: string; range: string }[] };
+  const calls = { fetch: [] as string[], made: [] as { family: string; src: string; range: string }[], loaded: [] as string[] };
   const backend: Backend = { fetch: async (u) => { calls.fetch.push(u); return { key: "k" + calls.fetch.length }; }, status: async (urls) => urls.filter((u) => u.includes("satoshi")).map((url) => ({ url, key: "held" })) };
   const seen = new Set<string>();
   const host: Host = {
-    make: (family, src, d): FaceLike => { calls.made.push({ family, src, range: d.unicodeRange }); return { family, status: "unloaded", load: async () => undefined }; },
+    make: (family, src, d): FaceLike => { calls.made.push({ family, src, range: d.unicodeRange }); return { family, status: "unloaded", load: async () => { calls.loaded.push(src); } }; },
     add: () => undefined,
     remember: { has: (u) => seen.has(u), add: (u) => void seen.add(u) },
   };
@@ -73,13 +73,24 @@ describe("the library", () => {
     expect(calls.made[0]!.src).toBe("/fonts/held.woff2");
     expect(lib.state("satoshi")).toBe("ready");
   });
-  it("loads only the script a text needs", async () => {
+  it("loads the script a text needs now and leaves the others to the browser's unicode-range", async () => {
     const { calls, lib } = setup();
     await lib.ensure("readex", { text: "مرحبا" });
-    expect(calls.made.map((m) => m.range)).toEqual([ARABIC]);
-    expect(calls.fetch).toEqual(["https://cdn.test/readex-ar.woff2"]);
+    expect(calls.loaded).toEqual(["/fonts/k1.woff2"]);
+    expect(calls.made.map((m) => m.range).sort()).toEqual([ARABIC, LATIN].sort());
+    expect(calls.fetch).toHaveLength(2);
     expect(lib.state("readex", "مرحبا")).toBe("ready");
-    expect(lib.state("readex", "Hello")).toBe("none");
+    expect(lib.state("readex", "Hello")).toBe("server");
+    await lib.ensure("readex", { text: "Hello" });
+    expect(calls.made).toHaveLength(2);
+    expect(calls.loaded).toHaveLength(2);
+    expect(lib.state("readex", "Hello")).toBe("ready");
+  });
+  it("fetches only what a preview draws", async () => {
+    const { calls, lib } = setup();
+    await lib.ensure("readex", { text: "Readex", preview: true });
+    expect(calls.fetch).toEqual(["https://cdn.test/readex-la.woff2"]);
+    expect(calls.made).toHaveLength(1);
   });
   it("builds the interface font of a language from one family per script", async () => {
     const { calls, lib } = setup();

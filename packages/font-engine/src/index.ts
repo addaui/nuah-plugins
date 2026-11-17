@@ -86,15 +86,20 @@ export type State = "none" | "server" | "loading" | "ready" | "failed";
 
 export class FontLibrary {
   private keys = new Map<string, string>();       // address -> key, once the server holds it
-  private loaded = new Set<string>();             // "family|url" already added to the document
+  private loaded = new Set<string>();             // "family|url" loaded
+  private ready = new Set<string>();              // addresses loaded under any name: the state of a family does not depend on what it was registered as
+  private added = new Set<string>();              // "family|url" registered with the document (loaded or waiting for a character)
+  private faceObjects = new Map<string, FaceLike>();
   private loading = new Map<string, Promise<void>>();
   private failed = new Set<string>();
   private busy = new Set<string>();
   private subs = new Set<() => void>();
+  /** Counts changes, for a store that re-renders on them. */
+  version = 0;
   constructor(readonly families: Family[], private backend: Backend, private host: Host = browserHost()) {}
 
   subscribe(fn: () => void): () => void { this.subs.add(fn); return () => { this.subs.delete(fn); }; }
-  private tell() { for (const f of this.subs) f(); }
+  private tell() { this.version++; for (const f of this.subs) f(); }
   family(id: string): Family | undefined { return this.families.find((f) => f.id === id); }
   /** The CSS family name to put in `font-family`. */
   css(f: Family | string): string { const n = typeof f === "string" ? this.family(f)?.name ?? f : f.name; return `"${n}"`; }
@@ -118,7 +123,7 @@ export class FontLibrary {
     if (faces.length === 0) return "none";
     if (faces.some((x) => this.failed.has(x.url))) return "failed";
     if (this.busy.has(id)) return "loading";
-    if (faces.every((x) => this.loaded.has(`${f.name}|${x.url}`))) return "ready";
+    if (faces.every((x) => this.ready.has(x.url))) return "ready";
     if (faces.every((x) => !this.remote(x) || this.keys.has(x.url))) return "server";
     return "none";
   }
@@ -130,27 +135,38 @@ export class FontLibrary {
   }
 
   /** Make a family drawable: fetch its files on the server if needed, then load the faces a text needs under `as` (default: its own name). */
-  ensure(id: string, o: { text?: string; as?: string; all?: boolean } = {}): Promise<void> {
+  ensure(id: string, o: { text?: string; as?: string; all?: boolean; preview?: boolean } = {}): Promise<void> {
     const f = this.family(id);
     if (!f) return Promise.resolve();
     const as = o.as ?? f.name;
-    const tag = `${id}|${as}|${o.text ?? ""}|${o.all ? 1 : 0}`;
+    const tag = `${id}|${as}|${o.text ?? ""}|${o.all ? 1 : 0}|${o.preview ? 1 : 0}`;
     const prior = this.loading.get(tag);
     if (prior) return prior;
     const run = (async () => {
       this.busy.add(id); this.tell();
       try {
-        await Promise.all(facesFor(f, o.text, o.all).map(async (face) => {
-          if (this.loaded.has(`${as}|${face.url}`)) return;
+        const need = new Set(facesFor(f, o.text, o.all).map((x) => x.url));
+        // every face is kept by the instance and registered with its unicode-range, so the browser fetches another script's subset only when a character needs it;
+        // the faces this call is for are loaded now
+        // a preview (a row of the picker) fetches and registers only what its text draws; use fetches the whole family
+        await Promise.all((o.preview ? facesFor(f, o.text, o.all) : f.faces).map(async (face) => {
+          const k = `${as}|${face.url}`;
+          if (this.loaded.has(k) || (this.added.has(k) && !need.has(face.url))) return;
           try {
             if (this.remote(face) && !this.keys.has(face.url)) this.keys.set(face.url, (await this.backend.fetch(face.url)).key);
-            const src = this.src(face)!;
-            const ff = this.host.make(as, src, { weight: `${face.weight[0]} ${face.weight[1]}`, style: face.style, unicodeRange: face.range });
-            this.host.add(ff);
-            await ff.load();
-            this.loaded.add(`${as}|${face.url}`);
+            let ff = this.faceObjects.get(k);
+            if (!ff) {
+              ff = this.host.make(as, this.src(face)!, { weight: `${face.weight[0]} ${face.weight[1]}`, style: face.style, unicodeRange: face.range });
+              this.host.add(ff);
+              this.faceObjects.set(k, ff); this.added.add(k);
+            }
+            if (need.has(face.url)) {
+              await ff.load();
+              this.loaded.add(k);
+              this.ready.add(face.url);
+              this.host.remember.add(face.url);
+            }
             this.failed.delete(face.url);
-            this.host.remember.add(face.url);
           } catch { this.failed.add(face.url); }
         }));
       } finally { this.busy.delete(id); this.loading.delete(tag); this.tell(); }
@@ -169,6 +185,8 @@ export class FontLibrary {
       lib.keys = this.keys;
       await lib.ensure(p.id, { as: name, all: true });
       for (const k of lib.loaded) this.loaded.add(k);
+      for (const u of lib.ready) this.ready.add(u);
+      for (const k of lib.added) this.added.add(k);
     }));
     this.tell();
   }
