@@ -170,9 +170,9 @@ impl Plugin for FontStore {
                     "reasons": {"fonts.unavailable": "That font could not be fetched", "fonts.not_listed": "That address is not a font of an enabled font plugin", "fonts.not_a_font": "That file is not a font this can keep"},
                     "input": {"type": "object", "required": ["url"], "properties": {"url": {"type": "string", "maxLength": 1000}}, "additionalProperties": false},
                     "output": {"type": "object", "required": ["key", "cached"], "properties": {"key": {"type": "string"}, "cached": {"type": "boolean"}, "size": {"type": "integer"}}}},
-                "fonts.status": {"kind": "query", "description": "Which of these keys the store holds",
-                    "input": {"type": "object", "required": ["keys"], "properties": {"keys": {"type": "array", "maxItems": 500, "items": {"type": "string", "maxLength": 64}}}, "additionalProperties": false},
-                    "output": {"type": "object", "required": ["present"], "properties": {"present": {"type": "array", "items": {"type": "string"}}}}},
+                "fonts.status": {"kind": "query", "description": "Which of these font addresses the store holds, with the key each is served under (/fonts/<key>.woff2)",
+                    "input": {"type": "object", "required": ["urls"], "properties": {"urls": {"type": "array", "maxItems": 500, "items": {"type": "string", "maxLength": 1000}}}, "additionalProperties": false},
+                    "output": {"type": "object", "required": ["present"], "properties": {"present": {"type": "array", "items": {"type": "object", "required": ["url", "key"], "properties": {"url": {"type": "string"}, "key": {"type": "string"}}}}}}},
                 "fonts.get": {"kind": "query", "public": true, "description": "The bytes of a stored font file, base64 (the Projection serves them at /fonts/<key>.woff2)",
                     "input": {"type": "object", "required": ["key"], "properties": {"key": {"type": "string", "maxLength": 64}}, "additionalProperties": false},
                     "output": {"type": "object", "required": ["data", "type"], "properties": {"data": {"type": "string"}, "type": {"type": "string"}}}},
@@ -186,9 +186,10 @@ impl Plugin for FontStore {
     fn bind(&self, b: &mut Bindings) {
         b.op("fonts.status", |tx, i| {
             let mut present = vec![];
-            for k in i["keys"].as_array().into_iter().flatten().filter_map(|k| k.as_str()) {
-                if tx.get(FILES, k)?.is_some() {
-                    present.push(k.to_string());
+            for url in i["urls"].as_array().into_iter().flatten().filter_map(|u| u.as_str()) {
+                let key = key_of(url);
+                if tx.get(FILES, &key)?.is_some() {
+                    present.push(json!({"url": url, "key": key}));
                 }
             }
             Ok(json!({"present": present}))
@@ -217,7 +218,7 @@ impl Plugin for FontStore {
                 return Err(Error::reason(Category::Invalid, "fonts.not_listed", "That address is not a font of an enabled font plugin"));
             }
             let key = key_of(url);
-            let held = cx.call("fonts.status", json!({"keys": [&key]}))?;
+            let held = cx.call("fonts.status", json!({"urls": [url]}))?;
             if held["present"].as_array().is_some_and(|p| !p.is_empty()) {
                 return Ok(json!({"key": key, "cached": true}));
             }

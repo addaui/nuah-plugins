@@ -51,7 +51,7 @@ fn a_listed_font_is_fetched_once_kept_and_served_to_anyone() {
     let again = call(&c, "fonts.fetch", json!({"url": url})).unwrap();
     assert_eq!(again["cached"], true);
     assert_eq!(asked(&url), 1, "the host is contacted once");
-    assert_eq!(call(&c, "fonts.status", json!({"keys": [key_of(&url), "0".repeat(32)]})).unwrap()["present"], json!([key_of(&url)]));
+    assert_eq!(call(&c, "fonts.status", json!({"urls": [&url, "https://other.example/x.woff2"]})).unwrap()["present"], json!([{"url": url, "key": key_of(&url)}]));
     let anon = Identity::new("anonymous", "anonymous", &[]);
     let got = c.call_as(&anon, "fonts.get", json!({"key": key_of(&url)}), None).unwrap().output;
     assert_eq!(STANDARD.decode(got["data"].as_str().unwrap()).unwrap(), b"wOF2\0\x01\0\0fake");
