@@ -4,7 +4,8 @@
 // is fetched once by the instance (the `fonts.fetch` operation) and loaded from `/fonts/<key>.woff2`, so the browser never contacts the font's host.
 
 export type Script = "latin" | "arabic" | "cyrillic" | "greek" | "hebrew" | "devanagari";
-export interface Face { script: Script; subset?: string; style: "normal" | "italic"; weight: [number, number]; range: string; url: string }
+/** One file of a family. `key` is given to a reader who cannot ask the store: the file is served at /fonts/<key>.woff2 when the store holds it. */
+export interface Face { script: Script; subset?: string; style: "normal" | "italic"; weight: [number, number]; range: string; url: string; key?: string }
 export interface Feature { tag: string; label: string; default: boolean }
 export interface Family {
   id: string; name: string; category: "sans" | "serif" | "mono" | "display" | "handwriting"; scripts: Script[]; weights: [number, number];
@@ -181,7 +182,10 @@ export class FontLibrary {
           const k = `${as}|${face.url}`;
           if (this.loaded.has(k) || (this.added.has(k) && !need.has(face.url))) return;
           try {
-            if (this.remote(face) && !this.keys.has(face.url)) this.keys.set(face.url, (await this.backend.fetch(face.url)).key);
+            if (this.remote(face) && !this.keys.has(face.url)) {
+              if (face.key) this.keys.set(face.url, face.key);   // already kept by the instance (a reader cannot ask it to fetch)
+              else this.keys.set(face.url, (await this.backend.fetch(face.url)).key);
+            }
             let ff = this.faceObjects.get(k);
             if (!ff) {
               ff = this.host.make(as, this.src(face)!, { weight: `${face.weight[0]} ${face.weight[1]}`, style: face.style, unicodeRange: face.range });

@@ -86,6 +86,14 @@ describe("the library", () => {
     expect(calls.loaded).toHaveLength(2);
     expect(lib.state("readex", "Hello")).toBe("ready");
   });
+  it("loads a face that carries its key without asking the server to fetch it (a reader of a shared page)", async () => {
+    const f = fam("shared", { faces: [{ script: "latin", style: "normal", weight: [300, 900], range: LATIN, url: "https://cdn.test/s.woff2", key: "abc123" }] });
+    const calls = { fetch: 0, src: [] as string[] };
+    const lib = new FontLibrary([f], { fetch: async () => { calls.fetch++; return { key: "x" }; }, status: async () => [] }, { make: (family, src) => { calls.src.push(src); return { family, status: "", load: async () => undefined }; }, add: () => undefined, remember: { has: () => false, add: () => undefined } });
+    await lib.ensure("shared");
+    expect(calls.fetch).toBe(0);
+    expect(calls.src).toEqual(["/fonts/abc123.woff2"]);
+  });
   it("fetches only what a preview draws", async () => {
     const { calls, lib } = setup();
     await lib.ensure("readex", { text: "Readex", preview: true });
