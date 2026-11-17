@@ -180,6 +180,9 @@ impl Plugin for FontStore {
                 "fonts.status": {"kind": "query", "description": "Which of these font addresses the store holds, with the key each is served under (/fonts/<key>.woff2)",
                     "input": {"type": "object", "required": ["urls"], "properties": {"urls": {"type": "array", "maxItems": 500, "items": {"type": "string", "maxLength": 1000}}}, "additionalProperties": false},
                     "output": {"type": "object", "required": ["present"], "properties": {"present": {"type": "array", "items": {"type": "object", "required": ["url", "key"], "properties": {"url": {"type": "string"}, "key": {"type": "string"}}}}}}},
+                "fonts.families": {"kind": "query", "public": true, "description": "Families of the enabled font plugins by id, each face with the key it is served under when the store holds it: what a reader of a shared page needs to draw its font",
+                    "input": {"type": "object", "required": ["ids"], "properties": {"ids": {"type": "array", "maxItems": 20, "items": {"type": "string", "maxLength": 60}}}, "additionalProperties": false},
+                    "output": {"type": "object", "required": ["families"], "properties": {"families": {"type": "array", "items": {"type": "object"}}}}},
                 "fonts.get": {"kind": "query", "public": true, "description": "The bytes of a stored font file, base64 (the Projection serves them at /fonts/<key>.woff2)",
                     "input": {"type": "object", "required": ["key"], "properties": {"key": {"type": "string", "maxLength": 64}}, "additionalProperties": false},
                     "output": {"type": "object", "required": ["data", "type"], "properties": {"data": {"type": "string"}, "type": {"type": "string"}}}},
@@ -200,6 +203,27 @@ impl Plugin for FontStore {
                 }
             }
             Ok(json!({"present": present}))
+        });
+        b.op("fonts.families", |tx, i| {
+            let want: Vec<&str> = i["ids"].as_array().into_iter().flatten().filter_map(|x| x.as_str()).collect();
+            let mut out = vec![];
+            for d in tx.font_data() {
+                for f in d["families"].as_array().cloned().unwrap_or_default() {
+                    if !want.contains(&f["id"].as_str().unwrap_or("")) || out.iter().any(|o: &Value| o["id"] == f["id"]) {
+                        continue;
+                    }
+                    let mut f = f;
+                    for fc in f["faces"].as_array_mut().into_iter().flatten() {
+                        let url = fc["url"].as_str().unwrap_or("").to_string();
+                        // a face served from this instance's own storage carries its key, so a reader who cannot ask the store can still load it
+                        if url.starts_with("https://") && tx.get(FILES, &key_of(&url))?.is_some() {
+                            fc["key"] = json!(key_of(&url));
+                        }
+                    }
+                    out.push(f);
+                }
+            }
+            Ok(json!({"families": out}))
         });
         b.op("fonts.get", |tx, i| {
             let key = i["key"].as_str().unwrap_or("");

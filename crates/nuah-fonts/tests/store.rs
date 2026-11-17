@@ -74,3 +74,19 @@ fn nobody_but_the_store_can_put_a_file_in_it() {
     let admin = Identity::new("root", "Root", &["admin", "member"]);
     assert_eq!(c.call_as(&admin, "fonts.store", put, None).unwrap_err().category, Category::Denied, "not even an admin");
 }
+
+#[test]
+fn a_reader_is_told_the_faces_of_a_family_and_the_keys_of_those_the_store_holds() {
+    let c = core();
+    let url = a_face_url(&c);
+    let anon = Identity::new("anonymous", "anonymous", &[]);
+    let ask = || c.call_as(&anon, "fonts.families", json!({"ids": ["readex-pro", "no-such-font"]}), None).unwrap().output;
+    let before = ask();
+    assert_eq!(before["families"].as_array().unwrap().len(), 1);
+    assert!(before["families"][0]["faces"].as_array().unwrap().iter().all(|f| f.get("key").is_none()), "nothing is stored yet");
+    call(&c, "fonts.fetch", json!({"url": url})).unwrap();
+    let after = ask();
+    let keyed: Vec<&Value> = after["families"][0]["faces"].as_array().unwrap().iter().filter(|f| f.get("key").is_some()).collect();
+    assert_eq!(keyed.len(), 1);
+    assert_eq!(keyed[0]["key"], key_of(&url));
+}

@@ -82,6 +82,7 @@
       "kind": "plugin",
       "name": "Font store",
       "operations": [
+        "fonts.families",
         "fonts.fetch",
         "fonts.get",
         "fonts.status",
