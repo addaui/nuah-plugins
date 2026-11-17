@@ -48,7 +48,8 @@ export const lch2hex = (L: number, C: number, H: number): string => {
 };
 
 export const FONTS: Record<string, string> = {
-  system: 'system-ui,-apple-system,"Segoe UI Variable","Segoe UI",Roboto,"Noto Sans",sans-serif', dm: '"DM Sans",system-ui,sans-serif', manrope: "Manrope,system-ui,sans-serif",
+  // `ui` is the interface font of the language, which the Face's font engine registers as --font-ui (ADR 0090)
+  ui: 'var(--font-ui,system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif)', system: 'system-ui,-apple-system,"Segoe UI Variable","Segoe UI",Roboto,"Noto Sans",sans-serif', dm: '"DM Sans",system-ui,sans-serif', manrope: "Manrope,system-ui,sans-serif",
   grotesk: '"Space Grotesk",system-ui,sans-serif', plex: '"IBM Plex Sans",system-ui,sans-serif', mono: '"IBM Plex Mono",ui-monospace,monospace', serif: "Fraunces,Georgia,serif", round: "Nunito,ui-rounded,system-ui,sans-serif",
 };
 /** The Arabic faces of a right-to-left page. A product that ships its own Arabic font sets `--font-ar` (a family name) and it goes first. */
@@ -98,7 +99,7 @@ export function tokens(T: Resolved, preset: Preset): Record<string, string> {
   const { pal, dark, g, sig, R, density } = T, P = preset.tokens, mat = g("material"), k = g("depth") / 100, sh = shadows(mat, k, dark, pal);
   const a = g("alpha") / 100, glass = mat === "glass", blur = glass ? g("blur") : 0, al = (h: string) => (glass ? rgba(h, a) : h);
   const bcol = mat === "terminal" ? pal.line : ({ text: pal.text, soft: rgba(pal.text, dark ? .16 : .12) } as Record<string, string>)[P.bcol] || pal.line;
-  const ff = (n: string) => (T.rtl ? ARABIC + "," : "") + FONTS[n];
+  const ff = (n: string) => (T.rtl && n !== "ui" ? ARABIC + "," : "") + FONTS[n];
   const ln = rgba(pal.text, dark ? .1 : .08), tex = g("texture");
   const hard = mat === "brutal" || P.bcol === "text";
   const v = {

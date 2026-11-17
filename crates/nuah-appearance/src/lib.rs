@@ -39,7 +39,7 @@ struct Tok {
 }
 
 const MATERIALS: &[&str] = &["flat", "hairline", "clay", "glass", "elite", "brutal", "terminal"];
-const FONTS: &[&str] = &["system", "dm", "manrope", "grotesk", "plex", "mono", "serif", "round"];
+const FONTS: &[&str] = &["ui", "system", "dm", "manrope", "grotesk", "plex", "mono", "serif", "round"];
 const TEXTURES: &[&str] = &["none", "grain", "dots", "grid", "orbit"];
 const CASES: &[&str] = &["none", "uppercase"];
 /// How the product's regions sit: `panels` are separate floating panels; `workspace` is one raised surface over a recessed plane that the

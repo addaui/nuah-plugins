@@ -36,6 +36,15 @@ describe("theme engine", () => {
   it("puts the Arabic font first for right-to-left, and lets a product supply its own with --font-ar", () => {
     expect(tokens(resolve(preset, {}, "light", true), preset)["--font"]).toMatch(/^var\(--font-ar,"Noto Sans Arabic"\)/);
   });
+  it("takes the interface font of the language for font: ui, with no Arabic font in front of it in either direction", () => {
+    const ui = { ...preset, tokens: { ...preset.tokens, font: "ui", head: "ui" } };
+    for (const rtl of [false, true]) {
+      const t = tokens(resolve(ui, {}, "light", rtl), ui);
+      expect(t["--font"]).toMatch(/^var\(--font-ui,system-ui/);
+      expect(t["--head"]).toBe(t["--font"]);
+    }
+  });
+
 
   it("applies to <html> through the CSSOM", () => {
     apply(preset, {}, "dark", false);

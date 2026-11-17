@@ -1,0 +1,11 @@
+{
+  "name": "@nuah/font-engine",
+  "version": "0.1.0",
+  "description": "Fonts for a Face: families from font plugins (fonts/1), loaded with the FontFace API by script (unicode-range), fetched once by the instance, with a status per family. No framework.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "private": true,
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "test": "vitest run", "typecheck": "tsc --noEmit" },
+  "devDependencies": { "typescript": "^5.9", "vitest": "^3", "jsdom": "^26" }
+}
