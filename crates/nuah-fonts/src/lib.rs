@@ -93,6 +93,13 @@ pub fn validate(data: &Value) -> std::result::Result<(), String> {
         if !f["source"]["url"].as_str().is_some_and(|u| u.starts_with("https://")) || text(&f["source"], "name").is_none() {
             return Err(at("the source needs a name and an https address"));
         }
+        if !f["metrics"].is_null() {
+            let m = &f["metrics"];
+            let n = |k: &str| m[k].as_f64().filter(|v| v.is_finite() && *v >= 0.0);
+            if !["upm", "ascent", "descent", "line_gap"].iter().all(|k| n(k).is_some()) || !n("width_ratio").is_some_and(|r| (0.5..=2.0).contains(&r)) || !matches!(m["fallback"].as_str(), Some("Arial" | "Times New Roman")) {
+                return Err(at("metrics need upm, ascent, descent, line_gap, a width_ratio between 0.5 and 2 and a fallback of Arial or Times New Roman"));
+            }
+        }
         let faces = f["faces"].as_array().filter(|a| !a.is_empty()).ok_or_else(|| at("no faces"))?;
         for fc in faces {
             if !fc["script"].as_str().is_some_and(|s| scripts.iter().any(|x| x == s)) {
@@ -277,6 +284,9 @@ mod tests {
         c["families"][2]["faces"][0]["range"] = json!("latin");
         assert!(validate(&c).unwrap_err().contains("unicode-range"));
         assert!(validate(&json!({"schema": "fonts/2", "families": []})).is_err());
+        let mut c = catalogue();
+        c["families"][0]["metrics"]["width_ratio"] = json!(9);
+        assert!(validate(&c).unwrap_err().contains("metrics"));
     }
 
     #[test]

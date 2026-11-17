@@ -99,6 +99,14 @@
    "rehost": true,
    "bundle": false,
    "ui": "en",
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1010,
+    "descent": 240,
+    "line_gap": 100,
+    "width_ratio": 1.1075,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -170,6 +178,14 @@
    },
    "popular": 2,
    "rehost": true,
+   "metrics": {
+    "upm": 2048,
+    "ascent": 1984,
+    "descent": 494,
+    "line_gap": 0,
+    "width_ratio": 1.0813,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -268,6 +284,14 @@
    },
    "popular": 3,
    "rehost": true,
+   "metrics": {
+    "upm": 2048,
+    "ascent": 1900,
+    "descent": 500,
+    "line_gap": 0,
+    "width_ratio": 1.0171,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -361,6 +385,14 @@
    },
    "popular": 4,
    "rehost": true,
+   "metrics": {
+    "upm": 2048,
+    "ascent": 2189,
+    "descent": 600,
+    "line_gap": 0,
+    "width_ratio": 1.0733,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -439,6 +471,14 @@
    },
    "popular": 5,
    "rehost": true,
+   "metrics": {
+    "upm": 2000,
+    "ascent": 1974,
+    "descent": 426,
+    "line_gap": 0,
+    "width_ratio": 1.0108,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -576,6 +616,14 @@
    },
    "popular": 6,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 968,
+    "descent": 251,
+    "line_gap": 0,
+    "width_ratio": 1.1662,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -648,6 +696,14 @@
    },
    "popular": 7,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1050,
+    "descent": 350,
+    "line_gap": 100,
+    "width_ratio": 1.1599,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -780,6 +836,14 @@
    },
    "popular": 8,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1024,
+    "descent": 400,
+    "line_gap": 0,
+    "width_ratio": 0.971,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -868,6 +932,14 @@
    },
    "popular": 9,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1011,
+    "descent": 353,
+    "line_gap": 0,
+    "width_ratio": 1.0286,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -956,6 +1028,14 @@
    },
    "popular": 10,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 992,
+    "descent": 310,
+    "line_gap": 0,
+    "width_ratio": 1.0686,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -1054,6 +1134,14 @@
    },
    "popular": 11,
    "rehost": true,
+   "metrics": {
+    "upm": 2000,
+    "ascent": 2132,
+    "descent": 600,
+    "line_gap": 0,
+    "width_ratio": 1.0765,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -1130,6 +1218,14 @@
    },
    "popular": 12,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1038,
+    "descent": 222,
+    "line_gap": 0,
+    "width_ratio": 1.1074,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -1228,6 +1324,14 @@
    },
    "popular": 13,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 930,
+    "descent": 243,
+    "line_gap": 0,
+    "width_ratio": 1.1213,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -1321,6 +1425,14 @@
    },
    "popular": 14,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 984,
+    "descent": 292,
+    "line_gap": 0,
+    "width_ratio": 1.133,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -1382,6 +1494,14 @@
    },
    "popular": 15,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1000,
+    "descent": 250,
+    "line_gap": 0,
+    "width_ratio": 1.1187,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -1443,6 +1563,14 @@
    },
    "popular": 16,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1025,
+    "descent": 275,
+    "line_gap": 0,
+    "width_ratio": 1.0331,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -1536,6 +1664,14 @@
    },
    "popular": 17,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1082,
+    "descent": 251,
+    "line_gap": 0,
+    "width_ratio": 1.1399,
+    "fallback": "Times New Roman"
+   },
    "faces": [
     {
      "script": "latin",
@@ -1634,6 +1770,14 @@
    },
    "popular": 18,
    "rehost": true,
+   "metrics": {
+    "upm": 2000,
+    "ascent": 1968,
+    "descent": 546,
+    "line_gap": 0,
+    "width_ratio": 1.2327,
+    "fallback": "Times New Roman"
+   },
    "faces": [
     {
      "script": "latin",
@@ -1732,6 +1876,14 @@
    },
    "popular": 19,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1006,
+    "descent": 274,
+    "line_gap": 0,
+    "width_ratio": 1.1796,
+    "fallback": "Times New Roman"
+   },
    "faces": [
     {
      "script": "latin",
@@ -1810,6 +1962,14 @@
    },
    "popular": 20,
    "rehost": true,
+   "metrics": {
+    "upm": 2000,
+    "ascent": 1956,
+    "descent": 510,
+    "line_gap": 0,
+    "width_ratio": 1.1938,
+    "fallback": "Times New Roman"
+   },
    "faces": [
     {
      "script": "latin",
@@ -1903,6 +2063,14 @@
    },
    "popular": 21,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1007,
+    "descent": 298,
+    "line_gap": 0,
+    "width_ratio": 0.9608,
+    "fallback": "Times New Roman"
+   },
    "faces": [
     {
      "script": "latin",
@@ -1996,6 +2164,14 @@
    },
    "popular": 22,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1036,
+    "descent": 335,
+    "line_gap": 0,
+    "width_ratio": 1.2207,
+    "fallback": "Times New Roman"
+   },
    "faces": [
     {
      "script": "latin",
@@ -2350,6 +2526,14 @@
    },
    "popular": 26,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 960,
+    "descent": 300,
+    "line_gap": 0,
+    "width_ratio": 0.7523,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "latin",
@@ -2408,6 +2592,14 @@
    "popular": 1,
    "rehost": true,
    "ui": "ar",
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1000,
+    "descent": 250,
+    "line_gap": 0,
+    "width_ratio": 1.1018,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -2486,6 +2678,14 @@
    },
    "popular": 2,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1374,
+    "descent": 738,
+    "line_gap": 0,
+    "width_ratio": 1.0856,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -2548,6 +2748,14 @@
    },
    "popular": 3,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1303,
+    "descent": 571,
+    "line_gap": 0,
+    "width_ratio": 0.9717,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -2610,6 +2818,14 @@
    },
    "popular": 4,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 643,
+    "descent": 357,
+    "line_gap": 200,
+    "width_ratio": 0.9655,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -2689,6 +2905,14 @@
    },
    "popular": 5,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 905,
+    "descent": 211,
+    "line_gap": 0,
+    "width_ratio": 0.9864,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -2768,6 +2992,14 @@
    },
    "popular": 6,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1085,
+    "descent": 415,
+    "line_gap": 0,
+    "width_ratio": 1.0331,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -2879,6 +3111,14 @@
    },
    "popular": 7,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1282,
+    "descent": 615,
+    "line_gap": 0,
+    "width_ratio": 1.0856,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -2957,6 +3197,14 @@
    },
    "popular": 8,
    "rehost": true,
+   "metrics": {
+    "upm": 2048,
+    "ascent": 2100,
+    "descent": 1100,
+    "line_gap": 0,
+    "width_ratio": 1.0171,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -3019,6 +3267,14 @@
    },
    "popular": 9,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 950,
+    "descent": 350,
+    "line_gap": 0,
+    "width_ratio": 0.971,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -3081,6 +3337,14 @@
    },
    "popular": 10,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1227,
+    "descent": 613,
+    "line_gap": 0,
+    "width_ratio": 1.0219,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -3143,6 +3407,14 @@
    },
    "popular": 11,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1019,
+    "descent": 544,
+    "line_gap": 0,
+    "width_ratio": 0.9695,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -3221,6 +3493,14 @@
    },
    "popular": 12,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1069,
+    "descent": 634,
+    "line_gap": 0,
+    "width_ratio": 1.217,
+    "fallback": "Times New Roman"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -3289,6 +3569,14 @@
    },
    "popular": 13,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1124,
+    "descent": 634,
+    "line_gap": 0,
+    "width_ratio": 0.9823,
+    "fallback": "Times New Roman"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -3461,6 +3749,14 @@
    },
    "popular": 14,
    "rehost": true,
+   "metrics": {
+    "upm": 2048,
+    "ascent": 2750,
+    "descent": 1427,
+    "line_gap": 0,
+    "width_ratio": 0.9062,
+    "fallback": "Times New Roman"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -3562,6 +3858,14 @@
    },
    "popular": 15,
    "rehost": true,
+   "metrics": {
+    "upm": 2048,
+    "ascent": 1718,
+    "descent": 740,
+    "line_gap": 0,
+    "width_ratio": 0.8549,
+    "fallback": "Times New Roman"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -3640,6 +3944,14 @@
    },
    "popular": 16,
    "rehost": true,
+   "metrics": {
+    "upm": 2048,
+    "ascent": 1937,
+    "descent": 1024,
+    "line_gap": 0,
+    "width_ratio": 0.8378,
+    "fallback": "Times New Roman"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -3741,6 +4053,14 @@
    },
    "popular": 17,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1221,
+    "descent": 244,
+    "line_gap": 98,
+    "width_ratio": 1.1381,
+    "fallback": "Times New Roman"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -3836,6 +4156,14 @@
    },
    "popular": 18,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 1100,
+    "descent": 400,
+    "line_gap": 0,
+    "width_ratio": 1.0262,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -3898,6 +4226,14 @@
    },
    "popular": 19,
    "rehost": true,
+   "metrics": {
+    "upm": 1000,
+    "ascent": 979,
+    "descent": 588,
+    "line_gap": 0,
+    "width_ratio": 0.9842,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "arabic",
@@ -3971,6 +4307,14 @@
    },
    "popular": 20,
    "rehost": true,
+   "metrics": {
+    "upm": 2048,
+    "ascent": 2166,
+    "descent": 1323,
+    "line_gap": 0,
+    "width_ratio": 0.7904,
+    "fallback": "Arial"
+   },
    "faces": [
     {
      "script": "arabic",

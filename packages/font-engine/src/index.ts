@@ -9,6 +9,8 @@ export interface Feature { tag: string; label: string; default: boolean }
 export interface Family {
   id: string; name: string; category: "sans" | "serif" | "mono" | "display" | "handwriting"; scripts: Script[]; weights: [number, number];
   variable: boolean; italic: boolean; features: Feature[]; licence: { spdx: string; url: string; credit: boolean }; source: { name: string; url: string };
+  /** What a fallback face needs to take the font's room while it loads: heights in font units, and its English width as a share of the fallback's. */
+  metrics?: { upm: number; ascent: number; descent: number; line_gap: number; width_ratio: number; fallback: "Arial" | "Times New Roman" };
   popular: number; rehost?: boolean; bundle?: boolean; ui?: string; faces: Face[];
 }
 /** What `describe` carries for fonts: one entry per enabled font plugin. */
@@ -64,7 +66,7 @@ export interface Backend {
 /** The browser's side: made so tests can stand in for it. */
 export interface FaceLike { family: string; status: string; load(): Promise<unknown> }
 export interface Host {
-  make(family: string, src: string, d: { weight: string; style: string; unicodeRange: string }): FaceLike;
+  make(family: string, src: string, d: { weight?: string; style?: string; unicodeRange?: string; sizeAdjust?: string; ascentOverride?: string; descentOverride?: string; lineGapOverride?: string }): FaceLike;
   add(face: FaceLike): void;
   remember: { has(url: string): boolean; add(url: string): void };
 }
@@ -72,7 +74,7 @@ export interface Host {
 export function browserHost(): Host {
   const known = (): Set<string> => { try { return new Set(JSON.parse(localStorage.getItem("fonts.ready") ?? "[]") as string[]); } catch { return new Set(); } };
   return {
-    make: (family, src, d) => new FontFace(family, `url("${src}") format("woff2")`, { ...d, display: "swap" }) as unknown as FaceLike,
+    make: (family, src, d) => new FontFace(family, src.startsWith("local(") ? src : `url("${src}") format("woff2")`, { ...d, display: "swap" } as FontFaceDescriptors) as unknown as FaceLike,
     add: (f) => document.fonts.add(f as unknown as FontFace),
     remember: {
       has: (u) => known().has(u),
@@ -101,6 +103,32 @@ export class FontLibrary {
   subscribe(fn: () => void): () => void { this.subs.add(fn); return () => { this.subs.delete(fn); }; }
   private tell() { this.version++; for (const f of this.subs) f(); }
   family(id: string): Family | undefined { return this.families.find((f) => f.id === id); }
+  private fallbacks = new Set<string>();
+  /**
+   * A face of the system's Arial (or Times New Roman) sized and spaced like the font, so the text does not jump when the font arrives: the font is
+   * `size-adjust`ed to the same width and given the same ascent, descent and line gap. Returns its family name (`<name> Fallback`), or undefined when the
+   * family has no metrics (a monospace, an Arabic-only family). Browsers that do not take these descriptors draw the plain fallback.
+   */
+  fallback(f: Family, as: string = f.name): string | undefined {
+    const m = f.metrics;
+    if (!m) return undefined;
+    const name = `${as} Fallback`;
+    if (!this.fallbacks.has(name)) {
+      this.fallbacks.add(name);
+      const pct = (n: number) => `${(n * 100).toFixed(2)}%`;
+      const adj = m.width_ratio;
+      this.host.add(this.host.make(name, `local("${m.fallback}")`, {
+        sizeAdjust: pct(adj), ascentOverride: pct(m.ascent / m.upm / adj), descentOverride: pct(m.descent / m.upm / adj), lineGapOverride: pct(m.line_gap / m.upm / adj),
+      }));
+    }
+    return name;
+  }
+  /** The CSS family names for `font-family`: the family, then its matched fallback. */
+  stack(f: Family, as: string = f.name): string {
+    const fb = this.fallback(f, as);
+    return `"${as}"${fb ? `,"${fb}"` : ""}`;
+  }
+
   /** The CSS family name to put in `font-family`. */
   css(f: Family | string): string { const n = typeof f === "string" ? this.family(f)?.name ?? f : f.name; return `"${n}"`; }
 
@@ -177,6 +205,8 @@ export class FontLibrary {
 
   /** A family of one name made of other families, one per script: the interface font of a language. */
   async composite(name: string, parts: { id: string; scripts: Script[] }[]): Promise<void> {
+    const lead = this.family(parts[0]?.id ?? "");
+    if (lead) this.fallback(lead, name);
     await Promise.all(parts.map(async (p) => {
       const f = this.family(p.id);
       if (!f) return;
