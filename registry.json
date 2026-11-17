@@ -299,7 +299,7 @@
     {
       "crate": "nuah-appearance",
       "defines": [],
-      "description": "one raised workspace over a recessed plane, no floating cards (default)",
+      "description": "one raised workspace over a recessed plane, no floating cards",
       "fills": null,
       "id": "@nuah/theme-elevated",
       "kind": "theme",
@@ -388,6 +388,27 @@
       "id": "@nuah/theme-phantom-onyx",
       "kind": "theme",
       "name": "Phantom Onyx",
+      "operations": [],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [
+          "@nuah/appearance"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.3.0"
+    },
+    {
+      "crate": "nuah-appearance",
+      "defines": [],
+      "description": "shadcn/ui new-york, neutral: flat, hairline borders, system font (default)",
+      "fills": null,
+      "id": "@nuah/theme-shadcn",
+      "kind": "theme",
+      "name": "shadcn",
       "operations": [],
       "provides": [],
       "requires": {

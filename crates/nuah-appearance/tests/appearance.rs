@@ -55,7 +55,7 @@ fn a_person_changes_the_look_and_can_go_back() {
 fn the_preferences_window_lists_what_appearance_declares() {
     let core = Core::start(&dist(&["@nuah/prefs", "@nuah/appearance"], true)).unwrap_or_else(|p| panic!("{p:#?}"));
     let prefs = core.call_as(&me(), "prefs.get", json!({}), None).unwrap().output;
-    assert_eq!(prefs["theme"], "elevated");
+    assert_eq!(prefs["theme"], "shadcn");
     assert_eq!(prefs["scheme"], "auto");
     assert_eq!(prefs["density"], "comfortable");
     assert_eq!(prefs["language"], "en", "prefs still declares its own");
@@ -84,7 +84,7 @@ fn a_theme_needs_appearance() {
 fn every_preset_is_complete_and_the_default_comes_first() {
     let all = themes();
     assert!(all.len() >= 9);
-    assert_eq!(all[0].0, "@nuah/theme-elevated");
+    assert_eq!(all[0].0, "@nuah/theme-shadcn");
     let ids = theme_ids();
     assert_eq!(ids.len(), all.len());
 }
