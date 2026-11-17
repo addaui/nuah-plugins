@@ -51,7 +51,8 @@ export const FONTS: Record<string, string> = {
   system: 'system-ui,-apple-system,"Segoe UI Variable","Segoe UI",Roboto,"Noto Sans",sans-serif', dm: '"DM Sans",system-ui,sans-serif', manrope: "Manrope,system-ui,sans-serif",
   grotesk: '"Space Grotesk",system-ui,sans-serif', plex: '"IBM Plex Sans",system-ui,sans-serif', mono: '"IBM Plex Mono",ui-monospace,monospace', serif: "Fraunces,Georgia,serif", round: "Nunito,ui-rounded,system-ui,sans-serif",
 };
-const ARABIC = '"Noto Sans Arabic","Noto Naskh Arabic",Tahoma';
+/** The Arabic faces of a right-to-left page. A product that ships its own Arabic font sets `--font-ar` (a family name) and it goes first. */
+const ARABIC = 'var(--font-ar,"Noto Sans Arabic"),"Noto Naskh Arabic",Tahoma';
 export const SIG = ["orbit", "glyph", "ids", "crop", "ruler", "keys", "prompt", "r_tier", "r_rail", "r_due", "r_mono", "r_hier", "r_harmony", "r_fill", "r_hover", "r_tint", "r_icons", "r_tabs"];
 
 /** The scheme in use: the person's choice, or the device's. */

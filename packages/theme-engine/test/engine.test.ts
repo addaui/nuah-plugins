@@ -33,8 +33,8 @@ describe("theme engine", () => {
     expect(t["--surface"]).not.toBe("#ffffff");
   });
 
-  it("puts the Arabic font first for right-to-left", () => {
-    expect(tokens(resolve(preset, {}, "light", true), preset)["--font"]).toMatch(/^"Noto Sans Arabic"/);
+  it("puts the Arabic font first for right-to-left, and lets a product supply its own with --font-ar", () => {
+    expect(tokens(resolve(preset, {}, "light", true), preset)["--font"]).toMatch(/^var\(--font-ar,"Noto Sans Arabic"\)/);
   });
 
   it("applies to <html> through the CSSOM", () => {
