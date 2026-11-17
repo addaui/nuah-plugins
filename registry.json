@@ -404,7 +404,7 @@
     {
       "crate": "nuah-appearance",
       "defines": [],
-      "description": "shadcn/ui new-york, neutral: flat, hairline borders, system font (default)",
+      "description": "shadcn/ui new-york, neutral: flush regions, hairline borders, system font (default)",
       "fills": null,
       "id": "@nuah/theme-shadcn",
       "kind": "theme",

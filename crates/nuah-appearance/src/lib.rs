@@ -43,8 +43,8 @@ const FONTS: &[&str] = &["system", "dm", "manrope", "grotesk", "plex", "mono", "
 const TEXTURES: &[&str] = &["none", "grain", "dots", "grid", "orbit"];
 const CASES: &[&str] = &["none", "uppercase"];
 /// How the product's regions sit: `panels` are separate floating panels; `workspace` is one raised surface over a recessed plane that the
-/// sidebar and header belong to (no floating cards).
-const LAYOUTS: &[&str] = &["panels", "workspace"];
+/// sidebar and header belong to (no floating cards); `flush` regions touch each other and the window edges, divided by hairlines (shadcn's own sidebar).
+const LAYOUTS: &[&str] = &["panels", "workspace", "flush"];
 
 pub const COLOUR_KEYS: [&str; 11] = ["bg", "side", "surface", "sunk", "text", "muted", "line", "primary", "accent", "warn", "ok"];
 pub const SIG_KEYS: [&str; 18] = [
@@ -69,7 +69,7 @@ fn tokens() -> Vec<Tok> {
         v.push(t);
     }
     v.push(tok("material", "shape", Kind::Choice(MATERIALS), "Material", "الخامة"));
-    v.push(tok("layout", "shape", Kind::Choice(LAYOUTS), "Layout (separate panels, or one raised workspace)", "التخطيط (لوحات منفصلة أو مساحة عمل مرتفعة واحدة)"));
+    v.push(tok("layout", "shape", Kind::Choice(LAYOUTS), "Layout (separate panels, one raised workspace, or flush regions with hairlines)", "التخطيط (لوحات منفصلة أو مساحة عمل مرتفعة أو مناطق متلاصقة بخطوط رفيعة)"));
     v.push(tok("r", "shape", Kind::Num(0.0, 40.0), "Surface radius", "تدوير الأسطح"));
     v.push(tok("rcard", "shape", Kind::NumAuto(0.0, 40.0), "Card radius", "تدوير البطاقات"));
     v.push(tok("rbtn", "shape", Kind::Num(0.0, 40.0), "Control radius (40 = pill)", "تدوير الأزرار (40 = حبة)"));
@@ -332,7 +332,7 @@ mod tests {
 
     #[test]
     fn overrides_are_checked() {
-        let ok = validate_overrides(&json!({"r": 5, "rcard": "auto", "dark:accent": "#D9D9D9", "sig.r_rail": 1, "material": "glass", "gap": null})).unwrap();
+        let ok = validate_overrides(&json!({"r": 5, "rcard": "auto", "dark:accent": "#D9D9D9", "sig.r_rail": 1, "material": "glass", "layout": "flush", "gap": null})).unwrap();
         assert_eq!(ok["dark:accent"], "#d9d9d9");
         assert_eq!(ok["sig.r_rail"], true);
         assert!(!ok.contains_key("gap"), "null clears");
