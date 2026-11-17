@@ -1,0 +1,4044 @@
+{
+ "schema": "fonts/1",
+ "families": [
+  {
+   "id": "satoshi",
+   "name": "Satoshi",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    300,
+    900
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "dlig",
+     "label": "Discretionary ligatures",
+     "default": false
+    },
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": false
+    },
+    {
+     "tag": "ordn",
+     "label": "Ordinals",
+     "default": false
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "salt",
+     "label": "Stylistic alternates",
+     "default": false
+    },
+    {
+     "tag": "ss01",
+     "label": "Stylistic set 1",
+     "default": false
+    },
+    {
+     "tag": "ss02",
+     "label": "Stylistic set 2",
+     "default": false
+    },
+    {
+     "tag": "subs",
+     "label": "Subscript",
+     "default": false
+    },
+    {
+     "tag": "sups",
+     "label": "Superscript",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    },
+    {
+     "tag": "ss03",
+     "label": "Stylistic set 3",
+     "default": false
+    },
+    {
+     "tag": "case",
+     "label": "Case-sensitive forms",
+     "default": false
+    },
+    {
+     "tag": "ss04",
+     "label": "Stylistic set 4",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "ITF-FFL",
+    "url": "https://www.fontshare.com/licenses/itf-ffl",
+    "credit": false
+   },
+   "source": {
+    "name": "Fontshare, Indian Type Foundry",
+    "url": "https://www.fontshare.com/fonts/satoshi"
+   },
+   "popular": 1,
+   "rehost": true,
+   "bundle": false,
+   "ui": "en",
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      300,
+      900
+     ],
+     "range": "U+0000-00FF,U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2000-206F,U+20A0-20C0,U+2113,U+2122,U+2191,U+2193,U+2212,U+2215,U+2C60-2C7F,U+A720-A7FF,U+FEFF,U+FFFD",
+     "url": "https://cdn.fontshare.com/wf/NWBQYJIM7GCZ5XWD7D26ARB3VDY55ZRT/K63EV2KZIGKLE7RANQ2U42S6SVHU5RJ7/X6XYTKIVDUW7GZTZPZNN4EUM5KH54KHF.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      300,
+      900
+     ],
+     "range": "U+0000-00FF,U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2000-206F,U+20A0-20C0,U+2113,U+2122,U+2191,U+2193,U+2212,U+2215,U+2C60-2C7F,U+A720-A7FF,U+FEFF,U+FFFD",
+     "url": "https://cdn.fontshare.com/wf/3JZIFUW7KLFSPLVCIUI2DLGNIER6IFCX/MMP4RUF5LYGUAZS3DCJC3GJ6F6SAGKSN/E3NEPGEAHYCHR37DSBXHV33XCYYRE2CY.woff2"
+    }
+   ]
+  },
+  {
+   "id": "inter",
+   "name": "Inter",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    100,
+    900
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Inter"
+   },
+   "popular": 2,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "roboto",
+   "name": "Roboto",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    100,
+    900
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "lnum",
+     "label": "Lining numerals",
+     "default": false
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Roboto"
+   },
+   "popular": 3,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/roboto:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/roboto:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/roboto:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/roboto:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "open-sans",
+   "name": "Open Sans",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    300,
+    800
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Open+Sans"
+   },
+   "popular": 4,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      300,
+      800
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/open-sans:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      300,
+      800
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/open-sans:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      300,
+      800
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/open-sans:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      300,
+      800
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/open-sans:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "lato",
+   "name": "Lato",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": false,
+   "italic": true,
+   "features": [
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Lato"
+   },
+   "popular": 5,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lato@5.3.0/latin-400-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lato@5.3.0/latin-700-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lato@5.3.0/latin-ext-400-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lato@5.3.0/latin-ext-700-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lato@5.3.0/latin-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lato@5.3.0/latin-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lato@5.3.0/latin-ext-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lato@5.3.0/latin-ext-700-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "montserrat",
+   "name": "Montserrat",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    100,
+    900
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Montserrat"
+   },
+   "popular": 6,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/montserrat:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/montserrat:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/montserrat:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/montserrat:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "poppins",
+   "name": "Poppins",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": false,
+   "italic": true,
+   "features": [],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Poppins"
+   },
+   "popular": 7,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/poppins@5.3.0/latin-400-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/poppins@5.3.0/latin-700-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/poppins@5.3.0/latin-ext-400-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/poppins@5.3.0/latin-ext-700-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/poppins@5.3.0/latin-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/poppins@5.3.0/latin-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/poppins@5.3.0/latin-ext-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/poppins@5.3.0/latin-ext-700-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "source-sans-3",
+   "name": "Source Sans 3",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    200,
+    900
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Source+Sans+3"
+   },
+   "popular": 8,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      200,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/source-sans-3:vf@5.3.1/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      200,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/source-sans-3:vf@5.3.1/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      200,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/source-sans-3:vf@5.3.1/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      200,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/source-sans-3:vf@5.3.1/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "nunito",
+   "name": "Nunito",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    200,
+    1000
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Nunito"
+   },
+   "popular": 9,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      200,
+      1000
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/nunito:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      200,
+      1000
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/nunito:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      200,
+      1000
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/nunito:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      200,
+      1000
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/nunito:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "dm-sans",
+   "name": "DM Sans",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    100,
+    1000
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/DM+Sans"
+   },
+   "popular": 10,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      100,
+      1000
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/dm-sans:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      100,
+      1000
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/dm-sans:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      100,
+      1000
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/dm-sans:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      100,
+      1000
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/dm-sans:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "manrope",
+   "name": "Manrope",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    200,
+    800
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Manrope"
+   },
+   "popular": 11,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      200,
+      800
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/manrope:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      200,
+      800
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/manrope:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "plus-jakarta-sans",
+   "name": "Plus Jakarta Sans",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    200,
+    800
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Plus+Jakarta+Sans"
+   },
+   "popular": 12,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      200,
+      800
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/plus-jakarta-sans:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      200,
+      800
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/plus-jakarta-sans:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      200,
+      800
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/plus-jakarta-sans:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      200,
+      800
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/plus-jakarta-sans:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "work-sans",
+   "name": "Work Sans",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    100,
+    900
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Work+Sans"
+   },
+   "popular": 13,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/work-sans:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/work-sans:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/work-sans:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/work-sans:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "space-grotesk",
+   "name": "Space Grotesk",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    300,
+    700
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Space+Grotesk"
+   },
+   "popular": 14,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      300,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/space-grotesk:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      300,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/space-grotesk:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "lexend",
+   "name": "Lexend",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    100,
+    900
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Lexend"
+   },
+   "popular": 15,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lexend:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lexend:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "ibm-plex-sans",
+   "name": "IBM Plex Sans",
+   "category": "sans",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    100,
+    700
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/IBM+Plex+Sans"
+   },
+   "popular": 16,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      100,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-sans:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      100,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-sans:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      100,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-sans:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      100,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-sans:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "playfair-display",
+   "name": "Playfair Display",
+   "category": "serif",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    400,
+    900
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "lnum",
+     "label": "Lining numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Playfair+Display"
+   },
+   "popular": 17,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      400,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/playfair-display:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      400,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/playfair-display:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/playfair-display:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/playfair-display:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "merriweather",
+   "name": "Merriweather",
+   "category": "serif",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    300,
+    900
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Merriweather"
+   },
+   "popular": 18,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      300,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/merriweather:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      300,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/merriweather:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      300,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/merriweather:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      300,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/merriweather:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "lora",
+   "name": "Lora",
+   "category": "serif",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Lora"
+   },
+   "popular": 19,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lora:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lora:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lora:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lora:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "fraunces",
+   "name": "Fraunces",
+   "category": "serif",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    100,
+    900
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Fraunces"
+   },
+   "popular": 20,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/fraunces:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/fraunces:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/fraunces:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/fraunces:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "eb-garamond",
+   "name": "EB Garamond",
+   "category": "serif",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    400,
+    800
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/EB+Garamond"
+   },
+   "popular": 21,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      400,
+      800
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/eb-garamond:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      400,
+      800
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/eb-garamond:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      800
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/eb-garamond:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      800
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/eb-garamond:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "source-serif-4",
+   "name": "Source Serif 4",
+   "category": "serif",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    200,
+    900
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Source+Serif+4"
+   },
+   "popular": 22,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      200,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/source-serif-4:vf@5.3.1/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      200,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/source-serif-4:vf@5.3.1/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      200,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/source-serif-4:vf@5.3.1/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      200,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/source-serif-4:vf@5.3.1/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "jetbrains-mono",
+   "name": "JetBrains Mono",
+   "category": "mono",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    100,
+    800
+   ],
+   "variable": true,
+   "italic": true,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/JetBrains+Mono"
+   },
+   "popular": 23,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      100,
+      800
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/jetbrains-mono:vf@5.3.0/latin-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      100,
+      800
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/jetbrains-mono:vf@5.3.0/latin-ext-wght-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      100,
+      800
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/jetbrains-mono:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      100,
+      800
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/jetbrains-mono:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "ibm-plex-mono",
+   "name": "IBM Plex Mono",
+   "category": "mono",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": false,
+   "italic": true,
+   "features": [
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/IBM+Plex+Mono"
+   },
+   "popular": 24,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-mono@5.3.0/latin-400-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-mono@5.3.0/latin-700-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-mono@5.3.0/latin-ext-400-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-mono@5.3.0/latin-ext-700-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-mono@5.3.0/latin-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-mono@5.3.0/latin-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-mono@5.3.0/latin-ext-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-mono@5.3.0/latin-ext-700-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "fira-code",
+   "name": "Fira Code",
+   "category": "mono",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    300,
+    700
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Fira+Code"
+   },
+   "popular": 25,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      300,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/fira-code:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      300,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/fira-code:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "caveat",
+   "name": "Caveat",
+   "category": "handwriting",
+   "scripts": [
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "frac",
+     "label": "Fractions",
+     "default": false
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Caveat"
+   },
+   "popular": 26,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/caveat:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/caveat:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "readex-pro",
+   "name": "Readex Pro",
+   "category": "sans",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    160,
+    700
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Readex+Pro"
+   },
+   "popular": 1,
+   "rehost": true,
+   "ui": "ar",
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      160,
+      700
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/readex-pro:vf@5.3.0/arabic-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      160,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/readex-pro:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      160,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/readex-pro:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "noto-sans-arabic",
+   "name": "Noto Sans Arabic",
+   "category": "sans",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    100,
+    900
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Noto+Sans+Arabic"
+   },
+   "popular": 2,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-arabic:vf@5.3.0/arabic-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-arabic:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-arabic:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "cairo",
+   "name": "Cairo",
+   "category": "sans",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    200,
+    1000
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Cairo"
+   },
+   "popular": 3,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      200,
+      1000
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/cairo:vf@5.3.0/arabic-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      200,
+      1000
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/cairo:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      200,
+      1000
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/cairo:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "tajawal",
+   "name": "Tajawal",
+   "category": "sans",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": false,
+   "italic": false,
+   "features": [],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Tajawal"
+   },
+   "popular": 4,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/tajawal@5.3.0/arabic-400-normal.woff2"
+    },
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/tajawal@5.3.0/arabic-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/tajawal@5.3.0/latin-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/tajawal@5.3.0/latin-700-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "almarai",
+   "name": "Almarai",
+   "category": "sans",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": false,
+   "italic": false,
+   "features": [
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Almarai"
+   },
+   "popular": 5,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/almarai@5.3.0/arabic-400-normal.woff2"
+    },
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/almarai@5.3.0/arabic-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/almarai@5.3.0/latin-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/almarai@5.3.0/latin-700-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "ibm-plex-sans-arabic",
+   "name": "IBM Plex Sans Arabic",
+   "category": "sans",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": false,
+   "italic": false,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/IBM+Plex+Sans+Arabic"
+   },
+   "popular": 6,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-sans-arabic@5.3.0/arabic-400-normal.woff2"
+    },
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-sans-arabic@5.3.0/arabic-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-sans-arabic@5.3.0/latin-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-sans-arabic@5.3.0/latin-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-sans-arabic@5.3.0/latin-ext-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-sans-arabic@5.3.0/latin-ext-700-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "noto-kufi-arabic",
+   "name": "Noto Kufi Arabic",
+   "category": "sans",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    100,
+    900
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Noto+Kufi+Arabic"
+   },
+   "popular": 7,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/noto-kufi-arabic:vf@5.3.0/arabic-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/noto-kufi-arabic:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/noto-kufi-arabic:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "vazirmatn",
+   "name": "Vazirmatn",
+   "category": "sans",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    100,
+    900
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Vazirmatn"
+   },
+   "popular": 8,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/vazirmatn:vf@5.3.0/arabic-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/vazirmatn:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      100,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/vazirmatn:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "mada",
+   "name": "Mada",
+   "category": "sans",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    200,
+    900
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Mada"
+   },
+   "popular": 9,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      200,
+      900
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/mada:vf@5.3.0/arabic-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      200,
+      900
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/mada:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      200,
+      900
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/mada:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "changa",
+   "name": "Changa",
+   "category": "sans",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    200,
+    800
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Changa"
+   },
+   "popular": 10,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      200,
+      800
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/changa:vf@5.3.0/arabic-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      200,
+      800
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/changa:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      200,
+      800
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/changa:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "el-messiri",
+   "name": "El Messiri",
+   "category": "sans",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/El+Messiri"
+   },
+   "popular": 11,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/el-messiri:vf@5.3.0/arabic-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/el-messiri:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/el-messiri:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "noto-naskh-arabic",
+   "name": "Noto Naskh Arabic",
+   "category": "serif",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Noto+Naskh+Arabic"
+   },
+   "popular": 12,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/noto-naskh-arabic:vf@5.3.0/arabic-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/noto-naskh-arabic:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/noto-naskh-arabic:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "amiri",
+   "name": "Amiri",
+   "category": "serif",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": false,
+   "italic": true,
+   "features": [
+    {
+     "tag": "pnum",
+     "label": "Proportional numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Amiri"
+   },
+   "popular": 13,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "italic",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/amiri@5.3.0/arabic-400-italic.woff2"
+    },
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "italic",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/amiri@5.3.0/arabic-700-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/amiri@5.3.0/latin-400-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "italic",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/amiri@5.3.0/latin-700-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/amiri@5.3.0/latin-ext-400-italic.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/amiri@5.3.0/latin-ext-700-italic.woff2"
+    },
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/amiri@5.3.0/arabic-400-normal.woff2"
+    },
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/amiri@5.3.0/arabic-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/amiri@5.3.0/latin-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/amiri@5.3.0/latin-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/amiri@5.3.0/latin-ext-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/amiri@5.3.0/latin-ext-700-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "scheherazade-new",
+   "name": "Scheherazade New",
+   "category": "serif",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": false,
+   "italic": false,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Scheherazade+New"
+   },
+   "popular": 14,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/scheherazade-new@5.3.0/arabic-400-normal.woff2"
+    },
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/scheherazade-new@5.3.0/arabic-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/scheherazade-new@5.3.0/latin-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/scheherazade-new@5.3.0/latin-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/scheherazade-new@5.3.0/latin-ext-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/scheherazade-new@5.3.0/latin-ext-700-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "markazi-text",
+   "name": "Markazi Text",
+   "category": "serif",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Markazi+Text"
+   },
+   "popular": 15,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/markazi-text:vf@5.3.0/arabic-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/markazi-text:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/markazi-text:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "lateef",
+   "name": "Lateef",
+   "category": "serif",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": false,
+   "italic": false,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    },
+    {
+     "tag": "tnum",
+     "label": "Tabular numerals",
+     "default": false
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Lateef"
+   },
+   "popular": 16,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lateef@5.3.0/arabic-400-normal.woff2"
+    },
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lateef@5.3.0/arabic-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lateef@5.3.0/latin-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lateef@5.3.0/latin-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lateef@5.3.0/latin-ext-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lateef@5.3.0/latin-ext-700-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "aref-ruqaa",
+   "name": "Aref Ruqaa",
+   "category": "serif",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": false,
+   "italic": false,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Aref+Ruqaa"
+   },
+   "popular": 17,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/aref-ruqaa@5.3.0/arabic-400-normal.woff2"
+    },
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/aref-ruqaa@5.3.0/arabic-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/aref-ruqaa@5.3.0/latin-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/aref-ruqaa@5.3.0/latin-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/aref-ruqaa@5.3.0/latin-ext-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/aref-ruqaa@5.3.0/latin-ext-700-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "reem-kufi",
+   "name": "Reem Kufi",
+   "category": "sans",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": true,
+   "italic": false,
+   "features": [],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Reem+Kufi"
+   },
+   "popular": 18,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/reem-kufi:vf@5.3.0/arabic-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/reem-kufi:vf@5.3.0/latin-wght-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/reem-kufi:vf@5.3.0/latin-ext-wght-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "lalezar",
+   "name": "Lalezar",
+   "category": "sans",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    400,
+    400
+   ],
+   "variable": false,
+   "italic": false,
+   "features": [],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Lalezar"
+   },
+   "popular": 19,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lalezar@5.3.0/arabic-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lalezar@5.3.0/latin-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/lalezar@5.3.0/latin-ext-400-normal.woff2"
+    }
+   ]
+  },
+  {
+   "id": "harmattan",
+   "name": "Harmattan",
+   "category": "sans",
+   "scripts": [
+    "arabic",
+    "latin"
+   ],
+   "weights": [
+    400,
+    700
+   ],
+   "variable": false,
+   "italic": false,
+   "features": [
+    {
+     "tag": "calt",
+     "label": "Contextual alternates",
+     "default": true
+    },
+    {
+     "tag": "liga",
+     "label": "Ligatures",
+     "default": true
+    }
+   ],
+   "licence": {
+    "spdx": "OFL-1.1",
+    "url": "https://openfontlicense.org/",
+    "credit": false
+   },
+   "source": {
+    "name": "Google Fonts",
+    "url": "https://fonts.google.com/specimen/Harmattan"
+   },
+   "popular": 20,
+   "rehost": true,
+   "faces": [
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/harmattan@5.3.0/arabic-400-normal.woff2"
+    },
+    {
+     "script": "arabic",
+     "subset": "arabic",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC,U+102E0-102FB,U+10E60-10E7E,U+10EC2-10EC4,U+10EFC-10EFF,U+1EE00-1EE03,U+1EE05-1EE1F,U+1EE21-1EE22,U+1EE24,U+1EE27,U+1EE29-1EE32,U+1EE34-1EE37,U+1EE39,U+1EE3B,U+1EE42,U+1EE47,U+1EE49,U+1EE4B,U+1EE4D-1EE4F,U+1EE51-1EE52,U+1EE54,U+1EE57,U+1EE59,U+1EE5B,U+1EE5D,U+1EE5F,U+1EE61-1EE62,U+1EE64,U+1EE67-1EE6A,U+1EE6C-1EE72,U+1EE74-1EE77,U+1EE79-1EE7C,U+1EE7E,U+1EE80-1EE89,U+1EE8B-1EE9B,U+1EEA1-1EEA3,U+1EEA5-1EEA9,U+1EEAB-1EEBB,U+1EEF0-1EEF1",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/harmattan@5.3.0/arabic-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/harmattan@5.3.0/latin-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/harmattan@5.3.0/latin-700-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      400,
+      400
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/harmattan@5.3.0/latin-ext-400-normal.woff2"
+    },
+    {
+     "script": "latin",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": [
+      700,
+      700
+     ],
+     "range": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+     "url": "https://cdn.jsdelivr.net/fontsource/fonts/harmattan@5.3.0/latin-ext-700-normal.woff2"
+    }
+   ]
+  }
+ ]
+}

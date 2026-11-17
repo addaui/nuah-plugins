@@ -74,6 +74,75 @@
       "version": "0.1.0"
     },
     {
+      "crate": "nuah-fonts",
+      "defines": [],
+      "description": "Fetches a web-hosted font once, through the net Port, keeps it and serves it, so a viewer's browser contacts only this server (ADR 0090). It fetches only addresses that a font plugin names.",
+      "fills": null,
+      "id": "@nuah/fonts",
+      "kind": "plugin",
+      "name": "Font store",
+      "operations": [
+        "fonts.fetch",
+        "fonts.get",
+        "fonts.status",
+        "fonts.store"
+      ],
+      "provides": [],
+      "requires": {
+        "capabilities": [
+          "net",
+          "call"
+        ],
+        "extension_points": [],
+        "plugins": [],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
+      "crate": "nuah-fonts",
+      "defines": [],
+      "description": "Satoshi by Indian Type Foundry, free for personal and commercial use; fetched by each instance from Fontshare and never bundled",
+      "fills": null,
+      "id": "@nuah/fonts-fontshare",
+      "kind": "font",
+      "name": "Satoshi (Fontshare)",
+      "operations": [],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [
+          "@nuah/fonts"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
+      "crate": "nuah-fonts",
+      "defines": [],
+      "description": "The most used Latin and Arabic families from Google Fonts (SIL Open Font License), fetched once by the instance",
+      "fills": null,
+      "id": "@nuah/fonts-google",
+      "kind": "font",
+      "name": "Popular fonts (open licence)",
+      "operations": [],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [
+          "@nuah/fonts"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
       "crate": "nuah-gifs",
       "defines": [
         "gifs.provider"

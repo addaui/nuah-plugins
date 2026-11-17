@@ -33,6 +33,7 @@ fn the_class_of_every_plugin_is_the_one_written_down() {
         ("@nuah/prefs", Feature),
         ("@nuah/appearance", Feature),
         ("@nuah/emoji", Feature),
+        ("@nuah/fonts", Platform),
         ("@nuah/gifs", Feature),
         ("@nuah/gifs-giphy", Feature),
         ("@nuah/link-analyzer", Platform),
@@ -42,8 +43,8 @@ fn the_class_of_every_plugin_is_the_one_written_down() {
     for (_, p) in registry::plugins() {
         let m = p.manifest();
         let c = m.class();
-        // every theme is data that adds a look: a feature, so the themes are not listed one by one
-        let want = if m.id.starts_with("@nuah/theme-") { Feature } else { expected.iter().find(|(id, _)| *id == m.id).unwrap_or_else(|| panic!("{} has no entry in the class table", m.id)).1 };
+        // every theme and every font set is data: a feature, so they are not listed one by one
+        let want = if m.id.starts_with("@nuah/theme-") || m.id.starts_with("@nuah/fonts-") { Feature } else { expected.iter().find(|(id, _)| *id == m.id).unwrap_or_else(|| panic!("{} has no entry in the class table", m.id)).1 };
         assert_eq!(c.class, want, "{}: {:?}", m.id, c.reasons);
         seen.push(m.id);
     }

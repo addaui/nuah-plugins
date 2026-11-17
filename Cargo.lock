@@ -695,6 +695,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "nuah-fonts"
+version = "0.6.1"
+dependencies = [
+ "base64 0.22.1",
+ "nuah-adapters",
+ "nuah-kernel",
+ "serde_json",
+ "sha2 0.10.9",
+]
+
+[[package]]
 name = "nuah-gifs"
 version = "0.6.1"
 dependencies = [
@@ -998,6 +1009,7 @@ dependencies = [
  "nuah-adapters",
  "nuah-appearance",
  "nuah-emoji",
+ "nuah-fonts",
  "nuah-gifs",
  "nuah-gifs-giphy",
  "nuah-kernel",

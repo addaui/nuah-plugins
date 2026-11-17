@@ -13,6 +13,7 @@ pub fn plugins() -> Vec<(&'static str, Arc<dyn Plugin>)> {
         ("nuah-prefs", Arc::new(nuah_prefs::Prefs)),
         ("nuah-appearance", Arc::new(nuah_appearance::Appearance)),
         ("nuah-emoji", Arc::new(nuah_emoji::Emoji)),
+        ("nuah-fonts", Arc::new(nuah_fonts::FontStore)),
         ("nuah-gifs", Arc::new(nuah_gifs::Gifs)),
         ("nuah-gifs-giphy", Arc::new(nuah_gifs_giphy::GifsGiphy)),
         ("nuah-link-analyzer", Arc::new(nuah_link_analyzer::LinkAnalyzer::default())),
@@ -20,6 +21,9 @@ pub fn plugins() -> Vec<(&'static str, Arc<dyn Plugin>)> {
     ];
     for t in nuah_appearance::themes() {
         v.push(("nuah-appearance", Arc::new(t)));
+    }
+    for f in nuah_fonts::font_sets() {
+        v.push(("nuah-fonts", Arc::new(f)));
     }
     v
 }
@@ -37,6 +41,8 @@ pub fn index() -> Value {
                 "adapter"
             } else if m["theme"].is_object() {
                 "theme"
+            } else if m["fonts"].is_object() {
+                "font"
             } else {
                 "plugin"
             };

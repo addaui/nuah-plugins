@@ -11,6 +11,7 @@ nuah-adapters = { workspace = true }
 nuah-prefs = { path = "../nuah-prefs" }
 nuah-appearance = { path = "../nuah-appearance" }
 nuah-emoji = { path = "../nuah-emoji" }
+nuah-fonts = { path = "../nuah-fonts" }
 nuah-gifs = { path = "../nuah-gifs" }
 nuah-gifs-giphy = { path = "../nuah-gifs-giphy" }
 nuah-link-analyzer = { path = "../nuah-link-analyzer" }
