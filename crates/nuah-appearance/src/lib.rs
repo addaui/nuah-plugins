@@ -267,7 +267,7 @@ impl Plugin for Appearance {
             "description": "The customizer: a person's own changes to a theme preset, checked against the token schema (ADR 0028)",
             "requires": {"capabilities": ["emit"]},
             "provides": [{"extension_point": "prefs.item", "optional": true}],
-            "data": {"collections": [OVERRIDES], "version": 1},
+            "data": {"schema": serde_json::from_str::<Value>(include_str!("../schema/appearance.json")).expect("the schema file is JSON")},
             "events": {"appearance.changed": {}},
             "operations": {
                 "appearance.schema": {"kind": "query", "description": "Every token a person may change, with its range or choices", "output": {"type":"object","required":["items"]}},

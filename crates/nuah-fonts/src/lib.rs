@@ -170,7 +170,7 @@ impl Plugin for FontStore {
             "id": "@nuah/fonts", "version": "0.1.0", "name": "Font store", "namespaces": ["fonts"],
             "description": "Fetches a web-hosted font once, through the net Port, keeps it and serves it, so a viewer's browser contacts only this server (ADR 0090). It fetches only addresses that a font plugin names.",
             "requires": {"capabilities": ["net", "call"]},
-            "data": {"collections": [FILES], "version": 1},
+            "data": {"schema": serde_json::from_str::<Value>(include_str!("../schema/fonts.json")).expect("the schema file is JSON")},
             "permissions": {"fonts.store": {"description": "Keep a font file (only the store itself, after it has fetched and checked it)", "default": ["plugin:@nuah/fonts"]}},
             "operations": {
                 "fonts.fetch": {"kind": "outbound", "description": "Fetch a font file from an address a font plugin names, once, and keep it; says its key",

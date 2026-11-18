@@ -39,7 +39,7 @@ impl Plugin for Prefs {
                 "description": "A plugin answers with the preferences it owns: {items: [{key, label, group, type, default, choices?, min?, max?}]}",
                 "input": {"type":"object"}}}},
             "provides": [{"extension_point": "prefs.item"}],
-            "data": {"collections": [PREFS], "version": 1},
+            "data": {"schema": serde_json::from_str::<Value>(include_str!("../schema/prefs.json")).expect("the schema file is JSON")},
             "events": {"prefs.changed": {}},
             "operations": {
                 "prefs.schema": {"kind": "query", "description": "Every preference the enabled plugins declare, to build a settings window",

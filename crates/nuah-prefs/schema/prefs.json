@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "collections": {
+    "prefs.prefs": {
+      "type": "object",
+      "description": "One person's preferences: the keys other plugins declare through prefs.item, each checked by this plugin against its declaration"
+    }
+  }
+}

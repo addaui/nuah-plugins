@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "collections": {
+    "appearance.overrides": {
+      "type": "object",
+      "required": ["overrides"],
+      "properties": {
+        "overrides": {"type": "object", "description": "Token name to value, each checked against the token schema by this plugin"}
+      }
+    }
+  }
+}
