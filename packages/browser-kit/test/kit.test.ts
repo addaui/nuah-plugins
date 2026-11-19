@@ -46,3 +46,22 @@ describe("browser-kit", () => {
     expect(() => setShared({ lib: { x: 2 } })).toThrow('shared library "lib" is already set to another value');
   });
 });
+
+describe("split builds", () => {
+  it("chunks_are_listed_for_the_crate", async () => {
+    const { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync } = await import("node:fs");
+    const dir = mkdtempSync(join(tmpdir(), "kit-split-"));
+    const src = join(dir, "src"); mkdirSync(src);
+    writeFileSync(join(src, "entry.ts"), 'export default async function register() { const m = await import("./later"); return m.value; }');
+    writeFileSync(join(src, "later.ts"), "export const value = 42;");
+    const out = join(dir, "browser");
+    const { buildModule, writeFilesRs } = await import("../src/build");
+    await buildModule({ entry: join(src, "entry.ts"), outdir: out, shared: [] });
+    expect(existsSync(join(out, "index.js"))).toBe(true);
+    const n = await writeFilesRs(out);
+    expect(n).toBeGreaterThanOrEqual(2);
+    const rs = readFileSync(join(out, "files.rs"), "utf8");
+    expect(rs).toContain('("index.js", include_bytes!("index.js")),');
+    expect(rs).toMatch(/\("chunks\/later-[A-Z0-9]+\.js", include_bytes!\("chunks\/later-[A-Z0-9]+\.js"\)\),/);
+  });
+});

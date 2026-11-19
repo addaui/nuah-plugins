@@ -9,7 +9,9 @@ import { dirname } from "node:path";
 
 export interface BuildOptions {
   entry: string;
-  outfile: string;
+  /** One file; or, with `outdir`, the entry as `index.js` plus the chunks it loads on demand. */
+  outfile?: string;
+  outdir?: string;
   /** Library names (and subpaths such as `react/jsx-runtime`) the host provides. */
   shared: string[];
   minify?: boolean;
@@ -54,9 +56,10 @@ ${named}`,
 }
 
 export async function buildModule(o: BuildOptions): Promise<{ bytes: number }> {
+  const split = !!o.outdir;
   const r = await build({
-    entryPoints: [o.entry],
-    outfile: o.outfile,
+    entryPoints: split ? { index: o.entry } : [o.entry],
+    ...(split ? { outdir: o.outdir, splitting: true, chunkNames: "chunks/[name]-[hash]" } : { outfile: o.outfile }),
     bundle: true,
     format: "esm",
     platform: "browser",
@@ -69,6 +72,20 @@ export async function buildModule(o: BuildOptions): Promise<{ bytes: number }> {
     metafile: true,
     logLevel: "silent",
   });
-  const out = Object.values(r.metafile!.outputs)[0];
-  return { bytes: out ? out.bytes : 0 };
+  return { bytes: Object.values(r.metafile!.outputs).reduce((n, x) => n + x.bytes, 0) };
+}
+
+/**
+ * Writes `files.rs` in a crate's browser folder: every built file as `(path, include_bytes!(...))`, for `Plugin::browser_files`
+ * (`include!("../browser/files.rs")`). The chunks' names change with their content, so the list is written, not typed.
+ */
+export async function writeFilesRs(dir: string): Promise<number> {
+  const { readdirSync, statSync, writeFileSync } = await import("node:fs");
+  const { join, relative } = await import("node:path");
+  const files: string[] = [];
+  const walk = (d: string) => { for (const f of readdirSync(d)) { const p = join(d, f); if (statSync(p).isDirectory()) walk(p); else if (/\.(js|wasm|css|json|woff2|svg|png|zip|tar)$/.test(f) && f !== "files.rs") files.push(relative(dir, p).split("\\").join("/")); } };
+  walk(dir);
+  files.sort();
+  writeFileSync(join(dir, "files.rs"), `// Written by the module's build (@nuah/browser-kit writeFilesRs); do not edit.\n&[\n${files.map((f) => `    (${JSON.stringify(f)}, include_bytes!(${JSON.stringify(f)})),`).join("\n")}\n]\n`);
+  return files.length;
 }
