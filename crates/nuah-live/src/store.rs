@@ -185,9 +185,21 @@ impl LiveStore {
     /// The document as it was at a Version.
     pub fn at(&self, tx: &Tx, key: &str, version_id: &str) -> Result<Value> {
         let v = self.version(tx, key, version_id)?;
-        let f = Frontiers::decode(&unb64("frontiers", v.body["frontiers"].as_str().unwrap_or(""))?).map_err(lerr)?;
-        let d = self.load(tx, key)?;
+        self.json_at(&self.load(tx, key)?, &v)
+    }
+
+    /// A loaded document as it was at one of its Versions (to read several Versions with one load).
+    pub fn json_at(&self, d: &LoroDoc, version: &Doc) -> Result<Value> {
+        let f = Frontiers::decode(&unb64("frontiers", version.body["frontiers"].as_str().unwrap_or(""))?).map_err(lerr)?;
         Ok(to_json(&d.fork_at(&f).map_err(lerr)?))
+    }
+
+    /// Name a Version, or take its name away.
+    pub fn name(&self, tx: &mut Tx, key: &str, version_id: &str, name: Option<&str>) -> Result<Doc> {
+        let v = self.version(tx, key, version_id)?;
+        let mut b = v.body.clone();
+        b["name"] = json!(name);
+        tx.put(self.versions, &v.id, b, Expect::Rev(v.rev))
     }
 
     /// Bring a Version's content back as a new change; the history after it is kept.
