@@ -9,6 +9,7 @@
 //! ```json
 //! {"entity": {"kind": "pages.page", "id": "p1", "title": "…", "text": "…", "aliases": [], "tags": [], "context": {}}}
 //! {"entity": {"kind": "pages.page", "id": "p1", "removed": true}}
+//! {"entities": [{"kind": "tasks.task", "id": "t1", "removed": true}, {"kind": "tasks.task", "id": "t2", "removed": true}]}
 //! {"refs": {"from": {"type": "pages.page", "id": "p1"}, "title": "…", "to": [{"type": "tasks.task", "id": "t9"}]}}
 //! ```
 //!
@@ -104,6 +105,8 @@ fn record_entity(tx: &mut Tx, namespace: &str, e: &Value, audience: &Value, at: 
     let rid = row_id(&key(kind, id));
     if e.get("removed") == Some(&Value::Bool(true)) {
         tx.delete(ENTRIES, &rid).map_err(|e| e.message)?;
+        // what is gone refers to nothing any more
+        drop_links(tx, &key(kind, id))?;
         return Ok(());
     }
     let title = e.get("title").and_then(|x| x.as_str()).ok_or("an entity needs a title (text)")?;
@@ -117,6 +120,18 @@ fn record_entity(tx: &mut Tx, namespace: &str, e: &Value, audience: &Value, at: 
     Ok(())
 }
 
+fn drop_links(tx: &mut Tx, from_key: &str) -> std::result::Result<(), String> {
+    loop {
+        let old = tx.query(LINKS, &Query::new().eq("from_key", from_key).limit(200)).map_err(|e| e.message)?;
+        if old.items.is_empty() {
+            return Ok(());
+        }
+        for o in old.items {
+            tx.delete(LINKS, &o.id).map_err(|e| e.message)?;
+        }
+    }
+}
+
 /// Every link from one Entity goes, and those the announcement names are written: safe to repeat.
 fn record_links(tx: &mut Tx, namespace: &str, r: &Value, audience: &Value) -> std::result::Result<(), String> {
     let from = &r["from"];
@@ -126,15 +141,7 @@ fn record_links(tx: &mut Tx, namespace: &str, r: &Value, audience: &Value) -> st
         return Err("a reference needs the id it is from".into());
     }
     let from_key = key(kind, id);
-    loop {
-        let old = tx.query(LINKS, &Query::new().eq("from_key", from_key.as_str()).limit(200)).map_err(|e| e.message)?;
-        if old.items.is_empty() {
-            break;
-        }
-        for o in old.items {
-            tx.delete(LINKS, &o.id).map_err(|e| e.message)?;
-        }
-    }
+    drop_links(tx, &from_key)?;
     for t in r["to"].as_array().cloned().unwrap_or_default() {
         let (tk, ti) = (text(&t, "type"), text(&t, "id"));
         if tk.is_empty() || ti.is_empty() {
@@ -224,7 +231,9 @@ impl Plugin for Entities {
         b.listener("entities.record", |tx, d| {
             let namespace = d.event.kind.split('.').next().unwrap_or("").to_string();
             let audience = serde_json::to_value(&d.event.audience).unwrap_or(Value::Null);
-            if let Some(e) = d.event.data.get("entity") {
+            let one = d.event.data.get("entity").into_iter();
+            let many = d.event.data.get("entities").and_then(|x| x.as_array()).into_iter().flatten();
+            for e in one.chain(many) {
                 if let Err(why) = record_entity(tx, &namespace, e, &audience, d.at) {
                     tx.log(Level::Warn, "entities.skipped", json!({"event": d.event.kind, "why": why}));
                 }

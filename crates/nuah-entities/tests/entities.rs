@@ -15,12 +15,13 @@ impl Plugin for Notes {
         serde_json::from_value(json!({"id": "@test/notes", "version": "1.0.0", "namespaces": ["notes"],
             "requires": {"capabilities": ["emit"]},
             "scopes": ["notes.team"],
-            "events": {"notes.saved": {}, "notes.removed": {}, "notes.odd": {}},
+            "events": {"notes.saved": {}, "notes.removed": {}, "notes.odd": {}, "notes.cleared": {}},
             "operations": {
                 "notes.team": {"kind": "command", "input": {"type": "object"}},
                 "notes.save": {"kind": "command", "input": {"type": "object"}},
                 "notes.remove": {"kind": "command", "input": {"type": "object"}},
-                "notes.odd": {"kind": "command", "input": {"type": "object"}}
+                "notes.odd": {"kind": "command", "input": {"type": "object"}},
+                "notes.clear": {"kind": "command", "input": {"type": "object"}}
             },
             "data": {"schema": {"version": 1, "collections": {"notes.teams": {"type": "object", "properties": {"members": {"type": "array", "items": {"type": "string"}}}}}}}
         })).unwrap()
@@ -52,6 +53,13 @@ impl Plugin for Notes {
         b.op("notes.remove", |tx, i| {
             let aud = audience(tx, &i);
             tx.emit("notes.removed", aud, json!({"entity": {"kind": "notes.note", "id": i["id"], "removed": true}, "refs": {"from": {"type": "notes.note", "id": i["id"]}, "to": []}}))?;
+            Ok(json!({}))
+        });
+        // several at once, as a removal that takes children with it
+        b.op("notes.clear", |tx, i| {
+            let gone: Vec<Value> = i["ids"].as_array().unwrap().iter().map(|id| json!({"kind": "notes.note", "id": id, "removed": true})).collect();
+            let me = Audience::subject(&tx.who().subject);
+            tx.emit("notes.cleared", me, json!({"entities": gone}))?;
             Ok(json!({}))
         });
         // announcements the index must not take: another plugin's kind, and one that is not an entity at all
@@ -164,4 +172,15 @@ fn an_announcement_of_another_plugins_kind_or_a_malformed_one_is_skipped_without
     call(&c, "ann", "notes.save", json!({"id": "n1", "title": "After the odd ones", "text": ""}));
     assert_eq!(titles(&call(&c, "ann", "entities.search", json!({"q": "after"}))), vec!["After the odd ones"]);
     assert_eq!(call(&c, "ann", "entities.get", json!({"kind": "tasks.task", "id": "t1"})), json!({"missing": true}));
+}
+
+#[test]
+fn several_entities_go_in_one_event_and_a_removed_one_takes_its_links_with_it() {
+    let c = core();
+    call(&c, "ann", "notes.save", json!({"id": "target", "title": "Target", "text": ""}));
+    call(&c, "ann", "notes.save", json!({"id": "a", "title": "Plan a", "text": "", "links": ["target"]}));
+    call(&c, "ann", "notes.save", json!({"id": "b", "title": "Plan b", "text": ""}));
+    call(&c, "ann", "notes.clear", json!({"ids": ["a", "b"]}));
+    assert!(titles(&call(&c, "ann", "entities.search", json!({"q": "plan"}))).is_empty());
+    assert_eq!(call(&c, "ann", "entities.backlinks", json!({"kind": "notes.note", "id": "target"}))["links"], json!([]));
 }
