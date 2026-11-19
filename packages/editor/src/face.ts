@@ -65,6 +65,12 @@ export interface EditorHandle {
   setAttrs(pos: number, patch: Record<string, unknown>): void;
   /** Writes one option of a block (the Element tab). */
   setOption(blockId: string, id: string, value: unknown): void;
+  /** Replaces the document (no Live document: a description that changed elsewhere). */
+  set(doc: unknown): void;
+  /** The page's defaults for element options, by node type or kind (ADR 0073). */
+  setDefaults(defaults: Record<string, Record<string, unknown>>): void;
+  /** Counts of margin actions changed (comments): the margin is drawn again. */
+  refreshComments(): void;
   destroy(): void;
 }
 /** What the editor shares with the element modules it loads (a module never bundles these, ADR 0095). */
@@ -113,7 +119,7 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
   const extras = { nodes: Object.assign({}, ...extra.map((x) => x.nodes ?? {})), marks: Object.assign({}, ...extra.map((x) => x.marks ?? {})) };
   const version = (kind: string) => list.kinds.find((k) => k.kind === kind)?.version ?? 1;
   const engine = createEngine({
-    place, registry: elements.registry(version), live: hooks.live, content: hooks.content, editable, extras, placeholder: hooks.placeholder,
+    place, registry: elements.registry(version), live: hooks.live, content: hooks.content, editable, extras, placeholder: hooks.placeholder, onChange: hooks.onChange,
     nodeViews: { ...(Object.assign({}, ...extra.map((x) => x.nodeViews ?? {})) as Record<string, NodeViewConstructor>), element: card, elementInline: card },
     plugins: (schema) => [slashPlugin(host), ways.plugin, clipboardPlugin(host), contextPlugin(host), marginPlugin(host, chosen), ...(extra.flatMap((x) => (typeof x.plugins === "function" ? x.plugins(schema) : x.plugins ?? [])) as pmState.Plugin[])],
   });
@@ -148,6 +154,9 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
       if (n) view.dispatch(view.state.tr.setNodeMarkup(pos, undefined, { ...n.attrs, ...patch }));
     },
     setOption: (id, option, value) => setOption(engine.view, host, id, option, value),
+    set: (doc) => engine.setContent(doc),
+    setDefaults: (d) => { host.defaults = d; for (const c of host.cards.values()) c.redraw(); },
+    refreshComments: () => { engine.view.dom.parentElement?.querySelectorAll(".nuah-gutter").forEach((g) => g.remove()); },
     destroy: () => { clearTimeout(later); engine.destroy(); },
   };
   return { handle, engine, loader, elements, list, host };

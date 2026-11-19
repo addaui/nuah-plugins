@@ -31,9 +31,13 @@ export interface EngineOptions {
   extras?: SpecExtras;
   /** The hint on the empty line the cursor is in. */
   placeholder?: string;
+  /** Called with the document after every change (a description kept as JSON has no Live document to write into). */
+  onChange?: (doc: unknown) => void;
 }
 export interface Engine {
   readonly view: EditorView;
+  /** Opens another document (no Live document: a description replaced from outside). */
+  setContent(json: unknown): void;
   json(): unknown;
   text(): string;
   undo(): boolean;
@@ -131,7 +135,10 @@ export function createEngine(o: EngineOptions): Engine {
     state: stateFor(schema),
     editable: () => editable,
     nodeViews: o.nodeViews,
-    dispatchTransaction(tr: Transaction) { view.updateState(view.state.apply(tr)); },
+    dispatchTransaction(tr: Transaction) {
+      view.updateState(view.state.apply(tr));
+      if (tr.docChanged) o.onChange?.(view.state.doc.toJSON());
+    },
   });
   // a person whose plugin we lack wrote something new: widen the schema and open the document again, so nothing of it is lost
   const unsub = o.live?.doc.subscribe(() => {
@@ -142,6 +149,12 @@ export function createEngine(o: EngineOptions): Engine {
   return {
     view,
     json: () => view.state.doc.toJSON(),
+    setContent(json) {
+      o.content = json;
+      const f = found();
+      if (outgrows(schema, f)) { schema = buildSchema(o.registry, f, o.extras); styles(schema); }
+      view.updateState(stateFor(schema));
+    },
     text: () => view.state.doc.textBetween(0, view.state.doc.content.size, "\n"),
     undo: () => run(loroUndo as never),
     redo: () => run(loroRedo as never),

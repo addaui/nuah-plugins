@@ -28,6 +28,8 @@ export interface CardHost {
   openerFor(kind: string, blockId?: string): string | undefined;
   /** Every card drawn now, by element id. */
   cards: Map<string, Card>;
+  /** The page's defaults for element options, by kind (ADR 0073). */
+  defaults?: Record<string, Record<string, unknown>>;
   /** Files dropped or pasted at a place (ways.ts). */
   files?: (files: File[], pos?: number) => Promise<number>;
   /** Re-reads the loaded plugins' keys (after modules load). */
@@ -151,7 +153,11 @@ export class Card implements NodeView {
     const st = this.stateType();
     let state: unknown = null;
     const options: Record<string, unknown> = {};
-    for (const o of def.options ?? []) options[o.id] = resolveOption(o, this.kind, (attrs.data ?? {}) as Record<string, unknown>).value;
+    const pref = (k: string) => this.host.hooks.pref?.(k);
+    for (const o of def.options ?? []) {
+      const person = pref(`editor.option.${this.kind}.${o.id}`);
+      options[o.id] = resolveOption(o, this.kind, (attrs.data ?? {}) as Record<string, unknown>, this.host.defaults as never, person !== undefined && person !== null && person !== "" ? { person: { [this.kind]: { [o.id]: person as string } } } : undefined).value;
+    }
     return {
       blockId, kind: this.kind, v: attrs.v ?? 1, data: (attrs.data ?? {}) as Record<string, unknown>,
       set: (patch) => self.setData(patch),
