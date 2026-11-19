@@ -1,0 +1,12 @@
+{
+  "name": "@nuah/browser-kit",
+  "version": "0.1.0",
+  "description": "Build and load Browser modules (ADR 0095): a module reads the libraries its host shares from one table instead of bundling its own copy.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "private": true,
+  "exports": { ".": "./src/index.ts", "./build": "./src/build.ts" },
+  "scripts": { "test": "vitest run", "typecheck": "tsc --noEmit" },
+  "dependencies": { "esbuild": "0.25.12" },
+  "devDependencies": { "typescript": "^5.9", "vitest": "^3", "loro-crdt": "1.18.0", "react": "19.2.0", "@types/node": "^22" }
+}
