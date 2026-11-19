@@ -23,6 +23,7 @@ import { slashPlugin } from "./slash";
 import { fileRouter, waysPlugin } from "./ways";
 import { clipboardPlugin } from "./clipboard";
 import { contextPlugin, gutterFor, marginPlugin, openerFor, setOption, turnInto } from "./surfaces";
+import { blockAt, floatingOf, floatingPlugin, lineTop, setFloating, type FloatingHooks } from "./floating";
 
 const IDLE_MS = 1500;
 import { localPresence, type PresenceStore } from "./state";
@@ -50,6 +51,8 @@ export interface FaceHooks {
   /** The element the cursor is in or that is selected, innermost first, with its options (pinned first), for the Element tab. */
   onContext?(ctx: { chain: unknown[]; selected: boolean } | null): void;
   onChange?(doc: unknown): void;
+  /** The floating layer (stickers): the layers to draw in, the list, and when to lay them out again. */
+  floating?: FloatingHooks;
   /** Loads a module (tests hand in their own). */
   importer?(url: string): Promise<{ default?: unknown }>;
 }
@@ -71,6 +74,12 @@ export interface EditorHandle {
   setDefaults(defaults: Record<string, Record<string, unknown>>): void;
   /** Counts of margin actions changed (comments): the margin is drawn again. */
   refreshComments(): void;
+  /** The floating layer's list, and writing it (one change everyone sees). */
+  floating(): unknown[];
+  setFloating(list: unknown[]): void;
+  /** The top-level block at a point (its id, and the character under the point), and the top of the line a character is on. */
+  blockAt(x: number, y: number): { id: string; at?: number } | null;
+  lineTop(id: string, at: number): number | null;
   destroy(): void;
 }
 /** What the editor shares with the element modules it loads (a module never bundles these, ADR 0095). */
@@ -121,7 +130,7 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
   const engine = createEngine({
     place, registry: elements.registry(version), live: hooks.live, content: hooks.content, editable, extras, placeholder: hooks.placeholder, onChange: hooks.onChange,
     nodeViews: { ...(Object.assign({}, ...extra.map((x) => x.nodeViews ?? {})) as Record<string, NodeViewConstructor>), element: card, elementInline: card },
-    plugins: (schema) => [slashPlugin(host), ways.plugin, clipboardPlugin(host), contextPlugin(host), marginPlugin(host, chosen), ...(extra.flatMap((x) => (typeof x.plugins === "function" ? x.plugins(schema) : x.plugins ?? [])) as pmState.Plugin[])],
+    plugins: (schema) => [floatingPlugin(place, hooks.floating, hooks.live?.doc, () => hooks.content), slashPlugin(host), ways.plugin, clipboardPlugin(host), contextPlugin(host), marginPlugin(host, chosen), ...(extra.flatMap((x) => (typeof x.plugins === "function" ? x.plugins(schema) : x.plugins ?? [])) as pmState.Plugin[])],
   });
   engineRef = engine;
   host.files = files;
@@ -156,6 +165,10 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
     setOption: (id, option, value) => setOption(engine.view, host, id, option, value),
     set: (doc) => engine.setContent(doc),
     setDefaults: (d) => { host.defaults = d; for (const c of host.cards.values()) c.redraw(); },
+    floating: () => floatingOf(hooks.live?.doc, hooks.content),
+    setFloating: (list) => setFloating(hooks.live?.doc, list),
+    blockAt: (x, y) => blockAt(engine.view, x, y),
+    lineTop: (id, at) => lineTop(engine.view, id, at),
     refreshComments: () => { engine.view.dom.parentElement?.querySelectorAll(".nuah-gutter").forEach((g) => g.remove()); },
     destroy: () => { clearTimeout(later); engine.destroy(); },
   };
