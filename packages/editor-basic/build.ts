@@ -7,3 +7,8 @@ import { fileURLToPath } from "node:url";
 const here = (p: string) => fileURLToPath(new URL(p, import.meta.url));
 const r = await buildModule({ entry: here("./src/index.ts"), outfile: here("../../crates/nuah-editor-basic/browser/index.js"), shared: [], minify: true });
 console.log(`editor-basic index.js: ${(r.bytes / 1024).toFixed(0)} kB`);
+
+// the kinds the crate declares to editor.element, from the same list the module uses (one source, no drift)
+const { KINDS } = await import("./src/index.ts");
+const { writeFileSync } = await import("node:fs");
+writeFileSync(here("../../crates/nuah-editor-basic/browser/kinds.json"), JSON.stringify({ kinds: KINDS }, null, 1) + "\n");

@@ -1,0 +1,147 @@
+{
+ "kinds": [
+  {
+   "kind": "@nuah/editor-basic/paragraph",
+   "version": 1,
+   "shape": "content",
+   "placement": "block",
+   "label": {
+    "en": "Text",
+    "ar": "نص"
+   },
+   "group": "text",
+   "icon": "type",
+   "keywords": "plain paragraph"
+  },
+  {
+   "kind": "@nuah/editor-basic/heading",
+   "version": 1,
+   "shape": "content",
+   "placement": "block",
+   "label": {
+    "en": "Heading",
+    "ar": "عنوان"
+   },
+   "group": "text",
+   "icon": "heading-1",
+   "keywords": "title h1 h2 h3"
+  },
+  {
+   "kind": "@nuah/editor-basic/bullet-list",
+   "version": 1,
+   "shape": "content",
+   "placement": "block",
+   "label": {
+    "en": "Bullet list",
+    "ar": "قائمة نقطية"
+   },
+   "group": "list",
+   "icon": "list-bullet",
+   "keywords": "ul unordered"
+  },
+  {
+   "kind": "@nuah/editor-basic/ordered-list",
+   "version": 1,
+   "shape": "content",
+   "placement": "block",
+   "label": {
+    "en": "Numbered list",
+    "ar": "قائمة مرقمة"
+   },
+   "group": "list",
+   "icon": "list-ordered",
+   "keywords": "ol ordered"
+  },
+  {
+   "kind": "@nuah/editor-basic/checklist",
+   "version": 1,
+   "shape": "content",
+   "placement": "block",
+   "label": {
+    "en": "Checklist",
+    "ar": "قائمة مهام"
+   },
+   "group": "list",
+   "icon": "list-check",
+   "keywords": "todo check task"
+  },
+  {
+   "kind": "@nuah/editor-basic/quote",
+   "version": 1,
+   "shape": "content",
+   "placement": "block",
+   "label": {
+    "en": "Quote",
+    "ar": "اقتباس"
+   },
+   "group": "text",
+   "icon": "quote",
+   "keywords": "blockquote cite"
+  },
+  {
+   "kind": "@nuah/editor-basic/divider",
+   "version": 1,
+   "shape": "content",
+   "placement": "block",
+   "label": {
+    "en": "Divider",
+    "ar": "فاصل"
+   },
+   "group": "text",
+   "icon": "divider",
+   "keywords": "line hr separator"
+  },
+  {
+   "kind": "@nuah/editor-basic/code",
+   "version": 1,
+   "shape": "content",
+   "placement": "block",
+   "label": {
+    "en": "Code block",
+    "ar": "كتلة شيفرة"
+   },
+   "group": "text",
+   "icon": "code",
+   "keywords": "code snippet"
+  },
+  {
+   "kind": "@nuah/editor-basic/callout",
+   "version": 1,
+   "shape": "content",
+   "placement": "block",
+   "label": {
+    "en": "Callout",
+    "ar": "تنبيه"
+   },
+   "group": "layout",
+   "icon": "callout",
+   "keywords": "note highlight box"
+  },
+  {
+   "kind": "@nuah/editor-basic/toggle",
+   "version": 1,
+   "shape": "content",
+   "placement": "block",
+   "label": {
+    "en": "Toggle",
+    "ar": "قسم قابل للطي"
+   },
+   "group": "layout",
+   "icon": "toggle",
+   "keywords": "collapse fold details"
+  },
+  {
+   "kind": "@nuah/editor-basic/hard-break",
+   "version": 1,
+   "shape": "content",
+   "placement": "inline",
+   "label": {
+    "en": "Line break",
+    "ar": "سطر جديد"
+   },
+   "group": "text",
+   "icon": "type",
+   "keywords": "br"
+  }
+ ]
+}
