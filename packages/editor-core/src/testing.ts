@@ -12,9 +12,7 @@ import type { describe as Describe, expect as Expect, it as It } from "vitest";
 
 /** The test runner, handed in so the suite uses the caller's vitest (a plugin repo has its own copy) and needs none of its own. */
 export interface Harness { describe: typeof Describe; it: typeof It; expect: typeof Expect }
-import { applyTransaction, type Transaction } from "./transform";
-import { History } from "./history";
-import { assignIds, idOf, nodeAt, walk, type Node } from "./doc";
+import { assignIds, idOf, nodeAt, replaceAt, walk, type Node } from "./doc";
 import { Registry, validate, type NodeSpec } from "./registry";
 import { resolveOption, type OptionDecl } from "./options";
 
@@ -145,12 +143,11 @@ export function runEditorPluginCompliance(c: Compliance, t: Harness): void {
           const attr = o.attr ?? o.id;
           const value = sample(o);
           const doc = d;
-          const r = applyTransaction(doc, { steps: [{ kind: "setAttr", path: [...path], name: attr, value }] });
-          const after = nodeAt(r.doc, path)!;
+          const changed = replaceAt(doc, path, (n) => ({ ...n, attrs: { ...n.attrs, [attr]: value } }));
+          const after = nodeAt(changed, path)!;
           expect(after.attrs?.[attr], `option ${o.id}`).toEqual(value);
           const before = nodeAt(doc, path)!;
           for (const k of new Set([...Object.keys(before.attrs ?? {}), ...Object.keys(after.attrs ?? {})])) if (k !== attr) expect(after.attrs?.[k], `option ${o.id} left "${k}" alone`).toEqual(before.attrs?.[k]);
-          expect(applyTransaction(r.doc, r.inverse).doc, `option ${o.id} undoes`).toEqual(doc);
         }
       });
       it("resolve in the order element, page, default (ADR 0073)", () => {
@@ -166,37 +163,7 @@ export function runEditorPluginCompliance(c: Compliance, t: Harness): void {
     });
 
     describe("editing", () => {
-      it("insert, change and delete each undo and redo to the same document", () => {
-        const base = c.fixtures.valid[0]!;
-        const node = own(base)[0]!;
-        const empty: Node = { type: "doc", content: [{ type: "paragraph" }] };
-        const h = new History(0);
-        let doc = empty;
-        const run = (tr: Transaction) => { const a = applyTransaction(doc, tr); h.push(a.inverse, Math.random() * 1e9); doc = a.doc; };
-        run({ steps: [{ kind: "insert", path: [], index: 1, node: structuredClone(node) }] });
-        const inserted = structuredClone(doc);
-        const attrs = (c.node.options ?? []).find((o) => o.type !== "text");
-        if (attrs) run({ steps: [{ kind: "setAttr", path: [1], name: attrs.attr ?? attrs.id, value: sample(attrs) }] });
-        const changed = structuredClone(doc);
-        run({ steps: [{ kind: "remove", path: [], index: 1 }] });
-        expect(doc).toEqual(empty);
-        doc = h.undo(doc); expect(doc).toEqual(changed);
-        if (attrs) { doc = h.undo(doc); expect(doc).toEqual(inserted); }
-        doc = h.undo(doc); expect(doc).toEqual(empty);
-        doc = h.redo(doc); expect(doc).toEqual(inserted);
-      });
-      it("two edits to different blocks both survive (a merge by block id)", () => {
-        const node = own(c.fixtures.valid[0]!)[0]!;
-        const doc: Node = { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: "a" }] }, structuredClone(node)] };
-        const mine = applyTransaction(doc, { steps: [{ kind: "setContent", path: [0], content: [{ type: "text", text: "mine" }] }] }).doc;
-        const theirs = applyTransaction(doc, { steps: [{ kind: "insert", path: [], index: 2, node: { type: "paragraph", content: [{ type: "text", text: "theirs" }] } }] }).doc;
-        const merged = applyTransaction(theirs, { steps: [{ kind: "setContent", path: [0], content: [{ type: "text", text: "mine" }] }] }).doc;
-        expect(merged.content!.length).toBe(3);
-        expect(mine.content![0]!.content![0]!.text).toBe("mine");
-        expect(merged.content![0]!.content![0]!.text).toBe("mine");
-        expect(merged.content![2]!.content![0]!.text).toBe("theirs");
-        expect(merged.content![1]).toEqual(node);
-      });
+      // undo and merging are the Live document's (ADR 0093): the editor's own suite (@nuah/editor/testing) checks them on Loro.
       it("a copy keeps every attribute", () => {
         for (const d of c.fixtures.valid) for (const n of own(d)) expect(JSON.parse(JSON.stringify(n)).attrs).toEqual(n.attrs);
       });

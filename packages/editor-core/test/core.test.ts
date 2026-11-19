@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { applyStep, type Step, applyTransaction, assignIds, emptyDoc, History, nodeAt, Registry, resolveOption, textOf, toProseMirrorSpec, validate, walk, type Node } from "../src";
+import { assignIds, emptyDoc, nodeAt, Registry, resolveOption, textOf, toProseMirrorSpec, validate, walk, type Node } from "../src";
 
 /** What the basic-blocks plugin and the core plugins say, in one registry: the same kinds Madar's pages hold today. */
 function madar(): Registry {
@@ -59,60 +59,6 @@ describe("ids", () => {
     const d: Node = { type: "doc", content: [p("a"), p("b", "x"), p("c", "x")] };
     const out = assignIds(d, madar().idTypes().has.bind(madar().idTypes()), () => "n" + ++n);
     expect(out.content!.map((b) => b.attrs?.blockId)).toEqual(["n1", "x", "n2"]);
-  });
-});
-
-describe("transactions", () => {
-  it("every step can be undone exactly", () => {
-    const d = page();
-    const steps = [
-      { kind: "setAttr", path: [3], name: "tone", value: "danger" },
-      { kind: "insert", path: [], index: 1, node: p("new", "p9") },
-      { kind: "remove", path: [3], index: 0 },
-      { kind: "setContent", path: [1], content: [{ type: "text", text: "Hi" }] },
-    ] as Step[];
-    for (const s of steps) { const a = applyStep(d, s); expect(a.doc).not.toEqual(d); expect(applyStep(a.doc, a.inverse).doc).toEqual(d); }
-  });
-  it("a transaction is undone by its inverse, whatever it did", () => {
-    const d = page();
-    const r = applyTransaction(d, { steps: [{ kind: "setAttr", path: [3], name: "tone", value: "danger" }, { kind: "insert", path: [], index: 0, node: p("top") }, { kind: "remove", path: [], index: 2 }] });
-    expect(textOf(r.doc)).not.toBe(textOf(d));
-    expect(applyTransaction(r.doc, r.inverse).doc).toEqual(d);
-  });
-  it("unsetting the only attribute leaves a node without attributes, so an undo restores the same document", () => {
-    const d: Node = { type: "doc", content: [{ type: "paragraph" }] };
-    const r = applyTransaction(d, { steps: [{ kind: "setAttr", path: [0], name: "align", value: "end" }] });
-    expect(r.doc.content![0]!.attrs).toEqual({ align: "end" });
-    expect(applyTransaction(r.doc, r.inverse).doc).toEqual(d);
-  });
-  it("does not change the document it was given", () => {
-    const d = page(), snap = JSON.stringify(d);
-    applyStep(d, { kind: "setAttr", path: [1], name: "align", value: "center" });
-    expect(JSON.stringify(d)).toBe(snap);
-  });
-  it("refuses a place that is not there", () => {
-    expect(() => applyStep(page(), { kind: "remove", path: [], index: 99 })).toThrow(RangeError);
-    expect(() => applyStep(page(), { kind: "insert", path: [99], index: 0, node: p("x") })).toThrow();
-  });
-});
-
-describe("history", () => {
-  it("undoes and redoes, and joins typing of the same group", () => {
-    const h = new History(500);
-    let d = emptyDoc();
-    const type = (text: string, at: number) => { const r = applyTransaction(d, { group: "typing", steps: [{ kind: "setContent", path: [0], content: [{ type: "text", text }] }] }); d = r.doc; h.push(r.inverse, at); };
-    type("a", 0); type("ab", 100); type("abc", 200);
-    const other = applyTransaction(d, { steps: [{ kind: "setAttr", path: [0], name: "align", value: "end" }] }); d = other.doc; h.push(other.inverse, 300);
-    d = h.undo(d);
-    expect(nodeAt(d, [0])!.attrs?.align).toBeUndefined();
-    expect(textOf(d)).toBe("abc");
-    d = h.undo(d);   // the three keystrokes are one undo
-    expect(textOf(d)).toBe("");
-    d = h.redo(d);
-    expect(textOf(d)).toBe("abc");
-    expect(h.canRedo).toBe(true);
-    h.push({ steps: [] }, 999);   // a new change ends the redo line
-    expect(h.canRedo).toBe(false);
   });
 });
 
