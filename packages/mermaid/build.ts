@@ -9,7 +9,7 @@ const here = (p: string) => fileURLToPath(new URL(p, import.meta.url));
 const out = here("../../crates/nuah-mermaid/browser");
 rmSync(out, { recursive: true, force: true });
 const r = await buildModule({ entry: here("./src/index.ts"), outdir: out, shared: [], minify: true });
-const { DECL } = await import("./src/index.ts");
+const { DECL } = await import("./src/decl.ts");
 writeFileSync(`${out}/kinds.json`, JSON.stringify({ kinds: [DECL] }, null, 1) + "\n");
 const n = await writeFilesRs(out);
 console.log(`mermaid: ${n} files, ${(r.bytes / 1024).toFixed(0)} kB`);

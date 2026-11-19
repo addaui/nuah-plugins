@@ -46,3 +46,16 @@ export function parseKind(kind: string): { plugin: string; name: string } {
   if (!m) throw new Error(`"${kind}" is not an element kind: it must be @scope/plugin/name, in lower case`);
   return { plugin: m[1]!, name: m[2]! };
 }
+
+/**
+ * The one change that turns `before` into `after`: where, how much to remove, what to insert (common start and end kept). Writing a
+ * text area's new value into an element's Loro text this way keeps other people's edits elsewhere in it.
+ */
+export function textEdit(before: string, after: string): { at: number; remove: number; insert: string } | null {
+  if (before === after) return null;
+  let s = 0;
+  while (s < before.length && s < after.length && before[s] === after[s]) s++;
+  let e = 0;
+  while (e < before.length - s && e < after.length - s && before[before.length - 1 - e] === after[after.length - 1 - e]) e++;
+  return { at: s, remove: before.length - s - e, insert: after.slice(s, after.length - e) };
+}

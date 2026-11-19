@@ -5,16 +5,11 @@
  * server code, nothing leaves the instance. Mermaid itself loads only when a diagram is drawn.
  */
 import type { EditorApi, ElementCtx, View } from "@nuah/editor-api";
-import type { ElementKindDecl } from "@nuah/editor-core";
+import { textEdit, type ElementKindDecl } from "@nuah/editor-core";
 import type { LoroText } from "loro-crdt";
 
-export const KIND = "@nuah/mermaid/diagram";
-const THEMES = ["default", "dark", "neutral", "forest"] as const;
-export const DECL: ElementKindDecl = {
-  kind: KIND, version: 1, shape: "card", placement: "block", label: { en: "Diagram", ar: "مخطط" }, icon: "flow", group: "media",
-  keywords: "mermaid flowchart sequence chart graph", state: "text", accepts: [".mmd", ".mermaid", "text/vnd.mermaid"],
-  schema: { type: "object", properties: { theme: { enum: [...THEMES] } } },
-};
+import { DECL, KIND, THEMES } from "./decl";
+export { DECL, KIND };
 const SAMPLE = "flowchart LR\n  A[Start] --> B[End]";
 
 /** The first line that says something (comments and blank lines skipped): the diagram's Fallback. */
@@ -24,13 +19,10 @@ export function firstLine(src: string): string {
 
 /** Turns `before` into `after` in the text with one delete and one insert where they differ, so others' edits elsewhere merge. */
 export function applyEdit(t: LoroText, before: string, after: string) {
-  if (before === after) return;
-  let s = 0;
-  while (s < before.length && s < after.length && before[s] === after[s]) s++;
-  let e = 0;
-  while (e < before.length - s && e < after.length - s && before[before.length - 1 - e] === after[after.length - 1 - e]) e++;
-  if (before.length - s - e > 0) t.delete(s, before.length - s - e);
-  if (after.length - s - e > 0) t.insert(s, after.slice(s, after.length - e));
+  const e = textEdit(before, after);
+  if (!e) return;
+  if (e.remove) t.delete(e.at, e.remove);
+  if (e.insert) t.insert(e.at, e.insert);
 }
 
 const text = (ctx: ElementCtx) => (ctx.state as LoroText | null)?.toString() ?? "";

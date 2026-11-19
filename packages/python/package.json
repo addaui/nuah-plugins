@@ -1,0 +1,12 @@
+{
+  "name": "@nuah/python",
+  "version": "0.1.0",
+  "description": "A Runner (ADR 0096): Python in the browser, in a Web Worker (Pyodide). Its core files come from the plugin; packages named in imports load from the Pyodide CDN.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "private": true,
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "test": "vitest run", "typecheck": "tsc --noEmit", "build": "node --experimental-strip-types build.ts" },
+  "dependencies": { "@nuah/editor-api": "workspace:*", "pyodide": "0.29.5" },
+  "devDependencies": { "@nuah/browser-kit": "workspace:*", "typescript": "^5.9", "vitest": "^3", "@types/node": "^22" }
+}

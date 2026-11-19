@@ -1,0 +1,29 @@
+{
+  "name": "@nuah/notebook",
+  "version": "0.1.0",
+  "description": "Code cells (ADR 0096): the source is the element's own Loro text; Run sends it to the Runner for its language and keeps what came back.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build": "node --experimental-strip-types build.ts"
+  },
+  "dependencies": {
+    "@nuah/editor-api": "workspace:*",
+    "@nuah/editor-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@nuah/editor": "workspace:*",
+    "@nuah/browser-kit": "workspace:*",
+    "typescript": "^5.9",
+    "vitest": "^3",
+    "jsdom": "26.1.0",
+    "loro-crdt": "1.18.0",
+    "@types/node": "^22"
+  }
+}

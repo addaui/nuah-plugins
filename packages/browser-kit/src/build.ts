@@ -83,7 +83,7 @@ export async function writeFilesRs(dir: string): Promise<number> {
   const { readdirSync, statSync, writeFileSync } = await import("node:fs");
   const { join, relative } = await import("node:path");
   const files: string[] = [];
-  const walk = (d: string) => { for (const f of readdirSync(d)) { const p = join(d, f); if (statSync(p).isDirectory()) walk(p); else if (/\.(js|wasm|css|json|woff2|svg|png|zip|tar)$/.test(f) && f !== "files.rs") files.push(relative(dir, p).split("\\").join("/")); } };
+  const walk = (d: string) => { for (const f of readdirSync(d)) { const p = join(d, f); if (statSync(p).isDirectory()) walk(p); else if (/\.(js|mjs|wasm|css|json|woff2|svg|png|zip|tar)$/.test(f) && f !== "files.rs") files.push(relative(dir, p).split("\\").join("/")); } };
   walk(dir);
   files.sort();
   writeFileSync(join(dir, "files.rs"), `// Written by the module's build (@nuah/browser-kit writeFilesRs); do not edit.\n&[\n${files.map((f) => `    (${JSON.stringify(f)}, include_bytes!(${JSON.stringify(f)})),`).join("\n")}\n]\n`);

@@ -41,12 +41,15 @@ export const BASIC = {
   kinds: [{ kind: "@nuah/editor-basic/paragraph", version: 1, shape: "content", placement: "block", label: { en: "Text" } }] as ElementKindDecl[],
 };
 
-function listOf(mods: { plugin: string; kinds: ElementKindDecl[] }[]): ElementsList {
-  return { kinds: mods.flatMap((m) => m.kinds.map((k) => ({ ...k, plugin: m.plugin, module: `/plugins/${m.plugin.slice(1)}/index.js`, openers: [m.plugin], default: null }))), runners: [] };
+function listOf(mods: { plugin: string; kinds: ElementKindDecl[] }[], runners: { plugin: string; languages: string[] }[] = []): ElementsList {
+  return {
+    kinds: mods.flatMap((m) => m.kinds.map((k) => ({ ...k, plugin: m.plugin, module: `/plugins/${m.plugin.slice(1)}/index.js`, openers: [m.plugin], default: null }))),
+    runners: runners.map((r) => ({ plugin: r.plugin, module: `/plugins/${r.plugin.slice(1)}/index.js`, languages: r.languages })),
+  };
 }
 
 /** A page through the real mount, with exactly these plugins' modules. */
-export async function openPage(mods: { plugin: string; module: { default: unknown }; kinds: ElementKindDecl[] }[], o: { doc?: LoroDoc; lang?: string; hooks?: Partial<FaceHooks>; declared?: { plugin: string; kinds: ElementKindDecl[] }[] } = {}): Promise<Mounted & { doc: LoroDoc; place: HTMLElement }> {
+export async function openPage(mods: { plugin: string; module: { default: unknown }; kinds: ElementKindDecl[]; languages?: string[] }[], o: { doc?: LoroDoc; lang?: string; editable?: boolean; hooks?: Partial<FaceHooks>; declared?: { plugin: string; kinds: ElementKindDecl[] }[] } = {}): Promise<Mounted & { doc: LoroDoc; place: HTMLElement }> {
   resetSharedForTests();
   const doc = o.doc ?? new LoroDoc();
   const importer = async (url: string) => {
@@ -56,7 +59,8 @@ export async function openPage(mods: { plugin: string; module: { default: unknow
   };
   const place = document.createElement("div");
   document.body.append(place);
-  const m = await open(place, { ui: testUi(), lang: o.lang ?? "en", editable: true, live: { doc }, elements: async () => listOf(o.declared ?? mods), importer, ...o.hooks } as FaceHooks);
+  const runners = mods.filter((m) => m.languages?.length).map((m) => ({ plugin: m.plugin, languages: m.languages! }));
+  const m = await open(place, { ui: testUi(), lang: o.lang ?? "en", editable: o.editable ?? true, live: { doc }, elements: async () => listOf(o.declared ?? mods.filter((x) => x.kinds.length), runners), importer, ...o.hooks } as FaceHooks);
   await tick();
   return { ...m, doc, place };
 }

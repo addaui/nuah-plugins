@@ -25,3 +25,13 @@ describe("option layers", () => {
     expect(resolveOption(o, "diagram", {})).toEqual({ value: "default", source: "default" });
   });
 });
+
+import { textEdit } from "../src";
+describe("text edits", () => {
+  it("one_change_between_two_texts", () => {
+    expect(textEdit("abc", "abc")).toBeNull();
+    expect(textEdit("flowchart LR", "flowchart TD")).toEqual({ at: 10, remove: 2, insert: "TD" });
+    expect(textEdit("ab", "aXb")).toEqual({ at: 1, remove: 0, insert: "X" });
+    expect(textEdit("aXb", "ab")).toEqual({ at: 1, remove: 1, insert: "" });
+  });
+});
