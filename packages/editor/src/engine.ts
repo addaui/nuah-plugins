@@ -10,7 +10,7 @@ import { baseKeymap } from "prosemirror-commands";
 import { dropCursor } from "prosemirror-dropcursor";
 import { gapCursor } from "prosemirror-gapcursor";
 import type { Schema, Node as PmNode } from "prosemirror-model";
-import type { LoroDoc } from "loro-crdt";
+import { UndoManager, type LoroDoc } from "loro-crdt";
 import { LoroSyncPlugin, LoroUndoPlugin, LoroEphemeralCursorPlugin, undo as loroUndo, redo as loroRedo, type CursorEphemeralStore } from "loro-prosemirror";
 import type { Registry } from "@nuah/editor-core";
 import { buildSchema, outgrows, scanJson, scanLoro } from "./schema";
@@ -95,7 +95,8 @@ export function createEngine(o: EngineOptions): Engine {
   const stateFor = (schema: Schema): EditorState => {
     const plugins: Plugin[] = [...(o.plugins?.(schema) ?? []), blockIds(idTypes), blockDir, dropCursor(), gapCursor()];
     if (o.live) {
-      plugins.unshift(LoroSyncPlugin({ doc: o.live.doc as never }), LoroUndoPlugin({ doc: o.live.doc as never }));
+      // an element's full view keeps its own undo: what it commits as `el:<id>` stays out of the page's (ADR 0094)
+      plugins.unshift(LoroSyncPlugin({ doc: o.live.doc as never }), LoroUndoPlugin({ doc: o.live.doc as never, undoManager: new UndoManager(o.live.doc, { excludeOriginPrefixes: ["el:"] }) as never }));
       if (o.live.ephemeral) plugins.push(LoroEphemeralCursorPlugin(drawableCursors(o.live.ephemeral, o.live.doc), { user: o.live.user }) as never);
       plugins.push(keymap({ "Mod-z": loroUndo, "Mod-y": loroRedo, "Shift-Mod-z": loroRedo }));
     }

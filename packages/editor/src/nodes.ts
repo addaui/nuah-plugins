@@ -5,7 +5,8 @@
  */
 import type { NodeSpec } from "prosemirror-model";
 
-const elementAttrs = { blockId: { default: null }, kind: { default: "" }, v: { default: 1 }, plugin: { default: "" }, data: { default: {} }, fallback: { default: null } };
+// `copy` only lives in the clipboard: a copied element's state, taken out again as it is pasted (never stored)
+const elementAttrs = { blockId: { default: null }, kind: { default: "" }, v: { default: 1 }, plugin: { default: "" }, data: { default: {} }, fallback: { default: null }, copy: { default: null } };
 
 export const elementNodes: Record<string, NodeSpec> = {
   element: {

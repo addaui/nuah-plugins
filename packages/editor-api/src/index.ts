@@ -49,6 +49,8 @@ export interface ElementCtx {
   readonly origin: string;
   openFull(): void;
   close(): void;
+  /** Ends a group of changes to the state, marked as this element's own (the page's undo skips them; the view keeps its own undo). */
+  commit(): void;
   files: { upload(file: Blob, name?: string): Promise<string> };
   /** An Operation of the plugin's own (or another's it may call), with the person's rights. */
   call(operation: string, input: unknown): Promise<unknown>;
@@ -63,13 +65,24 @@ export type ViewFactory = (place: HTMLElement, ctx: ElementCtx) => View;
 /** What makes a new element: its settings and, for its own state, a function that fills the new container. */
 export interface ElementInit { data?: Record<string, unknown>; fill?: (state: unknown) => void }
 
+/** What a content element's slash item may do to the block the person is in. */
+export interface EditorCommands {
+  setBlock(type: string, attrs?: Record<string, unknown>): boolean;
+  wrapIn(type: string, attrs?: Record<string, unknown>): boolean;
+  /** A list: wraps the block in `list` holding `item`. */
+  toggleList(list: string, item: string): boolean;
+  insertNode(json: unknown): void;
+  insertElement(kind: string, init?: ElementInit): string;
+}
+
 export interface Ways {
-  slash?: { label: Label; keywords?: string; icon?: string; group?: string; init?: () => ElementInit | Promise<ElementInit | null> }[];
+  /** Slash menu items. A card kind gets one from its declaration anyway; more items, or a content element's, are listed here. */
+  slash?: { id?: string; label: Label; keywords?: string; icon?: string; group?: string; init?: () => ElementInit | Promise<ElementInit | null>; apply?: (c: EditorCommands) => void }[];
   /** Typed at the start of an empty line, then Enter or space: `` ```mermaid ``. */
   shortcuts?: { match: string; init?: () => ElementInit }[];
   paste?: { text?: RegExp; url?: RegExp; make: (s: string) => ElementInit | Promise<ElementInit | null> }[];
   files?: { accept: string[]; make: (file: File) => ElementInit | Promise<ElementInit | null> }[];
-  keys?: Record<string, (ctx: { insert(init?: ElementInit): void }) => boolean>;
+  keys?: Record<string, (c: EditorCommands) => boolean>;
   menu?: (ctx: ElementCtx) => MenuItem[];
   margin?: { id: string; icon: string; label: Label; count?: (ctx: ElementCtx) => number; run: (ctx: ElementCtx, anchor: HTMLElement) => void }[];
 }

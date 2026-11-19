@@ -18,6 +18,11 @@ import { apiFor, Elements } from "./api";
 import { createEngine, type Engine, type Live } from "./engine";
 import { createLoader, type Loader, type ModuleEntry } from "./loader";
 import { Card, type CardHost } from "./card";
+import { slashPlugin } from "./slash";
+import { fileRouter, waysPlugin } from "./ways";
+import { clipboardPlugin } from "./clipboard";
+
+const IDLE_MS = 1500;
 import { localPresence, type PresenceStore } from "./state";
 import type { NodeViewConstructor } from "prosemirror-view";
 
@@ -86,11 +91,23 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
   let editable = hooks.editable;
   const presence = (hooks.live?.ephemeral as unknown as PresenceStore | undefined) ?? localPresence();
   const host: CardHost = {
-    elements, loader, list, hooks, doc: hooks.live?.doc, presence, editable: () => editable,
+    elements, loader, list, hooks, doc: hooks.live?.doc, presence, editable: () => editable, cards: new Map(),
     openerFor: (kind) => list.kinds.find((k) => k.kind === kind)?.plugin,
   };
   const card: NodeViewConstructor = (node, view, getPos) => new Card(node, view, getPos as () => number | undefined, host);
-  const engine = createEngine({ place, registry: elements.registry(), live: hooks.live, content: hooks.content, editable, nodeViews: { element: card, elementInline: card } });
+  let engineRef: Engine | null = null;
+  const files = fileRouter(host, () => engineRef!.view);
+  const ways = waysPlugin(host, files);
+  const engine = createEngine({
+    place, registry: elements.registry(), live: hooks.live, content: hooks.content, editable, nodeViews: { element: card, elementInline: card },
+    plugins: () => [slashPlugin(host), ways.plugin, clipboardPlugin(host)],
+  });
+  engineRef = engine;
+  host.files = files;
+  host.refreshWays = ways.refresh;
+  host.openFull = (id) => host.cards.get(id)?.full();
+  // the ways in live in plugins' code: once the page is open and quiet, every enabled element plugin loads in the background
+  const later = setTimeout(() => { void loader.loadFor(new Set(list.kinds.map((k) => k.kind))).then(() => ways.refresh()); }, IDLE_MS);
   const view = engine.view;
   const handle: EditorHandle = {
     json: () => engine.json(),
@@ -112,7 +129,7 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
       const n = view.state.doc.nodeAt(pos);
       if (n) view.dispatch(view.state.tr.setNodeMarkup(pos, undefined, { ...n.attrs, ...patch }));
     },
-    destroy: () => engine.destroy(),
+    destroy: () => { clearTimeout(later); engine.destroy(); },
   };
   return { handle, engine, loader, elements, list, host };
 }

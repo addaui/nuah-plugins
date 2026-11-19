@@ -26,6 +26,13 @@ export interface CardHost {
   editable(): boolean;
   /** The plugin that opens a kind here (Task 11 puts the person's and the owner's choice first). */
   openerFor(kind: string): string | undefined;
+  /** Every card drawn now, by element id. */
+  cards: Map<string, Card>;
+  /** Files dropped or pasted at a place (ways.ts). */
+  files?: (files: File[], pos?: number) => Promise<number>;
+  /** Re-reads the loaded plugins' keys (after modules load). */
+  refreshWays?: () => void;
+  openFull?: (blockId: string) => void;
 }
 
 const FALLBACK_MS = 1000;
@@ -48,6 +55,7 @@ export class Card implements NodeView {
     this.dom.dataset.kind = node.attrs.kind;
     this.body = document.createElement(node.type.spec.inline ? "span" : "div");
     this.dom.append(this.body);
+    if (node.attrs.blockId) host.cards.set(node.attrs.blockId, this);
     this.render();
   }
 
@@ -151,6 +159,7 @@ export class Card implements NodeView {
       presence: elementPresence(this.host.presence ?? localPresence(), blockId, peer),
       options, editable, lang: this.lang, dir: this.lang === "ar" ? "rtl" : "ltr", origin: `el:${blockId}`,
       openFull: () => self.openFull(def),
+      commit: () => self.host.doc?.commit({ origin: `el:${blockId}` }),
       close: () => { self.closeFull?.(); self.closeFull = null; },
       files: { upload: (f, n) => (self.host.hooks.files ? self.host.hooks.files.upload(f, n) : Promise.reject(new Error("uploads are not available here"))) },
       call: (op, input) => (self.host.hooks.call ? self.host.hooks.call(op, input) : Promise.reject(new Error("calls are not available here"))),
@@ -234,7 +243,9 @@ export class Card implements NodeView {
   selectNode() { this.dom.classList.add("is-selected"); }
   deselectNode() { this.dom.classList.remove("is-selected"); }
   private teardown() { this.mounted?.destroy(); this.mounted = null; this.stateSub?.(); this.stateSub = null; this.presenceSub?.(); this.presenceSub = null; }
-  destroy() { this.dead = true; clearTimeout(this.fbTimer); this.closeFull?.(); this.teardown(); }
+  /** Opens the full view (the right-click menu, the host's api). */
+  full() { const r = this.resolve(); if ("def" in r) this.openFull(r.def); }
+  destroy() { if (this.host.cards.get(this.node.attrs.blockId) === this) this.host.cards.delete(this.node.attrs.blockId); this.dead = true; clearTimeout(this.fbTimer); this.closeFull?.(); this.teardown(); }
 }
 
 /** Shows an element's raw data (the right-click menu's "View raw data"). */
