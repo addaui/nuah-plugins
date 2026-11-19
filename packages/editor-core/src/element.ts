@@ -26,6 +26,8 @@ export interface ElementKindDecl {
   /** Other plugins' kinds it can open, as `kind@version`. */
   opens?: string[];
   options?: OptionDecl[];
+  /** A content kind's node types (the schema's names), so a Face can show the kind's options without an element selected. */
+  nodes?: string[];
 }
 
 /** What every element stores as its attributes. */

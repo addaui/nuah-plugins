@@ -11,7 +11,47 @@
    },
    "group": "text",
    "icon": "type",
-   "keywords": "plain paragraph"
+   "keywords": "plain paragraph",
+   "nodes": [
+    "paragraph"
+   ],
+   "options": [
+    {
+     "id": "align",
+     "type": "choice",
+     "attr": "align",
+     "label": {
+      "en": "Alignment",
+      "ar": "المحاذاة"
+     },
+     "choices": [
+      {
+       "value": "start",
+       "label": {
+        "en": "start"
+       }
+      },
+      {
+       "value": "center",
+       "label": {
+        "en": "center"
+       }
+      },
+      {
+       "value": "end",
+       "label": {
+        "en": "end"
+       }
+      },
+      {
+       "value": "justify",
+       "label": {
+        "en": "justify"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "kind": "@nuah/editor-basic/heading",
@@ -24,7 +64,78 @@
    },
    "group": "text",
    "icon": "heading-1",
-   "keywords": "title h1 h2 h3"
+   "keywords": "title h1 h2 h3",
+   "nodes": [
+    "heading"
+   ],
+   "options": [
+    {
+     "id": "level",
+     "type": "choice",
+     "attr": "level",
+     "label": {
+      "en": "Level",
+      "ar": "المستوى"
+     },
+     "pinned": true,
+     "default": 1,
+     "choices": [
+      {
+       "value": 1,
+       "label": {
+        "en": "H1"
+       }
+      },
+      {
+       "value": 2,
+       "label": {
+        "en": "H2"
+       }
+      },
+      {
+       "value": 3,
+       "label": {
+        "en": "H3"
+       }
+      }
+     ]
+    },
+    {
+     "id": "align",
+     "type": "choice",
+     "attr": "align",
+     "label": {
+      "en": "Alignment",
+      "ar": "المحاذاة"
+     },
+     "choices": [
+      {
+       "value": "start",
+       "label": {
+        "en": "start"
+       }
+      },
+      {
+       "value": "center",
+       "label": {
+        "en": "center"
+       }
+      },
+      {
+       "value": "end",
+       "label": {
+        "en": "end"
+       }
+      },
+      {
+       "value": "justify",
+       "label": {
+        "en": "justify"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "kind": "@nuah/editor-basic/bullet-list",
@@ -37,7 +148,11 @@
    },
    "group": "list",
    "icon": "list-bullet",
-   "keywords": "ul unordered"
+   "keywords": "ul unordered",
+   "nodes": [
+    "bulletList",
+    "listItem"
+   ]
   },
   {
    "kind": "@nuah/editor-basic/ordered-list",
@@ -50,7 +165,24 @@
    },
    "group": "list",
    "icon": "list-ordered",
-   "keywords": "ol ordered"
+   "keywords": "ol ordered",
+   "nodes": [
+    "orderedList"
+   ],
+   "options": [
+    {
+     "id": "start",
+     "type": "number",
+     "attr": "start",
+     "label": {
+      "en": "Starts at",
+      "ar": "يبدأ من"
+     },
+     "min": 1,
+     "max": 9999,
+     "default": 1
+    }
+   ]
   },
   {
    "kind": "@nuah/editor-basic/checklist",
@@ -63,7 +195,11 @@
    },
    "group": "list",
    "icon": "list-check",
-   "keywords": "todo check task"
+   "keywords": "todo check task",
+   "nodes": [
+    "taskList",
+    "taskItem"
+   ]
   },
   {
    "kind": "@nuah/editor-basic/quote",
@@ -76,7 +212,47 @@
    },
    "group": "text",
    "icon": "quote",
-   "keywords": "blockquote cite"
+   "keywords": "blockquote cite",
+   "nodes": [
+    "blockquote"
+   ],
+   "options": [
+    {
+     "id": "align",
+     "type": "choice",
+     "attr": "align",
+     "label": {
+      "en": "Alignment",
+      "ar": "المحاذاة"
+     },
+     "choices": [
+      {
+       "value": "start",
+       "label": {
+        "en": "start"
+       }
+      },
+      {
+       "value": "center",
+       "label": {
+        "en": "center"
+       }
+      },
+      {
+       "value": "end",
+       "label": {
+        "en": "end"
+       }
+      },
+      {
+       "value": "justify",
+       "label": {
+        "en": "justify"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "kind": "@nuah/editor-basic/divider",
@@ -89,7 +265,10 @@
    },
    "group": "text",
    "icon": "divider",
-   "keywords": "line hr separator"
+   "keywords": "line hr separator",
+   "nodes": [
+    "horizontalRule"
+   ]
   },
   {
    "kind": "@nuah/editor-basic/code",
@@ -102,7 +281,22 @@
    },
    "group": "text",
    "icon": "code",
-   "keywords": "code snippet"
+   "keywords": "code snippet",
+   "nodes": [
+    "codeBlock"
+   ],
+   "options": [
+    {
+     "id": "language",
+     "type": "text",
+     "attr": "language",
+     "label": {
+      "en": "Language",
+      "ar": "اللغة"
+     },
+     "pinned": true
+    }
+   ]
   },
   {
    "kind": "@nuah/editor-basic/callout",
@@ -115,7 +309,53 @@
    },
    "group": "layout",
    "icon": "callout",
-   "keywords": "note highlight box"
+   "keywords": "note highlight box",
+   "nodes": [
+    "callout"
+   ],
+   "options": [
+    {
+     "id": "tone",
+     "type": "choice",
+     "attr": "tone",
+     "pinned": true,
+     "label": {
+      "en": "Kind",
+      "ar": "النوع"
+     },
+     "default": "info",
+     "choices": [
+      {
+       "value": "info",
+       "label": {
+        "en": "Info",
+        "ar": "معلومة"
+       }
+      },
+      {
+       "value": "tip",
+       "label": {
+        "en": "Tip",
+        "ar": "نصيحة"
+       }
+      },
+      {
+       "value": "warning",
+       "label": {
+        "en": "Warning",
+        "ar": "تحذير"
+       }
+      },
+      {
+       "value": "danger",
+       "label": {
+        "en": "Danger",
+        "ar": "خطر"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "kind": "@nuah/editor-basic/toggle",
@@ -128,7 +368,10 @@
    },
    "group": "layout",
    "icon": "toggle",
-   "keywords": "collapse fold details"
+   "keywords": "collapse fold details",
+   "nodes": [
+    "toggle"
+   ]
   },
   {
    "kind": "@nuah/editor-basic/hard-break",
@@ -141,7 +384,10 @@
    },
    "group": "text",
    "icon": "type",
-   "keywords": "br"
+   "keywords": "br",
+   "nodes": [
+    "hardBreak"
+   ]
   }
  ]
 }

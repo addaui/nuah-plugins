@@ -30,7 +30,46 @@
       ]
      }
     }
-   }
+   },
+   "options": [
+    {
+     "id": "theme",
+     "type": "choice",
+     "pinned": true,
+     "inherit": true,
+     "default": "default",
+     "label": {
+      "en": "Theme",
+      "ar": "النمط"
+     },
+     "choices": [
+      {
+       "value": "default",
+       "label": {
+        "en": "default"
+       }
+      },
+      {
+       "value": "dark",
+       "label": {
+        "en": "dark"
+       }
+      },
+      {
+       "value": "neutral",
+       "label": {
+        "en": "neutral"
+       }
+      },
+      {
+       "value": "forest",
+       "label": {
+        "en": "forest"
+       }
+      }
+     ]
+    }
+   ]
   }
  ]
 }

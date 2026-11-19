@@ -8,7 +8,7 @@ import type { EditorApi, ElementCtx, View } from "@nuah/editor-api";
 import { textEdit, type ElementKindDecl } from "@nuah/editor-core";
 import type { LoroText } from "loro-crdt";
 
-import { DECL, KIND, THEMES } from "./decl";
+import { DECL, KIND } from "./decl";
 export { DECL, KIND };
 const SAMPLE = "flowchart LR\n  A[Start] --> B[End]";
 
@@ -112,7 +112,7 @@ function editor(place: HTMLElement, ctx: ElementCtx, withPreview: boolean): View
 export default function register(api: EditorApi) {
   api.element({
     kind: KIND,
-    options: [{ id: "theme", type: "choice", pinned: true, inherit: true, default: "default", label: { en: "Theme", ar: "النمط" }, choices: THEMES.map((t) => ({ value: t, label: { en: t } })) }],
+    options: DECL.options,
     views: { card, full: (p, c) => editor(p, c, true), raw: (p, c) => editor(p, c, false) },
     ways: {
       slash: [{ label: DECL.label, init: () => ({ fill: (t) => (t as LoroText).insert(0, SAMPLE) }) }],

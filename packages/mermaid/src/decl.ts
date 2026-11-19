@@ -8,4 +8,5 @@ export const DECL: ElementKindDecl = {
   kind: KIND, version: 1, shape: "card", placement: "block", label: { en: "Diagram", ar: "مخطط" }, icon: "flow", group: "media",
   keywords: "mermaid flowchart sequence chart graph", state: "text", accepts: [".mmd", ".mermaid", "text/vnd.mermaid"],
   schema: { type: "object", properties: { theme: { enum: [...THEMES] } } },
+  options: [{ id: "theme", type: "choice", pinned: true, inherit: true, default: "default", label: { en: "Theme", ar: "النمط" }, choices: THEMES.map((t) => ({ value: t, label: { en: t } })) }],
 };

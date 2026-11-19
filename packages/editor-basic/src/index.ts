@@ -10,29 +10,37 @@ import { common, createLowlight } from "lowlight";
 
 const P = "@nuah/editor-basic";
 const L = (en: string, ar: string) => ({ en, ar });
-const kind = (name: string, label: { en: string; ar: string }, group: string, icon: string, keywords: string, placement: "block" | "inline" = "block"): ElementKindDecl =>
-  ({ kind: `${P}/${name}`, version: 1, shape: "content", placement, label, group, icon, keywords });
-
-export const KINDS: ElementKindDecl[] = [
-  kind("paragraph", L("Text", "نص"), "text", "type", "plain paragraph"),
-  kind("heading", L("Heading", "عنوان"), "text", "heading-1", "title h1 h2 h3"),
-  kind("bullet-list", L("Bullet list", "قائمة نقطية"), "list", "list-bullet", "ul unordered"),
-  kind("ordered-list", L("Numbered list", "قائمة مرقمة"), "list", "list-ordered", "ol ordered"),
-  kind("checklist", L("Checklist", "قائمة مهام"), "list", "list-check", "todo check task"),
-  kind("quote", L("Quote", "اقتباس"), "text", "quote", "blockquote cite"),
-  kind("divider", L("Divider", "فاصل"), "text", "divider", "line hr separator"),
-  kind("code", L("Code block", "كتلة شيفرة"), "text", "code", "code snippet"),
-  kind("callout", L("Callout", "تنبيه"), "layout", "callout", "note highlight box"),
-  kind("toggle", L("Toggle", "قسم قابل للطي"), "layout", "toggle", "collapse fold details"),
-  kind("hard-break", L("Line break", "سطر جديد"), "text", "type", "br", "inline"),
-];
-
-/** Addresses a link may have: web, the instance's own, an anchor, mail. Anything else (javascript:, data:) is refused. */
-export const safeUrl = (u: string) => /^(https?:\/\/|\/|#|mailto:)/i.test(u || "");
+const kind = (name: string, label: { en: string; ar: string }, group: string, icon: string, keywords: string, nodes: string[], options: OptionDecl[] = [], placement: "block" | "inline" = "block"): ElementKindDecl =>
+  ({ kind: `${P}/${name}`, version: 1, shape: "content", placement, label, group, icon, keywords, nodes, ...(options.length ? { options } : {}) });
 
 const align: OptionDecl = { id: "align", type: "choice", attr: "align", label: L("Alignment", "المحاذاة"), choices: ["start", "center", "end", "justify"].map((v) => ({ value: v, label: { en: v } })) };
 const TONES = ["info", "tip", "warning", "danger"] as const;
 const TONE_LABEL: Record<string, { en: string; ar: string }> = { info: L("Info", "معلومة"), tip: L("Tip", "نصيحة"), warning: L("Warning", "تحذير"), danger: L("Danger", "خطر") };
+const OPTIONS: Record<string, OptionDecl[]> = {
+  paragraph: [align],
+  heading: [{ id: "level", type: "choice", attr: "level", label: L("Level", "المستوى"), pinned: true, default: 1, choices: [1, 2, 3].map((v) => ({ value: v, label: { en: `H${v}` } })) }, align],
+  "ordered-list": [{ id: "start", type: "number", attr: "start", label: L("Starts at", "يبدأ من"), min: 1, max: 9999, default: 1 }],
+  quote: [align],
+  code: [{ id: "language", type: "text", attr: "language", label: L("Language", "اللغة"), pinned: true }],
+  callout: [{ id: "tone", type: "choice", attr: "tone", pinned: true, label: L("Kind", "النوع"), default: "info", choices: TONES.map((t) => ({ value: t, label: TONE_LABEL[t]! })) }],
+};
+
+export const KINDS: ElementKindDecl[] = [
+  kind("paragraph", L("Text", "نص"), "text", "type", "plain paragraph", ["paragraph"], OPTIONS.paragraph),
+  kind("heading", L("Heading", "عنوان"), "text", "heading-1", "title h1 h2 h3", ["heading"], OPTIONS.heading),
+  kind("bullet-list", L("Bullet list", "قائمة نقطية"), "list", "list-bullet", "ul unordered", ["bulletList", "listItem"]),
+  kind("ordered-list", L("Numbered list", "قائمة مرقمة"), "list", "list-ordered", "ol ordered", ["orderedList"], OPTIONS["ordered-list"]),
+  kind("checklist", L("Checklist", "قائمة مهام"), "list", "list-check", "todo check task", ["taskList", "taskItem"]),
+  kind("quote", L("Quote", "اقتباس"), "text", "quote", "blockquote cite", ["blockquote"], OPTIONS.quote),
+  kind("divider", L("Divider", "فاصل"), "text", "divider", "line hr separator", ["horizontalRule"]),
+  kind("code", L("Code block", "كتلة شيفرة"), "text", "code", "code snippet", ["codeBlock"], OPTIONS.code),
+  kind("callout", L("Callout", "تنبيه"), "layout", "callout", "note highlight box", ["callout"], OPTIONS.callout),
+  kind("toggle", L("Toggle", "قسم قابل للطي"), "layout", "toggle", "collapse fold details", ["toggle"]),
+  kind("hard-break", L("Line break", "سطر جديد"), "text", "type", "br", ["hardBreak"], [], "inline"),
+];
+
+/** Addresses a link may have: web, the instance's own, an anchor, mail. Anything else (javascript:, data:) is refused. */
+export const safeUrl = (u: string) => /^(https?:\/\/|\/|#|mailto:)/i.test(u || "");
 
 const node = (id: string, s: Omit<NodeSpec, "id">): NodeSpec => ({ id, ids: s.group === "block", ...s });
 const lowlight = createLowlight(common);
@@ -44,32 +52,32 @@ function defs(): ElementDef[] {
   const slash = (label: { en: string; ar: string }, icon: string, group: string, keywords: string, apply: (c: EditorCommands) => void, id: string) => ({ id, label, icon, group, keywords, apply });
   return [
     {
-      kind: `${P}/paragraph`, options: [align],
+      kind: `${P}/paragraph`, options: OPTIONS.paragraph,
       nodes: [node("paragraph", { group: "block", content: "inline*", attrs: { align: { default: null } }, dom: { tag: "p" } }), node("text", { group: "text" })],
       marks: ["bold", "italic", "underline", "strike", "code", "highlight"].map((id) => ({ id })).concat([{ id: "link", attrs: { href: { default: "" } } } as never]),
       ways: { slash: [slash(L("Text", "نص"), "type", "text", "plain paragraph", (c) => c.setBlock("paragraph"), "text")] },
     },
     {
       kind: `${P}/heading`,
-      options: [{ id: "level", type: "choice", attr: "level", label: L("Level", "المستوى"), pinned: true, default: 1, choices: [1, 2, 3].map((v) => ({ value: v, label: { en: `H${v}` } })) }, align],
+      options: OPTIONS.heading,
       nodes: [node("heading", { group: "block", content: "inline*", attrs: { level: { default: 1 }, align: { default: null } } })],
       ways: { slash: [1, 2, 3].map((l) => slash(L(`Heading ${l}`, `عنوان ${"١٢٣"[l - 1]}`), `heading-${l}`, "text", `title h${l}`, (c) => c.setBlock("heading", { level: l }), `h${l}`)) },
     },
     { kind: `${P}/bullet-list`, nodes: [node("bulletList", { group: "block", content: "listItem+" }), node("listItem", { group: "", content: "paragraph block*" } as never)],
       ways: { slash: [slash(L("Bullet list", "قائمة نقطية"), "list-bullet", "list", "ul unordered", (c) => c.toggleList("bulletList", "listItem"), "ul")] } },
-    { kind: `${P}/ordered-list`, options: [{ id: "start", type: "number", attr: "start", label: L("Starts at", "يبدأ من"), min: 1, max: 9999, default: 1 }],
+    { kind: `${P}/ordered-list`, options: OPTIONS["ordered-list"],
       nodes: [node("orderedList", { group: "block", content: "listItem+", attrs: { start: { default: 1 } } })],
       ways: { slash: [slash(L("Numbered list", "قائمة مرقمة"), "list-ordered", "list", "ol ordered", (c) => c.toggleList("orderedList", "listItem"), "ol")] } },
     { kind: `${P}/checklist`, nodes: [node("taskList", { group: "block", content: "taskItem+" }), node("taskItem", { group: "", content: "paragraph block*", attrs: { checked: { default: false } } } as never)],
       ways: { slash: [slash(L("Checklist", "قائمة مهام"), "list-check", "list", "todo check task", (c) => c.toggleList("taskList", "taskItem"), "todo")] } },
-    { kind: `${P}/quote`, options: [align], nodes: [node("blockquote", { group: "block", content: "block+", attrs: { align: { default: null } } })],
+    { kind: `${P}/quote`, options: OPTIONS.quote, nodes: [node("blockquote", { group: "block", content: "block+", attrs: { align: { default: null } } })],
       ways: { slash: [slash(L("Quote", "اقتباس"), "quote", "text", "blockquote cite", (c) => c.wrapIn("blockquote"), "quote")] } },
     { kind: `${P}/divider`, nodes: [node("horizontalRule", { group: "block", atom: true })],
       ways: { slash: [slash(L("Divider", "فاصل"), "divider", "text", "line hr separator", (c) => c.insertNode({ type: "horizontalRule" }), "hr")] } },
-    { kind: `${P}/code`, options: [{ id: "language", type: "text", attr: "language", label: L("Language", "اللغة"), pinned: true }],
+    { kind: `${P}/code`, options: OPTIONS.code,
       nodes: [node("codeBlock", { group: "block", content: "text*", attrs: { language: { default: null } } })],
       ways: { slash: [slash(L("Code block", "كتلة شيفرة"), "code", "text", "code snippet", (c) => c.setBlock("codeBlock"), "code")] } },
-    { kind: `${P}/callout`, options: [{ id: "tone", type: "choice", attr: "tone", pinned: true, label: L("Kind", "النوع"), default: "info", choices: TONES.map((t) => ({ value: t, label: TONE_LABEL[t]! })) }],
+    { kind: `${P}/callout`, options: OPTIONS.callout,
       nodes: [node("callout", { group: "block", content: "block+", attrs: { tone: { default: "info" } } })],
       ways: { slash: TONES.map((t) => slash({ en: `Callout: ${TONE_LABEL[t]!.en}`, ar: `تنبيه: ${TONE_LABEL[t]!.ar}` }, t, "layout", `callout note ${t}`, (c) => c.insertNode({ type: "callout", attrs: { tone: t }, content: [{ type: "paragraph" }] }), `callout-${t}`)) } },
     { kind: `${P}/toggle`, nodes: [node("toggle", { group: "block", content: "paragraph block*", attrs: { open: { default: true } } })],
