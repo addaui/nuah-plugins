@@ -81,3 +81,22 @@ describe("Link.call", () => {
     expect(f).toHaveBeenCalledTimes(1);
   });
 });
+
+describe("Link.watch", () => {
+  it("hands Signals to onSignal and Events to onEvent", () => {
+    const made: { listeners: Record<string, (e: { data: string }) => void>; close: () => void }[] = [];
+    class FakeSource { static CLOSED = 2; readyState = 1; onerror: (() => void) | null = null; listeners: Record<string, (e: { data: string }) => void> = {}; constructor() { made.push(this); } addEventListener(k: string, f: (e: { data: string }) => void) { this.listeners[k] = f; } close() {} }
+    const real = (globalThis as { EventSource?: unknown }).EventSource;
+    (globalThis as { EventSource?: unknown }).EventSource = FakeSource;
+    try {
+      const l = link(vi.fn() as unknown as typeof fetch);
+      const signals: unknown[] = [];
+      l.watch({ onEvent: () => {}, onSignal: (s) => signals.push(s) });
+      made[0]!.listeners.signal!({ data: JSON.stringify({ seq: 1, kind: "pages.presence", data: { page: "p1" }, at: 5, actor: "bob" }) });
+      made[0]!.listeners.signal!({ data: "not json" });
+      expect(signals).toEqual([{ seq: 1, kind: "pages.presence", data: { page: "p1" }, at: 5, actor: "bob" }]);
+    } finally {
+      (globalThis as { EventSource?: unknown }).EventSource = real;
+    }
+  });
+});

@@ -94,7 +94,7 @@ export class LiveDoc {
       s.#retryLater();
     }
     s.#bind();
-    if (o.ephemeral) s.#unsubPresence = o.ephemeral.subscribeLocalUpdates((b) => s.#queuePresence(b));
+    if (o.ephemeral) s.setEphemeral(o.ephemeral);
     if (s.state !== "offline" && s.#unsent()) s.#schedule(0);
     return s;
   }
@@ -102,6 +102,13 @@ export class LiveDoc {
   subscribe(f: (e: LiveEvent) => void): () => void {
     this.#listeners.add(f);
     return () => { this.#listeners.delete(f); };
+  }
+
+  /** Relay this Presence store (one made for this document's peer, so it can only come after opening). */
+  setEphemeral(e: Ephemeral) {
+    this.#unsubPresence?.();
+    this.#o.ephemeral = e;
+    this.#unsubPresence = e.subscribeLocalUpdates((b) => this.#queuePresence(b));
   }
 
   /** Use another way to reach the server (the app's Link changed). */
@@ -130,8 +137,10 @@ export class LiveDoc {
     void this.#reconnect();
   }
 
-  /** Stop: what is not stored yet is stored now. Unsent changes stay in storage for the next open. */
+  /** Stop: what is waiting is sent now if the server can be reached, and stored either way (unsent changes stay for the next open). */
   async close() {
+    for (const t of [this.#batch, this.#retry, this.#save, this.#presence]) clearTimeout(t);
+    if (this.state !== "offline" && !this.#inflight && this.#unsent()) await this.#flush().catch(() => undefined);
     this.#closed = true;
     for (const t of [this.#batch, this.#retry, this.#save, this.#presence]) clearTimeout(t);
     this.#unsub?.();

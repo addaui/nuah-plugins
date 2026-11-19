@@ -37,7 +37,12 @@ export interface PulseHandlers {
   onState?: (state: PulseState) => void;
   /** The Core lost its place for this watcher: reload what you show. */
   onReset?: () => void;
+  /** A Signal (ADR 0093): something that matters only now, such as Presence or a Live document's update. Never stored, so a Signal missed while away is gone. */
+  onSignal?: (signal: PulseSignal) => void;
 }
+
+/** A Signal as Pulse delivers it. */
+export interface PulseSignal { seq: number; kind: string; data: unknown; at: number; actor: string }
 
 const sleep = (ms: number, signal?: AbortSignal) =>
   new Promise<void>((resolve, reject) => {
@@ -144,6 +149,9 @@ export class Link<Ops extends OpsOf<Ops> = Record<string, OperationTypes>> {
     es.addEventListener("ready", () => handlers.onState?.("live"));
     es.addEventListener("reset", () => handlers.onReset?.());
     es.addEventListener("closed", () => { handlers.onState?.("closed"); es.close(); });
+    es.addEventListener("signal", (ev) => {
+      try { handlers.onSignal?.(JSON.parse((ev as MessageEvent<string>).data) as PulseSignal); } catch { /* a malformed Signal is ignored */ }
+    });
     es.onerror = () => handlers.onState?.(es.readyState === EventSource.CLOSED ? "closed" : "down");
     for (const kind of Object.keys(this.#desc?.events ?? {})) {
       es.addEventListener(kind, (ev) => {

@@ -182,4 +182,24 @@ describe("LiveDoc", () => {
     a.receivePresence(new Uint8Array([9]));
     expect([...got[0]]).toEqual([9]);
   });
+
+  it("closing sends what is waiting instead of leaving it for the next visit", async () => {
+    const server = new Server("abc");
+    const a = await LiveDoc.open("p1", { transport: server.transport(), store: memoryStore(), loro });
+    type(a, 3, "d");
+    await a.close();
+    expect(server.text()).toBe("abcd");
+  });
+
+  it("presence can be attached after opening (it needs the document's peer)", async () => {
+    const server = new Server("x");
+    const sent: Uint8Array[] = [];
+    const a = await LiveDoc.open("p1", { transport: { ...server.transport(), presence: async (s: Uint8Array) => { sent.push(s); } }, store: memoryStore(), loro });
+    const local: ((b: Uint8Array) => void)[] = [];
+    a.setEphemeral({ subscribeLocalUpdates: (f) => { local.push(f); return () => {}; }, apply: () => {} });
+    local[0](new Uint8Array([5]));
+    await settle();
+    expect([...sent[0]]).toEqual([5]);
+  });
 });
+
