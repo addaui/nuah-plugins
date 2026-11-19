@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "collections": {
+    "editor.openers": {
+      "type": "object",
+      "description": "The Owner's default Opener for one element kind (ADR 0094): which plugin draws and edits elements of that kind",
+      "required": ["kind", "plugin"],
+      "properties": { "kind": { "type": "string", "maxLength": 200 }, "plugin": { "type": "string", "maxLength": 120 } }
+    }
+  }
+}
