@@ -1,0 +1,12 @@
+{
+  "name": "@nuah/live-doc",
+  "version": "0.1.0",
+  "description": "A Live document session in the browser (ADR 0093): a Loro document kept in the browser's storage, its edits sent in batches and kept until the server has them, remote updates merged in, Presence relayed. No framework; the caller hands in the Loro classes so one WebAssembly instance is shared.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "private": true,
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "test": "vitest run", "typecheck": "tsc --noEmit" },
+  "peerDependencies": { "loro-crdt": "^1.18.0" },
+  "devDependencies": { "typescript": "^5.9", "vitest": "^3", "loro-crdt": "1.18.0", "fake-indexeddb": "^6" }
+}
