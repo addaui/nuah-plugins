@@ -10,6 +10,7 @@ import * as pmTransform from "prosemirror-transform";
 import * as pmKeymap from "prosemirror-keymap";
 import * as pmCommands from "prosemirror-commands";
 import * as pmInputrules from "prosemirror-inputrules";
+import * as pmSchemaList from "prosemirror-schema-list";
 import * as loroPm from "loro-prosemirror";
 import { setShared } from "@nuah/browser-kit";
 import type { ElementKindDecl } from "@nuah/editor-core";
@@ -70,7 +71,7 @@ export interface EditorHandle {
 function share() {
   setShared({
     "prosemirror-model": pmModel, "prosemirror-state": pmState, "prosemirror-view": pmView, "prosemirror-transform": pmTransform,
-    "prosemirror-keymap": pmKeymap, "prosemirror-commands": pmCommands, "prosemirror-inputrules": pmInputrules, "loro-prosemirror": loroPm,
+    "prosemirror-keymap": pmKeymap, "prosemirror-commands": pmCommands, "prosemirror-inputrules": pmInputrules, "prosemirror-schema-list": pmSchemaList, "loro-prosemirror": loroPm,
   });
 }
 
@@ -106,9 +107,15 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
   let engineRef: Engine | null = null;
   const files = fileRouter(host, () => engineRef!.view);
   const ways = waysPlugin(host, files);
+  // what content plugins add for a ProseMirror engine: plugins, node views, spec additions
+  const pm = { model: pmModel, state: pmState, view: pmView, transform: pmTransform, keymap: pmKeymap, commands: pmCommands, inputrules: pmInputrules, schemaList: pmSchemaList };
+  const extra = elements.all().map(({ def }) => def.prosemirror?.(pm) ?? {});
+  const extras = { nodes: Object.assign({}, ...extra.map((x) => x.nodes ?? {})), marks: Object.assign({}, ...extra.map((x) => x.marks ?? {})) };
+  const version = (kind: string) => list.kinds.find((k) => k.kind === kind)?.version ?? 1;
   const engine = createEngine({
-    place, registry: elements.registry(), live: hooks.live, content: hooks.content, editable, nodeViews: { element: card, elementInline: card },
-    plugins: () => [slashPlugin(host), ways.plugin, clipboardPlugin(host), contextPlugin(host), marginPlugin(host, chosen)],
+    place, registry: elements.registry(version), live: hooks.live, content: hooks.content, editable, extras, placeholder: hooks.placeholder,
+    nodeViews: { ...(Object.assign({}, ...extra.map((x) => x.nodeViews ?? {})) as Record<string, NodeViewConstructor>), element: card, elementInline: card },
+    plugins: (schema) => [slashPlugin(host), ways.plugin, clipboardPlugin(host), contextPlugin(host), marginPlugin(host, chosen), ...(extra.flatMap((x) => (typeof x.plugins === "function" ? x.plugins(schema) : x.plugins ?? [])) as pmState.Plugin[])],
   });
   engineRef = engine;
   host.files = files;

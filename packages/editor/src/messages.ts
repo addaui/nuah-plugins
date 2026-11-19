@@ -13,6 +13,13 @@ const M = {
   },
 } as const;
 export type MsgKey = keyof typeof M.en;
+
+/** The slash menu's groups that Nuah's own plugins use; any other group shows as the plugin wrote it. */
+const GROUPS: Record<string, Record<string, string>> = {
+  en: { text: "Text", list: "Lists", layout: "Layout", media: "Media", embed: "Embeds", reference: "Links", code: "Code" },
+  ar: { text: "نص", list: "قوائم", layout: "تخطيط", media: "وسائط", embed: "تضمين", reference: "روابط", code: "شيفرة" },
+};
+export const groupLabel = (lang: string, g: string) => GROUPS[lang]?.[g] ?? GROUPS.en![g] ?? g;
 export function msg(lang: string, key: MsgKey, vars: Record<string, string> = {}): string {
   const t: string = (M as Record<string, Record<MsgKey, string>>)[lang]?.[key] ?? M.en[key];
   return t.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? "");

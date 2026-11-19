@@ -99,8 +99,11 @@ export interface ElementDef {
   /** Content elements: the nodes and marks the engine's schema gets. */
   nodes?: NodeSpec[];
   marks?: MarkSpec[];
-  /** Extras only a ProseMirror engine reads (input rules, keymaps, node views), given its libraries. */
-  prosemirror?: (pm: Record<string, unknown>) => { plugins?: unknown[]; nodeViews?: Record<string, unknown> };
+  /**
+   * Extras only a ProseMirror engine reads, given its libraries: plugins (input rules, keymaps, decorations), node views, and
+   * additions to the specs of this plugin's own nodes and marks (toDOM and parseDOM by attribute, `defining`, `inclusive`...).
+   */
+  prosemirror?: (pm: Record<string, unknown>) => { plugins?: unknown[] | ((schema: unknown) => unknown[]); nodeViews?: Record<string, unknown>; nodes?: Record<string, Record<string, unknown>>; marks?: Record<string, Record<string, unknown>> };
   /** Other plugins' kinds this one opens, as `kind@version`. */
   opens?: string[];
   convert?: { to?: { kind: string; make: (ctx: ElementCtx) => ElementInit }[] };

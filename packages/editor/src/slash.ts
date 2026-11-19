@@ -7,6 +7,7 @@ import { Plugin, PluginKey, type EditorState } from "prosemirror-state";
 import type { EditorView } from "prosemirror-view";
 import type { CardHost } from "./card";
 import { commandsFor, insertElement } from "./commands";
+import { groupLabel } from "./messages";
 
 export interface SlashItem { id: string; label: string; group: string; icon?: string; keywords: string; run: (view: EditorView, at: number) => void | Promise<void> }
 interface Open { from: number; to: number; query: string }
@@ -96,7 +97,7 @@ export function slashPlugin(host: CardHost): Plugin {
           menu.replaceChildren();
           let group: string | null = null;
           items.forEach((it, i) => {
-            if (it.group !== group) { group = it.group; if (group) menu!.append(Object.assign(document.createElement("div"), { className: "nuah-slash-group", textContent: group })); }
+            if (it.group !== group) { group = it.group; if (group) menu!.append(Object.assign(document.createElement("div"), { className: "nuah-slash-group", textContent: groupLabel(host.hooks.lang, group) })); }
             const row = document.createElement("div");
             row.className = "nuah-slash-item" + (i === index ? " is-active" : "");
             row.setAttribute("role", "option");

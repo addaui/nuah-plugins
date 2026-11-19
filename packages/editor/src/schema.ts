@@ -73,8 +73,11 @@ const withAttrs = (spec: NodeSpec | MarkSpec, keys: Iterable<string>) => {
   return Object.keys(attrs).length ? { ...spec, attrs } : spec;
 };
 
+/** Additions plugins make to the specs of their own nodes and marks (toDOM, parseDOM, defining...). */
+export interface SpecExtras { nodes?: Record<string, Record<string, unknown>>; marks?: Record<string, Record<string, unknown>> }
+
 /** The schema: the host's nodes, the registry's, and placeholders for whatever else `found` holds. */
-export function buildSchema(registry: Registry, found: Found = empty()): Schema {
+export function buildSchema(registry: Registry, found: Found = empty(), extras: SpecExtras = {}): Schema {
   const pm = toProseMirrorSpec(registry);
   const nodes: Record<string, NodeSpec> = {};
   for (const [name, s] of Object.entries(pm.nodes)) {
@@ -91,7 +94,7 @@ export function buildSchema(registry: Registry, found: Found = empty()): Schema 
       return s.content ? [tag, a, 0] : [tag, a];
     };
     spec.parseDOM = [{ tag: dom?.class ? `${tag}.${dom.class.split(" ")[0]}` : tag }];
-    nodes[name] = spec;
+    nodes[name] = { ...spec, ...(extras.nodes?.[name] ?? {}) } as NodeSpec;
   }
   for (const [name, spec] of Object.entries(elementNodes)) nodes[name] ??= spec;
   for (const [name, n] of found.nodes) {
@@ -108,7 +111,7 @@ export function buildSchema(registry: Registry, found: Found = empty()): Schema 
   const marks: Record<string, MarkSpec> = {};
   for (const [name, m] of Object.entries(pm.marks)) {
     const dom = (registry.marks.get(name)?.dom?.tag) ?? "span";
-    marks[name] = { ...m, toDOM: () => [dom, 0], parseDOM: [{ tag: dom }] };
+    marks[name] = { ...m, toDOM: () => [dom, 0], parseDOM: [{ tag: dom }], ...(extras.marks?.[name] ?? {}) } as MarkSpec;
   }
   for (const [name, keys] of found.marks) {
     if (marks[name]) { marks[name] = withAttrs(marks[name]!, keys) as MarkSpec; continue; }

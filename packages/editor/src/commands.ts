@@ -3,6 +3,7 @@
 import type { EditorView } from "prosemirror-view";
 import type { Node as PmNode } from "prosemirror-model";
 import { setBlockType, wrapIn } from "prosemirror-commands";
+import { wrapInList } from "prosemirror-schema-list";
 import type { EditorCommands, ElementInit } from "@nuah/editor-api";
 import { newBlockId } from "./engine";
 import { stateFor, type StateType } from "./state";
@@ -37,7 +38,7 @@ export function commandsFor(view: EditorView, host: CardHost, pos?: number): Edi
   return {
     setBlock: (t, attrs) => !!type(t) && setBlockType(type(t)!, attrs)(view.state, view.dispatch),
     wrapIn: (t, attrs) => !!type(t) && wrapIn(type(t)!, attrs)(view.state, view.dispatch),
-    toggleList: (list, item) => !!type(list) && !!type(item) && wrapIn(type(list)!)(view.state, view.dispatch),
+    toggleList: (list, item) => !!type(list) && !!type(item) && wrapInList(type(list)!)(view.state, view.dispatch),
     insertNode: (json) => insertAt(view, view.state.schema.nodeFromJSON(json), pos),
     insertElement: (kind, init) => insertElement(view, host, kind, init, pos),
   };

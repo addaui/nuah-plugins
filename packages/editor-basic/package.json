@@ -1,0 +1,23 @@
+{
+  "name": "@nuah/editor-basic",
+  "version": "0.1.0",
+  "description": "The basic elements (ADR 0094): paragraphs, headings, lists, checklists, quotes, dividers, code, callouts, toggles and the text marks, as one element plugin's Browser module.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "private": true,
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "test": "vitest run", "typecheck": "tsc --noEmit", "build": "node --experimental-strip-types build.ts" },
+  "dependencies": {
+    "@nuah/editor-api": "workspace:*",
+    "@nuah/editor-core": "workspace:*",
+    "lowlight": "3.3.0",
+    "prosemirror-model": "1.25.13",
+    "prosemirror-state": "1.4.4",
+    "prosemirror-view": "1.42.9",
+    "prosemirror-inputrules": "1.6.0",
+    "prosemirror-keymap": "1.2.3",
+    "prosemirror-commands": "1.7.2",
+    "prosemirror-schema-list": "1.6.0"
+  },
+  "devDependencies": { "@nuah/editor": "workspace:*", "@nuah/browser-kit": "workspace:*", "typescript": "^5.9", "vitest": "^3", "jsdom": "26.1.0", "loro-crdt": "1.18.0", "@types/node": "^22" }
+}

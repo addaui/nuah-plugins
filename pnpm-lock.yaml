@@ -60,6 +60,9 @@ importers:
       prosemirror-model:
         specifier: 1.25.13
         version: 1.25.13
+      prosemirror-schema-list:
+        specifier: 1.6.0
+        version: 1.6.0
       prosemirror-state:
         specifier: 1.4.4
         version: 1.4.4
@@ -69,7 +72,72 @@ importers:
       prosemirror-view:
         specifier: 1.42.9
         version: 1.42.9
+      vitest:
+        specifier: ^3
+        version: 3.2.7(@types/node@22.20.5)(jsdom@26.1.0)
     devDependencies:
+      '@types/node':
+        specifier: ^22
+        version: 22.20.5
+      jsdom:
+        specifier: 26.1.0
+        version: 26.1.0
+      loro-crdt:
+        specifier: 1.18.0
+        version: 1.18.0
+      typescript:
+        specifier: ^5.9
+        version: 5.9.3
+
+  packages/editor-api:
+    dependencies:
+      '@nuah/editor-core':
+        specifier: workspace:*
+        version: link:../editor-core
+    devDependencies:
+      typescript:
+        specifier: ^5.9
+        version: 5.9.3
+
+  packages/editor-basic:
+    dependencies:
+      '@nuah/editor-api':
+        specifier: workspace:*
+        version: link:../editor-api
+      '@nuah/editor-core':
+        specifier: workspace:*
+        version: link:../editor-core
+      lowlight:
+        specifier: 3.3.0
+        version: 3.3.0
+      prosemirror-commands:
+        specifier: 1.7.2
+        version: 1.7.2
+      prosemirror-inputrules:
+        specifier: 1.6.0
+        version: 1.6.0
+      prosemirror-keymap:
+        specifier: 1.2.3
+        version: 1.2.3
+      prosemirror-model:
+        specifier: 1.25.13
+        version: 1.25.13
+      prosemirror-schema-list:
+        specifier: 1.6.0
+        version: 1.6.0
+      prosemirror-state:
+        specifier: 1.4.4
+        version: 1.4.4
+      prosemirror-view:
+        specifier: 1.42.9
+        version: 1.42.9
+    devDependencies:
+      '@nuah/browser-kit':
+        specifier: workspace:*
+        version: link:../browser-kit
+      '@nuah/editor':
+        specifier: workspace:*
+        version: link:../editor
       '@types/node':
         specifier: ^22
         version: 22.20.5
@@ -85,16 +153,6 @@ importers:
       vitest:
         specifier: ^3
         version: 3.2.7(@types/node@22.20.5)(jsdom@26.1.0)
-
-  packages/editor-api:
-    dependencies:
-      '@nuah/editor-core':
-        specifier: workspace:*
-        version: link:../editor-core
-    devDependencies:
-      typescript:
-        specifier: ^5.9
-        version: 5.9.3
 
   packages/editor-core:
     devDependencies:
@@ -669,6 +727,9 @@ packages:
   '@types/estree@1.0.10':
     resolution: {integrity: sha512-lTyOMnOcmRBzdCv6/4zUZCrEhV0xrqQiUZBZtVcbmLHBXKLnN8q89v/wKRF/Q0HbwVsqbIG3o5HDoFl9sduM+g==}
 
+  '@types/hast@3.0.5':
+    resolution: {integrity: sha512-rp/ezSWaD1m44dPKICGhiskI13nVr7qTloFwDa/IYkhhf5nzwP+zIQcIJh3WIFSBOy/H1PzB40jPjMDksN4F+g==}
+
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
@@ -677,6 +738,9 @@ packages:
 
   '@types/node@22.20.5':
     resolution: {integrity: sha512-U2+DNr+wSjpsTS/wZGYHq7GcwfuSmKiKvoPvK22zwTlRhU91yOniN4qRR5KhIjvif7ysw/dz/hKmfDH0Ris4aA==}
+
+  '@types/unist@3.0.3':
+    resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
 
   '@vitest/expect@3.2.7':
     resolution: {integrity: sha512-E8eBXaKibuvH2pSZErOjdVb5vF4PbKYcrnluBTYxEk1l/VhhwZg1kZQsdtjq+CsF5CFydf2Rdkz7jDHKSisi3w==}
@@ -754,6 +818,13 @@ packages:
     resolution: {integrity: sha512-h5k/5U50IJJFpzfL6nO9jaaumfjO/f2NjK/oYB2Djzm4p9L+3T9qWpZqZ2hAbLPuuYq9wrU08WQyBTL5GbPk5Q==}
     engines: {node: '>=6'}
 
+  dequal@2.0.3:
+    resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}
+    engines: {node: '>=6'}
+
+  devlop@1.1.0:
+    resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
+
   entities@6.0.1:
     resolution: {integrity: sha512-aN97NXWF6AWBTahfVOIrB/NShkzi5H7F9r1s9mD3cDj4Ko5f2qhhVoYMibXF7GlLveb/D2ioWay8lxI97Ven3g==}
     engines: {node: '>=0.12'}
@@ -795,6 +866,10 @@ packages:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
+
+  highlight.js@11.11.2:
+    resolution: {integrity: sha512-oaXMACAU0kzOMXBjWpNcX+vlwSBCIAiZ9BHa7gA15NOTtT2L/l8OSZDuqS2XppOhZBPJ7hm4o8ep2kyuip2uEQ==}
+    engines: {node: '>=12.0.0'}
 
   html-encoding-sniffer@4.0.0:
     resolution: {integrity: sha512-Y22oTqIU4uuPgEemfz7NDJz6OeKf12Lsu+QC+s3BVpda64lTiMYCyGwg5ki4vFxkMwQdeZDl2adZoqUgdFuTgQ==}
@@ -866,6 +941,9 @@ packages:
   loupe@3.2.1:
     resolution: {integrity: sha512-CdzqowRJCeLU72bHvWqwRBBlLcMEtIvGrlvef74kMnV2AolS9Y8xUv1I0U/MNAWMhBlKIoyuEgoJ0t/bbwHbLQ==}
 
+  lowlight@3.3.0:
+    resolution: {integrity: sha512-0JNhgFoPvP6U6lE/UdVsSq99tn6DhjjpAj5MxG49ewd2mOBVtwWYIT8ClyABhq198aXXODMU6Ox8DrGy/CpTZQ==}
+
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
@@ -932,6 +1010,9 @@ packages:
 
   prosemirror-model@1.25.13:
     resolution: {integrity: sha512-MlDMWGjYXaYOeCiO17jcybntCOzPnN+97U0809ke2QsgPtxW3n5/sD6ZKyJONUgMw1iP93ohZTjeKjnRJ7L6kQ==}
+
+  prosemirror-schema-list@1.6.0:
+    resolution: {integrity: sha512-G1srDtan+VqWn+qpmWFj/6j0YsZ5zMU+ZIlGVIW41a5JF2jAI3jzfMRWmSABmEH2Qoq1PmAG/o2mucMMdLOsLg==}
 
   prosemirror-state@1.4.4:
     resolution: {integrity: sha512-6jiYHH2CIGbCfnxdHbXZ12gySFY/fz/ulZE333G6bPqIZ4F+TXo9ifiR86nAHpWnfoNjOb3o5ESi7J8Uz1jXHw==}
@@ -1435,6 +1516,10 @@ snapshots:
 
   '@types/estree@1.0.10': {}
 
+  '@types/hast@3.0.5':
+    dependencies:
+      '@types/unist': 3.0.3
+
   '@types/json-schema@7.0.15': {}
 
   '@types/lodash@4.17.27': {}
@@ -1442,6 +1527,8 @@ snapshots:
   '@types/node@22.20.5':
     dependencies:
       undici-types: 6.21.0
+
+  '@types/unist@3.0.3': {}
 
   '@vitest/expect@3.2.7':
     dependencies:
@@ -1521,6 +1608,12 @@ snapshots:
 
   deep-eql@5.0.2: {}
 
+  dequal@2.0.3: {}
+
+  devlop@1.1.0:
+    dependencies:
+      dequal: 2.0.3
+
   entities@6.0.1: {}
 
   es-module-lexer@1.7.0: {}
@@ -1597,6 +1690,8 @@ snapshots:
 
   fsevents@2.3.3:
     optional: true
+
+  highlight.js@11.11.2: {}
 
   html-encoding-sniffer@4.0.0:
     dependencies:
@@ -1693,6 +1788,12 @@ snapshots:
 
   loupe@3.2.1: {}
 
+  lowlight@3.3.0:
+    dependencies:
+      '@types/hast': 3.0.5
+      devlop: 1.1.0
+      highlight.js: 11.11.2
+
   lru-cache@10.4.3: {}
 
   magic-string@0.30.21:
@@ -1761,6 +1862,12 @@ snapshots:
   prosemirror-model@1.25.13:
     dependencies:
       orderedmap: 2.1.1
+
+  prosemirror-schema-list@1.6.0:
+    dependencies:
+      prosemirror-model: 1.25.13
+      prosemirror-state: 1.4.4
+      prosemirror-transform: 1.12.6
 
   prosemirror-state@1.4.4:
     dependencies:

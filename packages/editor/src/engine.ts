@@ -13,7 +13,7 @@ import type { Schema, Node as PmNode } from "prosemirror-model";
 import { UndoManager, type LoroDoc } from "loro-crdt";
 import { LoroSyncPlugin, LoroUndoPlugin, LoroEphemeralCursorPlugin, undo as loroUndo, redo as loroRedo, type CursorEphemeralStore } from "loro-prosemirror";
 import type { Registry } from "@nuah/editor-core";
-import { buildSchema, outgrows, scanJson, scanLoro } from "./schema";
+import { buildSchema, outgrows, scanJson, scanLoro, type SpecExtras } from "./schema";
 import { ELEMENT_TYPES } from "./nodes";
 
 export interface Live { doc: LoroDoc; ephemeral?: CursorEphemeralStore; user?: { name: string; color: string } }
@@ -27,6 +27,10 @@ export interface EngineOptions {
   /** More ProseMirror plugins (the host's surfaces, plugins' extras), before the base keymap. */
   plugins?: (schema: Schema) => Plugin[];
   nodeViews?: Record<string, NodeViewConstructor>;
+  /** Plugins' additions to their nodes' and marks' specs. */
+  extras?: SpecExtras;
+  /** The hint on the empty line the cursor is in. */
+  placeholder?: string;
 }
 export interface Engine {
   readonly view: EditorView;
@@ -69,12 +73,27 @@ const blockDir = new Plugin({
     decorations(state) {
       const page = document.documentElement.dir === "rtl" ? "rtl" : "ltr", out: Decoration[] = [];
       state.doc.descendants((node, pos) => {
-        if (node.isTextblock && !/\p{L}/u.test(node.textContent)) out.push(Decoration.node(pos, pos + node.nodeSize, { dir: page }));
+        // always set: when a decoration's attribute goes, ProseMirror removes it rather than restoring the node's own
+        if (node.isTextblock) out.push(Decoration.node(pos, pos + node.nodeSize, { dir: /\p{L}/u.test(node.textContent) ? "auto" : page }));
       });
       return DecorationSet.create(state.doc, out);
     },
   },
 });
+
+/** The page's hint on the empty top-level line the cursor is in (`data-placeholder`, drawn by the Face's styles). */
+function placeholder(text: string) {
+  return new Plugin({
+    key: new PluginKey("nuahPlaceholder"),
+    props: {
+      decorations(state) {
+        const { $from, empty } = state.selection;
+        if (!text || !empty || $from.depth !== 1 || !$from.parent.isTextblock || $from.parent.content.size > 0) return null;
+        return DecorationSet.create(state.doc, [Decoration.node($from.before(), $from.after(), { class: "is-empty", "data-placeholder": text })]);
+      },
+    },
+  });
+}
 
 /** Another person's cursor in text this copy has not received yet is left out: the binding throws drawing it (ADR 0093). */
 function drawableCursors(store: CursorEphemeralStore, doc: LoroDoc): CursorEphemeralStore {
@@ -93,7 +112,7 @@ export function createEngine(o: EngineOptions): Engine {
   let editable = o.editable ?? true;
   const found = () => (o.live ? scanLoro(o.live.doc) : scanJson(o.content ?? null));
   const stateFor = (schema: Schema): EditorState => {
-    const plugins: Plugin[] = [...(o.plugins?.(schema) ?? []), blockIds(idTypes), blockDir, dropCursor(), gapCursor()];
+    const plugins: Plugin[] = [...(o.plugins?.(schema) ?? []), blockIds(idTypes), blockDir, placeholder(o.placeholder ?? ""), dropCursor(), gapCursor()];
     if (o.live) {
       // an element's full view keeps its own undo: what it commits as `el:<id>` stays out of the page's (ADR 0094)
       plugins.unshift(LoroSyncPlugin({ doc: o.live.doc as never }), LoroUndoPlugin({ doc: o.live.doc as never, undoManager: new UndoManager(o.live.doc, { excludeOriginPrefixes: ["el:"] }) as never }));
@@ -106,7 +125,7 @@ export function createEngine(o: EngineOptions): Engine {
   };
   // every mark the schema knows is a Loro text style (loro-prosemirror configures a document once, with the first schema only)
   const styles = (s: Schema) => o.live?.doc.configTextStyle(Object.fromEntries(Object.entries(s.marks).map(([n, t]) => [n, { expand: t.spec.inclusive === false ? "none" : "after" }])) as never);
-  let schema = buildSchema(o.registry, found());
+  let schema = buildSchema(o.registry, found(), o.extras);
   styles(schema);
   const view = new EditorView(o.place, {
     state: stateFor(schema),
@@ -117,7 +136,7 @@ export function createEngine(o: EngineOptions): Engine {
   // a person whose plugin we lack wrote something new: widen the schema and open the document again, so nothing of it is lost
   const unsub = o.live?.doc.subscribe(() => {
     const f = found();
-    if (outgrows(schema, f)) { schema = buildSchema(o.registry, f); styles(schema); view.updateState(stateFor(schema)); }
+    if (outgrows(schema, f)) { schema = buildSchema(o.registry, f, o.extras); styles(schema); view.updateState(stateFor(schema)); }
   });
   const run = (cmd: (s: EditorState, d?: (tr: Transaction) => void) => boolean) => cmd(view.state, view.dispatch);
   return {

@@ -28,7 +28,8 @@
     "prosemirror-dropcursor": "1.8.4",
     "prosemirror-gapcursor": "1.4.1",
     "@nuah/editor-api": "workspace:*",
-    "vitest": "^3"
+    "vitest": "^3",
+    "prosemirror-schema-list": "1.6.0"
   },
   "peerDependencies": {
     "loro-crdt": "1.18.0"

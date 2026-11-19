@@ -28,11 +28,15 @@ export class Elements {
   all(): Declared[] { return [...this.kinds.values()]; }
   addRunner(plugin: string, languages: string[], run: Run) { for (const l of languages) this.runners.set(l, { plugin, run }); }
   runner(language: string) { return this.runners.get(language); }
-  /** The model registry from every content element's nodes and marks (a fresh one: plugins may load later). */
-  registry(): Registry {
+  /**
+   * The model registry from every content element's nodes and marks (a fresh one: plugins may load later). Each node carries the
+   * plugin that declares it and the kind's version (`plugin`, `v`), so a page says which plugin knows every block (ADR 0094).
+   */
+  registry(versions: (kind: string) => number = () => 1): Registry {
     const r = new Registry();
-    for (const { def } of this.kinds.values()) {
-      for (const n of def.nodes ?? []) if (!r.has(n.id)) r.addNode(n);
+    for (const { plugin, def } of this.kinds.values()) {
+      const v = versions(def.kind);
+      for (const n of def.nodes ?? []) if (!r.has(n.id)) r.addNode(n.id === "doc" || n.id === "text" ? n : { ...n, attrs: { ...(n.attrs ?? {}), plugin: { default: plugin }, v: { default: v } } });
       for (const m of def.marks ?? []) if (!r.marks.has(m.id)) r.addMark(m);
     }
     return r;

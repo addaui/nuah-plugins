@@ -69,10 +69,13 @@ const find = (m: Mounted, blockId: string) => { let p = -1; m.engine.view.state.
 /** Puts a sample element on the page and returns its id. */
 export function insertSample(m: Mounted & { doc: LoroDoc }, decl: ElementKindDecl, plugin: string, s: Sample, v = decl.version): string {
   const view = m.engine.view;
+  // a first line of its own, so the sample goes after it and "typing elsewhere" has somewhere to go
+  if (view.state.doc.firstChild?.isTextblock && view.state.doc.firstChild.content.size === 0) view.dispatch(view.state.tr.insertText("first line", 1));
   if (decl.shape === "content") {
-    m.handle.insert(s.node);
-    let id = "";
-    view.state.doc.descendants((n) => { if (!id && n.attrs.plugin === plugin && n.attrs.blockId) id = n.attrs.blockId; });
+    const id = "c" + Math.random().toString(36).slice(2, 10);
+    const n = s.node as { attrs?: Record<string, unknown> };
+    m.handle.insert({ ...n, attrs: { ...(n.attrs ?? {}), blockId: id } });
+    m.doc.commit();
     return id;
   }
   const id = "c" + Math.random().toString(36).slice(2, 10);
@@ -118,7 +121,7 @@ export function runElementCompliance(p: PluginUnderTest, { describe, it, expect 
         const stateBefore = JSON.stringify(stateJson(a.doc, id));
         const off = await openPage(others, { doc: copyOf(a.doc), declared: others });
         const v = off.engine.view;
-        v.dispatch(v.state.tr.insertText("typed elsewhere", v.state.doc.content.size - 1));
+        v.dispatch(v.state.tr.insertText("typed elsewhere ", 1));
         await tick(1100);
         off.doc.commit();
         expect(JSON.stringify(childrenOf(off.doc).find((c) => JSON.stringify(c).includes(id)))).toBe(before);
