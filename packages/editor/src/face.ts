@@ -21,6 +21,7 @@ import { Card, type CardHost } from "./card";
 import { slashPlugin } from "./slash";
 import { fileRouter, waysPlugin } from "./ways";
 import { clipboardPlugin } from "./clipboard";
+import { contextPlugin, gutterFor, marginPlugin, openerFor, setOption, turnInto } from "./surfaces";
 
 const IDLE_MS = 1500;
 import { localPresence, type PresenceStore } from "./state";
@@ -43,6 +44,10 @@ export interface FaceHooks {
   files?: { upload(file: Blob, name?: string): Promise<string> };
   /** Whether a missing plugin is known to the Core and whether this person may switch it on (owner and admins, ADR 0094). */
   needsPlugin?(plugin: string): { known: boolean; canEnable: boolean; enable(): Promise<void> };
+  /** A person's preference (the default Opener of a kind is `editor.opener.<kind>`). */
+  pref?(key: string): unknown;
+  /** The element the cursor is in or that is selected, innermost first, with its options (pinned first), for the Element tab. */
+  onContext?(ctx: { chain: unknown[]; selected: boolean } | null): void;
   onChange?(doc: unknown): void;
   /** Loads a module (tests hand in their own). */
   importer?(url: string): Promise<{ default?: unknown }>;
@@ -57,6 +62,8 @@ export interface EditorHandle {
   insert(content: unknown, pos?: number): void;
   /** Writes attributes of the node at a position. */
   setAttrs(pos: number, patch: Record<string, unknown>): void;
+  /** Writes one option of a block (the Element tab). */
+  setOption(blockId: string, id: string, value: unknown): void;
   destroy(): void;
 }
 /** What the editor shares with the element modules it loads (a module never bundles these, ADR 0095). */
@@ -92,20 +99,24 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
   const presence = (hooks.live?.ephemeral as unknown as PresenceStore | undefined) ?? localPresence();
   const host: CardHost = {
     elements, loader, list, hooks, doc: hooks.live?.doc, presence, editable: () => editable, cards: new Map(),
-    openerFor: (kind) => list.kinds.find((k) => k.kind === kind)?.plugin,
+    openerFor: (kind, blockId) => openerFor(host, chosen, kind, blockId),
   };
+  const chosen = new Map<string, string>();
   const card: NodeViewConstructor = (node, view, getPos) => new Card(node, view, getPos as () => number | undefined, host);
   let engineRef: Engine | null = null;
   const files = fileRouter(host, () => engineRef!.view);
   const ways = waysPlugin(host, files);
   const engine = createEngine({
     place, registry: elements.registry(), live: hooks.live, content: hooks.content, editable, nodeViews: { element: card, elementInline: card },
-    plugins: () => [slashPlugin(host), ways.plugin, clipboardPlugin(host)],
+    plugins: () => [slashPlugin(host), ways.plugin, clipboardPlugin(host), contextPlugin(host), marginPlugin(host, chosen)],
   });
   engineRef = engine;
   host.files = files;
   host.refreshWays = ways.refresh;
   host.openFull = (id) => host.cards.get(id)?.full();
+  host.openWith = async (id, plugin) => { chosen.set(id, plugin); await loader.loadPlugin(plugin); host.cards.get(id)?.redraw(); };
+  host.turnInto = (id, kind) => turnInto(engine.view, host, id, kind);
+  host.gutterFor = (id) => gutterFor(engine.view, host, chosen, id);
   // the ways in live in plugins' code: once the page is open and quiet, every enabled element plugin loads in the background
   const later = setTimeout(() => { void loader.loadFor(new Set(list.kinds.map((k) => k.kind))).then(() => ways.refresh()); }, IDLE_MS);
   const view = engine.view;
@@ -129,6 +140,7 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
       const n = view.state.doc.nodeAt(pos);
       if (n) view.dispatch(view.state.tr.setNodeMarkup(pos, undefined, { ...n.attrs, ...patch }));
     },
+    setOption: (id, option, value) => setOption(engine.view, host, id, option, value),
     destroy: () => { clearTimeout(later); engine.destroy(); },
   };
   return { handle, engine, loader, elements, list, host };

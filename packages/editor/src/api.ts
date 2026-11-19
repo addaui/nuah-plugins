@@ -4,7 +4,7 @@
  * kinds it brings. A plugin declares only its own kinds; opening another's is what `opens` is for.
  */
 import { parseKind, Registry } from "@nuah/editor-core";
-import type { EditorApi, ElementDef, RunReport, RunResult, Ui } from "@nuah/editor-api";
+import type { BlockRef, EditorApi, ElementDef, MarginAction, MenuItem, RunReport, RunResult, Ui } from "@nuah/editor-api";
 
 export const API_VERSION = "1.0.0";
 export interface Declared { plugin: string; def: ElementDef }
@@ -13,8 +13,17 @@ type Run = (req: { language: string; source: string }, report: (r: RunReport) =>
 /** Every kind the loaded modules declared, and every Runner. */
 export class Elements {
   private kinds = new Map<string, Declared>();
+  private byPlugin = new Map<string, ElementDef[]>();
+  readonly margins: { plugin: string; action: MarginAction }[] = [];
+  readonly menus: { plugin: string; items: (b: BlockRef) => MenuItem[] }[] = [];
   private runners = new Map<string, { plugin: string; run: Run }>();
-  add(plugin: string, def: ElementDef) { this.kinds.set(def.kind, { plugin, def }); }
+  add(plugin: string, def: ElementDef) { this.kinds.set(def.kind, { plugin, def }); this.byPlugin.set(plugin, [...(this.byPlugin.get(plugin) ?? []), def]); }
+  /** The definition `plugin` draws `kind` with: its own, or one of its kinds that `opens` it (ADR 0094 "Open with"). */
+  defFor(kind: string, plugin: string): ElementDef | undefined {
+    const own = this.kinds.get(kind);
+    if (own && own.plugin === plugin) return own.def;
+    return this.byPlugin.get(plugin)?.find((d) => d.opens?.some((o) => o === kind || o.startsWith(kind + "@")));
+  }
   get(kind: string): Declared | undefined { return this.kinds.get(kind); }
   all(): Declared[] { return [...this.kinds.values()]; }
   addRunner(plugin: string, languages: string[], run: Run) { for (const l of languages) this.runners.set(l, { plugin, run }); }
@@ -45,6 +54,8 @@ export function apiFor(plugin: string, els: Elements, host: HostServices): Edito
       els.add(plugin, def);
     },
     runner(languages, run) { els.addRunner(plugin, languages, run); },
+    margin(action) { els.margins.push({ plugin, action }); },
+    menu(items) { els.menus.push({ plugin, items }); },
     lang: () => host.lang ?? "en",
     ui: host.ui,
     call: (op, input) => (host.call ? host.call(op, input) : Promise.reject(new Error("calls are not available here"))),

@@ -83,8 +83,8 @@ export interface Ways {
   paste?: { text?: RegExp; url?: RegExp; make: (s: string) => ElementInit | Promise<ElementInit | null> }[];
   files?: { accept: string[]; make: (file: File) => ElementInit | Promise<ElementInit | null> }[];
   keys?: Record<string, (c: EditorCommands) => boolean>;
+  /** Items for the right-click menu of an element of this kind. */
   menu?: (ctx: ElementCtx) => MenuItem[];
-  margin?: { id: string; icon: string; label: Label; count?: (ctx: ElementCtx) => number; run: (ctx: ElementCtx, anchor: HTMLElement) => void }[];
 }
 
 export interface ElementDef {
@@ -116,6 +116,14 @@ export interface EditorApi {
   readonly ui: Ui;
   call(operation: string, input: unknown): Promise<unknown>;
   files: { upload(file: Blob, name?: string): Promise<string> };
+  /** A button in every block's margin (comments, reactions), whatever the block's kind. */
+  margin(action: MarginAction): void;
+  /** Items for the right-click menu of every block. */
+  menu(items: (block: BlockRef) => MenuItem[]): void;
 }
+
+/** A block, as margin actions and menus see it. */
+export interface BlockRef { blockId: string; type: string; kind: string | null; attrs: Record<string, unknown> }
+export interface MarginAction { id: string; icon: string; label: Label; count?: (b: BlockRef) => number; run: (b: BlockRef, anchor: HTMLElement) => void }
 
 export type { ElementKindDecl };

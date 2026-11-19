@@ -24,8 +24,8 @@ export interface CardHost {
   doc?: LoroDoc;
   presence: PresenceStore;
   editable(): boolean;
-  /** The plugin that opens a kind here (Task 11 puts the person's and the owner's choice first). */
-  openerFor(kind: string): string | undefined;
+  /** The plugin that opens a kind here: this element's choice, else the person's, else the Owner's, else the declaring plugin's. */
+  openerFor(kind: string, blockId?: string): string | undefined;
   /** Every card drawn now, by element id. */
   cards: Map<string, Card>;
   /** Files dropped or pasted at a place (ways.ts). */
@@ -33,6 +33,9 @@ export interface CardHost {
   /** Re-reads the loaded plugins' keys (after modules load). */
   refreshWays?: () => void;
   openFull?: (blockId: string) => void;
+  openWith?: (blockId: string, plugin: string) => Promise<void>;
+  turnInto?: (blockId: string, kind: string) => Promise<string | null>;
+  gutterFor?: (blockId: string) => HTMLElement | null;
 }
 
 const FALLBACK_MS = 1000;
@@ -65,10 +68,10 @@ export class Card implements NodeView {
 
   /** The definition this element is drawn with, or why not. */
   private resolve(): { def: ElementDef; plugin: string } | { why: "missing" | "loading" | "failed" | "newer"; plugin: string } {
-    const plugin = this.host.openerFor(this.kind) ?? this.decl?.plugin;
+    const plugin = this.host.openerFor(this.kind, this.node.attrs.blockId) ?? this.decl?.plugin;
     if (!plugin || !this.decl) return { why: "missing", plugin: this.node.attrs.plugin || plugin || "" };
     if (this.host.loader.failed(plugin)) return { why: "failed", plugin };
-    const def = this.host.elements.get(this.kind)?.def;
+    const def = this.host.elements.defFor(this.kind, plugin);
     if (!def || !this.host.loader.loaded(plugin)) return { why: "loading", plugin };
     if ((this.node.attrs.v ?? 1) > (this.decl.version ?? 1)) return { why: "newer", plugin };
     return { def, plugin };
@@ -116,7 +119,7 @@ export class Card implements NodeView {
       return;
     }
     // loading: draw when the module is in
-    void this.host.loader.loadFor(new Set([this.kind])).then(() => this.render());
+    void this.host.loader.loadPlugin(r.plugin).then(() => this.render());
   }
 
   /** An element of an older version is brought up to the plugin's version when it opens (by someone who may write): each step in turn. */
@@ -243,6 +246,10 @@ export class Card implements NodeView {
   selectNode() { this.dom.classList.add("is-selected"); }
   deselectNode() { this.dom.classList.remove("is-selected"); }
   private teardown() { this.mounted?.destroy(); this.mounted = null; this.stateSub?.(); this.stateSub = null; this.presenceSub?.(); this.presenceSub = null; }
+  /** Draws again (another Opener was chosen). */
+  redraw() { this.render(); }
+  /** The context a view would get now (Turn into, the right-click menu), or null when the element is not drawn. */
+  ctxNow(): ElementCtx | null { const r = this.resolve(); return "def" in r ? this.ctx(r.def) : null; }
   /** Opens the full view (the right-click menu, the host's api). */
   full() { const r = this.resolve(); if ("def" in r) this.openFull(r.def); }
   destroy() { if (this.host.cards.get(this.node.attrs.blockId) === this) this.host.cards.delete(this.node.attrs.blockId); this.dead = true; clearTimeout(this.fbTimer); this.closeFull?.(); this.teardown(); }
