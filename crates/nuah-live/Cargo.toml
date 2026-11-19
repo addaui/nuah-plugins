@@ -1,0 +1,17 @@
+[package]
+name = "nuah-live"
+description = "Live documents (ADR 0093): rich text as a Loro CRDT in the layout of loro-prosemirror, kept in the owning plugin's Collections, with Versions"
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+nuah-kernel = { workspace = true }
+serde_json = { workspace = true }
+loro = "=1.18.0"
+similar = "2"
+base64 = "0.22"
+
+[dev-dependencies]
+nuah-adapters = { workspace = true }
