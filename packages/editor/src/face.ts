@@ -17,6 +17,9 @@ import type { Ui } from "@nuah/editor-api";
 import { apiFor, Elements } from "./api";
 import { createEngine, type Engine, type Live } from "./engine";
 import { createLoader, type Loader, type ModuleEntry } from "./loader";
+import { Card, type CardHost } from "./card";
+import { localPresence, type PresenceStore } from "./state";
+import type { NodeViewConstructor } from "prosemirror-view";
 
 /** `editor.elements`, as the Core answers it (Task 13). */
 export interface ElementsList {
@@ -71,7 +74,7 @@ export function modulesOf(list: ElementsList): ModuleEntry[] {
   return [...by.values()];
 }
 
-export interface Mounted { handle: EditorHandle; engine: Engine; loader: Loader; elements: Elements; list: ElementsList }
+export interface Mounted { handle: EditorHandle; engine: Engine; loader: Loader; elements: Elements; list: ElementsList; host: CardHost }
 
 /** The parts, for the host's own surfaces and tests. */
 export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounted> {
@@ -80,12 +83,19 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
   const elements = new Elements();
   const loader = createLoader({ list: modulesOf(list), ui: hooks.ui, api: (p) => apiFor(p, elements, hooks), importer: hooks.importer });
   await loader.loadContent();
-  const engine = createEngine({ place, registry: elements.registry(), live: hooks.live, content: hooks.content, editable: hooks.editable });
+  let editable = hooks.editable;
+  const presence = (hooks.live?.ephemeral as unknown as PresenceStore | undefined) ?? localPresence();
+  const host: CardHost = {
+    elements, loader, list, hooks, doc: hooks.live?.doc, presence, editable: () => editable,
+    openerFor: (kind) => list.kinds.find((k) => k.kind === kind)?.plugin,
+  };
+  const card: NodeViewConstructor = (node, view, getPos) => new Card(node, view, getPos as () => number | undefined, host);
+  const engine = createEngine({ place, registry: elements.registry(), live: hooks.live, content: hooks.content, editable, nodeViews: { element: card, elementInline: card } });
   const view = engine.view;
   const handle: EditorHandle = {
     json: () => engine.json(),
     live: () => !!hooks.live,
-    setEditable: (on) => engine.setEditable(on),
+    setEditable: (on) => { editable = on; engine.setEditable(on); },
     focus(atEnd) {
       view.focus();
       if (atEnd) view.dispatch(view.state.tr.setSelection(pmState.Selection.atEnd(view.state.doc)));
@@ -104,7 +114,7 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
     },
     destroy: () => engine.destroy(),
   };
-  return { handle, engine, loader, elements, list };
+  return { handle, engine, loader, elements, list, host };
 }
 
 export async function mount(place: HTMLElement, hooks: FaceHooks): Promise<EditorHandle> {

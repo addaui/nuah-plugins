@@ -4,7 +4,7 @@
  * Undo is the person's own, from Loro. Every block a plugin marks `ids`, and every element, carries a stable id (ADR 0043).
  */
 import { EditorState, Plugin, PluginKey, type Transaction } from "prosemirror-state";
-import { EditorView, Decoration, DecorationSet } from "prosemirror-view";
+import { EditorView, Decoration, DecorationSet, type NodeViewConstructor } from "prosemirror-view";
 import { keymap } from "prosemirror-keymap";
 import { baseKeymap } from "prosemirror-commands";
 import { dropCursor } from "prosemirror-dropcursor";
@@ -26,6 +26,7 @@ export interface EngineOptions {
   editable?: boolean;
   /** More ProseMirror plugins (the host's surfaces, plugins' extras), before the base keymap. */
   plugins?: (schema: Schema) => Plugin[];
+  nodeViews?: Record<string, NodeViewConstructor>;
 }
 export interface Engine {
   readonly view: EditorView;
@@ -109,6 +110,7 @@ export function createEngine(o: EngineOptions): Engine {
   const view = new EditorView(o.place, {
     state: stateFor(schema),
     editable: () => editable,
+    nodeViews: o.nodeViews,
     dispatchTransaction(tr: Transaction) { view.updateState(view.state.apply(tr)); },
   });
   // a person whose plugin we lack wrote something new: widen the schema and open the document again, so nothing of it is lost
