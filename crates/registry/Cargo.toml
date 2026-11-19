@@ -9,6 +9,7 @@ publish.workspace = true
 nuah-kernel = { workspace = true }
 nuah-adapters = { workspace = true }
 nuah-prefs = { path = "../nuah-prefs" }
+nuah-entities = { path = "../nuah-entities" }
 nuah-appearance = { path = "../nuah-appearance" }
 nuah-emoji = { path = "../nuah-emoji" }
 nuah-fonts = { path = "../nuah-fonts" }

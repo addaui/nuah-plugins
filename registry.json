@@ -74,6 +74,29 @@
       "version": "0.1.0"
     },
     {
+      "crate": "nuah-entities",
+      "defines": [],
+      "description": "One index of everything that can be found or referred to; plugins announce their entities in their events",
+      "fills": null,
+      "id": "@nuah/entities",
+      "kind": "plugin",
+      "name": "Entities",
+      "operations": [
+        "entities.backlinks",
+        "entities.get",
+        "entities.search"
+      ],
+      "provides": [],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [],
+        "plugins": [],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
       "crate": "nuah-fonts",
       "defines": [],
       "description": "Fetches a web-hosted font once, through the net Port, keeps it and serves it, so a viewer's browser contacts only this server (ADR 0090). It fetches only addresses that a font plugin names.",

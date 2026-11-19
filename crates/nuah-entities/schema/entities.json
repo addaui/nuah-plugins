@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "collections": {
+    "entities.entries": {
+      "type": "object",
+      "description": "One Entity of any plugin, as its last Event announced it (ADR 0092)",
+      "properties": {
+        "kind": {"type": "string", "index": true, "description": "namespaced, in the announcing plugin's namespace"},
+        "ref": {"type": "string", "description": "the Entity's id in its plugin"},
+        "title": {"type": "string", "search": true},
+        "text": {"type": "string", "search": true},
+        "aliases": {"type": "array", "items": {"type": "string"}, "search": true},
+        "tags": {"type": "array", "items": {"type": "string"}, "search": true},
+        "context": {"type": "object", "description": "what the announcing plugin wants shown with a result, as given"},
+        "audience": {"type": "object", "description": "the Audience of the announcing Event: who may find it"},
+        "at": {"type": "integer"}
+      },
+      "required": ["kind", "ref", "title", "audience"]
+    },
+    "entities.links": {
+      "type": "object",
+      "description": "One reference from an Entity to another, as the last Event of the first announced it",
+      "properties": {
+        "from": {"type": "object", "description": "{type, id}"},
+        "to": {"type": "object", "description": "{type, id, ..}"},
+        "from_key": {"type": "string", "index": true},
+        "to_key": {"type": "string", "index": true},
+        "title": {"type": "string"},
+        "audience": {"type": "object"}
+      },
+      "required": ["from", "to", "from_key", "to_key", "audience"]
+    }
+  }
+}
