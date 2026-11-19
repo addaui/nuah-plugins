@@ -1,0 +1,36 @@
+{
+ "kinds": [
+  {
+   "kind": "@nuah/excalidraw/sketch",
+   "version": 1,
+   "shape": "card",
+   "placement": "block",
+   "label": {
+    "en": "Sketch",
+    "ar": "رسم"
+   },
+   "icon": "pen",
+   "group": "media",
+   "keywords": "excalidraw drawing whiteboard sketch canvas",
+   "state": "map",
+   "accepts": [
+    ".excalidraw",
+    "application/vnd.excalidraw+json"
+   ],
+   "schema": {
+    "type": "object",
+    "properties": {
+     "height": {
+      "type": "number",
+      "minimum": 120,
+      "maximum": 1200
+     },
+     "picture": {
+      "type": "string",
+      "maxLength": 300
+     }
+    }
+   }
+  }
+ ]
+}

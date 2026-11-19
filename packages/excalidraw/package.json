@@ -1,0 +1,12 @@
+{
+  "name": "@nuah/excalidraw",
+  "version": "0.1.0",
+  "description": "Sketches as an element (ADR 0094): a card showing the drawing, and Excalidraw full size with its own undo; every shape is an entry of the element's Loro map, so two people drawing merge.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "private": true,
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "test": "vitest run", "typecheck": "tsc --noEmit", "build": "node --experimental-strip-types build.ts" },
+  "dependencies": { "@nuah/editor-api": "workspace:*", "@excalidraw/excalidraw": "0.18.1", "react": "19.2.0", "react-dom": "19.2.0" },
+  "devDependencies": { "@nuah/editor": "workspace:*", "@nuah/editor-core": "workspace:*", "@nuah/browser-kit": "workspace:*", "typescript": "^5.9", "vitest": "^3", "jsdom": "26.1.0", "loro-crdt": "1.18.0", "@types/node": "^22", "@types/react": "^19", "@types/react-dom": "^19" }
+}

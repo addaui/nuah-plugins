@@ -1,0 +1,1 @@
+import"./chunk-DXB73IDG.js";var e=globalThis.__nuahShared;if(!e||!("react-dom/client"in e))throw new Error('shared library "react-dom/client" is not provided by the host');var t=e["react-dom/client"],o=t&&t.default!==void 0?t.default:t,{createRoot:r,hydrateRoot:a,version:d}=t;export{r as createRoot,o as default,a as hydrateRoot,d as version};
