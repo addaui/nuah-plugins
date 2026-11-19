@@ -33,6 +33,9 @@ importers:
       '@nuah/browser-kit':
         specifier: workspace:*
         version: link:../browser-kit
+      '@nuah/editor-api':
+        specifier: workspace:*
+        version: link:../editor-api
       '@nuah/editor-core':
         specifier: workspace:*
         version: link:../editor-core
@@ -82,6 +85,16 @@ importers:
       vitest:
         specifier: ^3
         version: 3.2.7(@types/node@22.20.5)(jsdom@26.1.0)
+
+  packages/editor-api:
+    dependencies:
+      '@nuah/editor-core':
+        specifier: workspace:*
+        version: link:../editor-core
+    devDependencies:
+      typescript:
+        specifier: ^5.9
+        version: 5.9.3
 
   packages/editor-core:
     devDependencies:

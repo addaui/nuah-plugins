@@ -5,8 +5,15 @@
   "license": "Apache-2.0",
   "type": "module",
   "private": true,
-  "exports": { ".": "./src/index.ts", "./testing": "./src/testing.ts" },
-  "scripts": { "test": "vitest run", "typecheck": "tsc --noEmit", "build": "node --experimental-strip-types build.ts" },
+  "exports": {
+    ".": "./src/index.ts",
+    "./testing": "./src/testing.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build": "node --experimental-strip-types build.ts"
+  },
   "dependencies": {
     "@nuah/editor-core": "workspace:*",
     "@nuah/browser-kit": "workspace:*",
@@ -19,8 +26,17 @@
     "prosemirror-commands": "1.7.2",
     "prosemirror-inputrules": "1.6.0",
     "prosemirror-dropcursor": "1.8.4",
-    "prosemirror-gapcursor": "1.4.1"
+    "prosemirror-gapcursor": "1.4.1",
+    "@nuah/editor-api": "workspace:*"
   },
-  "peerDependencies": { "loro-crdt": "1.18.0" },
-  "devDependencies": { "typescript": "^5.9", "vitest": "^3", "jsdom": "26.1.0", "loro-crdt": "1.18.0", "@types/node": "^22" }
+  "peerDependencies": {
+    "loro-crdt": "1.18.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9",
+    "vitest": "^3",
+    "jsdom": "26.1.0",
+    "loro-crdt": "1.18.0",
+    "@types/node": "^22"
+  }
 }

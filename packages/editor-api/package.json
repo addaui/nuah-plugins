@@ -1,0 +1,12 @@
+{
+  "name": "@nuah/editor-api",
+  "version": "1.0.0",
+  "description": "Types of editor.element@1 (ADR 0094): what the editor gives an element plugin's Browser module and what the module gives back. Types only.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "private": true,
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "typecheck": "tsc --noEmit" },
+  "dependencies": { "@nuah/editor-core": "workspace:*" },
+  "devDependencies": { "typescript": "^5.9" }
+}
