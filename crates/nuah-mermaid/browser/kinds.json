@@ -1,0 +1,36 @@
+{
+ "kinds": [
+  {
+   "kind": "@nuah/mermaid/diagram",
+   "version": 1,
+   "shape": "card",
+   "placement": "block",
+   "label": {
+    "en": "Diagram",
+    "ar": "مخطط"
+   },
+   "icon": "flow",
+   "group": "media",
+   "keywords": "mermaid flowchart sequence chart graph",
+   "state": "text",
+   "accepts": [
+    ".mmd",
+    ".mermaid",
+    "text/vnd.mermaid"
+   ],
+   "schema": {
+    "type": "object",
+    "properties": {
+     "theme": {
+      "enum": [
+       "default",
+       "dark",
+       "neutral",
+       "forest"
+      ]
+     }
+    }
+   }
+  }
+ ]
+}
