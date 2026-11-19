@@ -45,6 +45,8 @@ export class Elements {
 
 export interface HostServices {
   ui: Ui;
+  /** The Face's own services by name (`face.editor` hooks), for element plugins that ask. */
+  services?: Record<string, unknown>;
   lang?: string;
   call?: (operation: string, input: unknown) => Promise<unknown>;
   files?: { upload(file: Blob, name?: string): Promise<string> };
@@ -60,6 +62,7 @@ export function apiFor(plugin: string, els: Elements, host: HostServices): Edito
     runner(languages, run) { els.addRunner(plugin, languages, run); },
     margin(action) { els.margins.push({ plugin, action }); },
     menu(items) { els.menus.push({ plugin, items }); },
+    service: <T,>(name: string) => host.services?.[name] as T | undefined,
     lang: () => host.lang ?? "en",
     ui: host.ui,
     call: (op, input) => (host.call ? host.call(op, input) : Promise.reject(new Error("calls are not available here"))),

@@ -123,6 +123,11 @@ export interface EditorApi {
   margin(action: MarginAction): void;
   /** Items for the right-click menu of every block. */
   menu(items: (block: BlockRef) => MenuItem[]): void;
+  /**
+   * A service the Face offers by name (a product's own: open a page, pick something to link to, make a page), or undefined when this
+   * Face has none of that name. A plugin that needs one says what it does without it.
+   */
+  service<T = (...args: never[]) => unknown>(name: string): T | undefined;
 }
 
 /** A block, as margin actions and menus see it. */

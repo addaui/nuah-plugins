@@ -51,6 +51,8 @@ export interface FaceHooks {
   /** The element the cursor is in or that is selected, innermost first, with its options (pinned first), for the Element tab. */
   onContext?(ctx: { chain: unknown[]; selected: boolean } | null): void;
   onChange?(doc: unknown): void;
+  /** Services this Face offers element plugins by name (EditorApi.service). */
+  services?: Record<string, unknown>;
   /** The floating layer (stickers): the layers to draw in, the list, and when to lay them out again. */
   floating?: FloatingHooks;
   /** Loads a module (tests hand in their own). */

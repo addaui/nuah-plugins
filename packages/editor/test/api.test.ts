@@ -51,3 +51,12 @@ describe("mount (face.editor@1)", () => {
     h.destroy();
   });
 });
+
+describe("the Face's services", () => {
+  it("a_plugin_gets_a_service_the_face_offers_and_undefined_otherwise", () => {
+    const openRef = () => "opened";
+    const api = apiFor("@t/x", new Elements(), { ui, services: { openRef } } as never);
+    expect(api.service<typeof openRef>("openRef")?.()).toBe("opened");
+    expect(api.service("nothing")).toBeUndefined();
+  });
+});
