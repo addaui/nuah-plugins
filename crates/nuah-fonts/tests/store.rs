@@ -6,17 +6,18 @@ use nuah_adapters::*;
 use nuah_fonts::{font_set_ids, font_sets, key_of, FontStore};
 use nuah_kernel::*;
 use serde_json::{json, Value};
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
 
-/// Every address the fake web was asked for (tests run in parallel, so each asserts about its own addresses).
-static ASKED: Mutex<Vec<String>> = Mutex::new(Vec::new());
-fn asked(url: &str) -> usize { ASKED.lock().unwrap().iter().filter(|u| *u == url).count() }
+// Every address the fake web was asked for, per test thread: tests run in parallel and several fetch the same font, so a list shared by all of them
+// counted another test's fetch as a second one (the Core calls the net Adapter on the calling thread).
+thread_local! { static ASKED: std::cell::RefCell<Vec<String>> = const { std::cell::RefCell::new(Vec::new()) }; }
+fn asked(url: &str) -> usize { ASKED.with(|a| a.borrow().iter().filter(|u| *u == url).count()) }
 
 struct Web;
 impl Net for Web {
     fn name(&self) -> &str { "@test/net" }
     fn fetch(&self, r: &NetRequest) -> Result<NetResponse> {
-        ASKED.lock().unwrap().push(r.url.clone());
+        ASKED.with(|a| a.borrow_mut().push(r.url.clone()));
         let ok = |body: Vec<u8>| NetResponse { status: 200, url: r.url.clone(), headers: vec![], body, truncated: false };
         Ok(if r.url.ends_with(".woff2") && !r.url.contains("html") { ok(b"wOF2\0\x01\0\0fake".to_vec()) } else { ok(b"<html>nope</html>".to_vec()) })
     }
