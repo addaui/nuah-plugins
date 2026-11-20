@@ -86,6 +86,8 @@ function full(place: HTMLElement, ctx: ElementCtx): View {
     root.render(react.createElement(x.Excalidraw as never, {
       initialData: { elements: readScene(map(cur)), appState: { viewBackgroundColor: "transparent" } },
       viewModeEnabled: !cur.editable,
+      // the full view is opened to draw: its shortcuts work at once
+      autoFocus: true,
       langCode: cur.lang === "ar" ? "ar-SA" : "en",
       excalidrawAPI: (a: typeof api) => { api = a; },
       onChange: (els: readonly Shape[]) => {
