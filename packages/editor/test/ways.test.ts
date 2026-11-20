@@ -156,3 +156,19 @@ describe("ways in for content elements", () => {
     p.handle.destroy();
   });
 });
+
+describe("the slash menu's order", () => {
+  const item = (id: string, label: string, group: string, keywords = "") => ({ id, label, group, keywords: `${keywords} ${label}`.toLowerCase(), run: () => {} });
+  it("puts_the_best_match_first_so_enter_picks_it_and_keeps_groups_together", async () => {
+    const { filterItems } = await import("../src/slash");
+    const items = [
+      item("link", "Link to a page or task", "links", "mention ref"),
+      item("task", "Task", "list", "todo"),
+      item("check", "Checklist", "list", "task todo"),
+      item("quote", "Quote", "text"),
+    ];
+    expect(filterItems(items, "task").map((i) => i.id)).toEqual(["task", "check", "link"]);
+    // with nothing typed, the order is the plugins' own
+    expect(filterItems(items, "").map((i) => i.id)).toEqual(["link", "task", "check", "quote"]);
+  });
+});

@@ -54,9 +54,29 @@ export function slashItems(host: CardHost): SlashItem[] {
   return items;
 }
 
+/** How well an item fits what was typed (lower is better): the label itself, its start, a word of it, inside it, then a keyword; null when it does not fit. */
+function fit(i: SlashItem, q: string): number | null {
+  const l = i.label.toLowerCase();
+  if (l === q) return 0;
+  if (l.startsWith(q)) return 1;
+  if (l.split(/\s+/).some((w) => w.startsWith(q))) return 2;
+  if (l.includes(q)) return 3;
+  return i.keywords.includes(q) ? 4 : null;
+}
+
+/** What fits the query, best first, so Enter picks it. A group stays together and goes where its best item goes; with nothing typed the order is the plugins' own. */
 export function filterItems(items: SlashItem[], query: string): SlashItem[] {
   const q = query.toLowerCase();
-  return q ? items.filter((i) => i.label.toLowerCase().includes(q) || i.keywords.includes(q)) : items;
+  if (!q) return items;
+  const found = items.map((i, at) => ({ i, at, f: fit(i, q) })).filter((x): x is { i: SlashItem; at: number; f: number } => x.f !== null);
+  const best = new Map<string, { f: number; at: number }>();
+  for (const x of found) { const b = best.get(x.i.group); best.set(x.i.group, { f: Math.min(x.f, b?.f ?? x.f), at: b?.at ?? x.at }); }
+  return found
+    .sort((a, b) => {
+      const ga = best.get(a.i.group)!, gb = best.get(b.i.group)!;
+      return ga.f - gb.f || ga.at - gb.at || (a.i.group === b.i.group ? a.f - b.f || a.at - b.at : a.at - b.at);
+    })
+    .map((x) => x.i);
 }
 
 export function slashPlugin(host: CardHost): Plugin {
