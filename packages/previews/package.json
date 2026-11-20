@@ -1,0 +1,29 @@
+{
+  "name": "@nuah/previews",
+  "version": "0.1.0",
+  "description": "Link cards and YouTube videos as elements (ADR 0094, 0099): the card is fetched once by the guarded provider; pictures only from this server.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build": "node --experimental-strip-types build.ts"
+  },
+  "dependencies": {
+    "@nuah/editor-api": "workspace:*",
+    "@nuah/editor-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@nuah/editor": "workspace:*",
+    "@nuah/browser-kit": "workspace:*",
+    "typescript": "^5.9",
+    "vitest": "^3",
+    "jsdom": "26.1.0",
+    "loro-crdt": "1.18.0",
+    "@types/node": "^22"
+  }
+}

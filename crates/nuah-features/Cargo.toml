@@ -1,0 +1,19 @@
+[package]
+name = "nuah-features"
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+nuah-kernel = { workspace = true }
+serde_json = { workspace = true }
+
+[dev-dependencies]
+nuah-adapters = { workspace = true }
+nuah-shell = { workspace = true }
+nuah-emoji = { path = "../nuah-emoji" }
+nuah-gifs = { path = "../nuah-gifs" }
+nuah-gifs-giphy = { path = "../nuah-gifs-giphy" }
+nuah-link-analyzer = { path = "../nuah-link-analyzer" }
+nuah-prefs = { path = "../nuah-prefs" }
