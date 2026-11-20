@@ -40,7 +40,10 @@ export function clipboardPlugin(host: CardHost): Plugin {
     key: new PluginKey("nuahClipboard"),
     props: {
       transformCopied: (slice) => (host.doc ? mapSlice(slice, (n) => (isElement(n) && n.attrs.blockId ? n.type.create({ ...n.attrs, copy: save(host.doc!, n.attrs.blockId) }, n.content, n.marks) : n)) : slice),
-      transformPasted: (slice) => mapSlice(slice, (n) => (isElement(n) ? n.type.create({ ...n.attrs, blockId: newBlockId() }, n.content, n.marks) : n)),
+      // a drag that moves a card keeps it (same id, same state, comments stay on it); anything else pasted is a new copy
+      transformPasted: (slice, view) => view?.dragging?.move
+        ? mapSlice(slice, (n) => (isElement(n) ? n.type.create({ ...n.attrs, copy: null }, n.content, n.marks) : n))
+        : mapSlice(slice, (n) => (isElement(n) ? n.type.create({ ...n.attrs, blockId: newBlockId() }, n.content, n.marks) : n)),
     },
     appendTransaction(trs, _o, state) {
       if (!trs.some((t) => t.docChanged)) return null;

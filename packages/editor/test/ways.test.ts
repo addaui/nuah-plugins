@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { LoroText } from "loro-crdt";
 import { Slice } from "prosemirror-model";
-import { TextSelection } from "prosemirror-state";
+import { NodeSelection, TextSelection } from "prosemirror-state";
 import { elementsOf, insertCard, kind, listWith, page, tick } from "./helpers";
 
 const D = "@t/diagram/chart", S = "@t/sketch/canvas";
@@ -88,6 +88,51 @@ describe("ways in", () => {
     p.engine.undo(); await tick(10);
     expect((p.doc.getMap("elements").get("e1") as LoroText).toString()).toBe("drawn");
     expect(p.engine.text()).not.toContain("typed");
+    p.handle.destroy();
+  });
+
+  it("copy_and_paste_through_the_clipboard_html_keeps_the_card_and_copies_its_state", async () => {
+    const p = await page({ list: listWith(kind(S, "@t/sketch")), modules: { "@t/sketch": card(S) } });
+    const v = p.engine.view;
+    insertCard(v, { blockId: "e1", kind: S, plugin: "@t/sketch", data: { ink: "blue" } });
+    (p.doc.getMap("elements").ensureMergeableText("e1") as LoroText).insert(0, "original");
+    p.doc.commit();
+    await tick(10);
+    let at = -1; v.state.doc.descendants((n, pos) => { if (n.attrs.blockId === "e1") at = pos; });
+    v.dispatch(v.state.tr.setSelection(NodeSelection.create(v.state.doc, at)));
+    const { dom } = (v as any).serializeForClipboard(v.state.selection.content());
+    v.dispatch(v.state.tr.setSelection(TextSelection.create(v.state.doc, 1)));
+    (v as any).pasteHTML(dom.innerHTML, new Event("paste"));
+    await tick(10);
+    const els = elementsOf(p.doc);
+    expect(els.length).toBe(2);
+    const ids = els.map((e: any) => e.attributes.blockId);
+    const copyId = ids.find((i: string) => i !== "e1");
+    expect(copyId).toBeTruthy();
+    expect(els.find((e: any) => e.attributes.blockId === copyId).attributes.data).toEqual({ ink: "blue" });
+    expect((p.doc.getMap("elements").get(copyId) as LoroText).toString()).toBe("original");
+    p.handle.destroy();
+  });
+
+  it("dragging_a_card_to_move_it_keeps_its_id_and_its_state", async () => {
+    const p = await page({ list: listWith(kind(S, "@t/sketch")), modules: { "@t/sketch": card(S) } });
+    const v = p.engine.view;
+    v.dispatch(v.state.tr.insertText("a", 1));
+    insertCard(v, { blockId: "e1", kind: S, plugin: "@t/sketch" });
+    (p.doc.getMap("elements").ensureMergeableText("e1") as LoroText).insert(0, "drawn");
+    p.doc.commit();
+    await tick(10);
+    let at = -1; v.state.doc.descendants((n, pos) => { if (n.attrs.blockId === "e1") at = pos; });
+    let slice: Slice = v.state.doc.slice(at, at + 1);
+    slice = v.someProp("transformCopied", (f: any) => f(slice, v)) ?? slice;
+    (v as any).dragging = { slice, move: true };
+    slice = v.someProp("transformPasted", (f: any) => f(slice, v, false)) ?? slice;
+    (v as any).dragging = null;
+    v.dispatch(v.state.tr.delete(at, at + 1).insert(0, slice.content));
+    await tick(10);
+    const els = elementsOf(p.doc);
+    expect(els.map((e: any) => e.attributes.blockId)).toEqual(["e1"]);
+    expect((p.doc.getMap("elements").get("e1") as LoroText).toString()).toBe("drawn");
     p.handle.destroy();
   });
 
