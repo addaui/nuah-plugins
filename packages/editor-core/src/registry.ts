@@ -19,6 +19,8 @@ export interface NodeSpec {
   /** How an engine draws it, for an engine that needs the markup: a tag and a class. */
   dom?: { tag: string; class?: string };
   options?: OptionDecl[];
+  /** The block a new line becomes (Enter at the end of a block, an empty document). Nodes that say so come first, so the order plugins load in never decides it. */
+  defaultBlock?: boolean;
 }
 export interface MarkSpec { id: string; attrs?: Record<string, { default: unknown }>; dom?: { tag: string } }
 

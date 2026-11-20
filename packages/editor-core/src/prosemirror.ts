@@ -7,7 +7,10 @@ import type { Registry } from "./registry";
 export interface PmNodeSpec { content?: string; group?: string; inline?: boolean; atom?: boolean; selectable?: boolean; attrs?: Record<string, { default: unknown }>; dom?: { tag: string; class?: string } }
 export function toProseMirrorSpec(r: Registry): { nodes: Record<string, PmNodeSpec>; marks: Record<string, { attrs?: Record<string, { default: unknown }> }> } {
   const nodes: Record<string, PmNodeSpec> = {};
-  for (const s of r.nodes.values()) {
+  // ProseMirror makes the first fitting type the default, so default blocks go first (after doc and text)
+  const all = [...r.nodes.values()];
+  const ordered = [...all.filter((s) => s.id === "doc" || s.id === "text"), ...all.filter((s) => s.defaultBlock), ...all.filter((s) => s.id !== "doc" && s.id !== "text" && !s.defaultBlock)];
+  for (const s of ordered) {
     const attrs = { ...(s.attrs ?? {}), ...(s.ids ? { blockId: { default: null } } : {}) };
     nodes[s.id] = {
       ...(s.content !== undefined && s.content !== "" ? { content: s.content } : {}),

@@ -53,7 +53,7 @@ function defs(): ElementDef[] {
   return [
     {
       kind: `${P}/paragraph`, options: OPTIONS.paragraph,
-      nodes: [node("paragraph", { group: "block", content: "inline*", attrs: { align: { default: null } }, dom: { tag: "p" } }), node("text", { group: "text" })],
+      nodes: [node("paragraph", { group: "block", content: "inline*", attrs: { align: { default: null } }, dom: { tag: "p" }, defaultBlock: true }), node("text", { group: "text" })],
       marks: ["bold", "italic", "underline", "strike", "code", "highlight"].map((id) => ({ id })).concat([{ id: "link", attrs: { href: { default: "" } } } as never]),
       ways: { slash: [slash(L("Text", "نص"), "type", "text", "plain paragraph", (c) => c.setBlock("paragraph"), "text")] },
     },

@@ -119,3 +119,15 @@ describe("the engine", () => {
     ea.destroy(); eb.destroy();
   });
 });
+
+describe("the default block", () => {
+  it("is the node that says so, whatever order plugins loaded in", async () => {
+    const { buildSchema } = await import("../src/schema");
+    const r = new Registry();
+    // a plugin that loaded first adds its own textblock
+    r.addNode({ id: "taskBlock", group: "block", content: "inline*" });
+    r.addNode({ id: "paragraph", group: "block", content: "inline*", defaultBlock: true });
+    const schema = buildSchema(r);
+    expect(schema.topNodeType.contentMatch.defaultType?.name).toBe("paragraph");
+  });
+});

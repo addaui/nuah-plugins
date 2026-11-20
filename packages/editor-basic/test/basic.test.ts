@@ -83,3 +83,12 @@ describe("the basic elements", () => {
     m.handle.destroy();
   });
 });
+
+describe("paragraph", () => {
+  it("is the default block, so Enter never makes another plugin's block", () => {
+    const defs: any[] = [];
+    basic({ element: (d: any) => defs.push(d), lang: () => "en" } as never);
+    const p = defs.find((d) => d.kind.endsWith("/paragraph"));
+    expect(p.nodes.find((n: any) => n.id === "paragraph")).toMatchObject({ defaultBlock: true });
+  });
+});
