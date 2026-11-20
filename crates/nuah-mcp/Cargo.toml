@@ -1,0 +1,18 @@
+[package]
+name = "nuah-mcp"
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+nuah-kernel = { workspace = true }
+serde_json = { workspace = true }
+axum = "0.8.9"
+tokio = { version = "1.54.1", features = ["rt"] }
+
+[dev-dependencies]
+nuah-adapters = { workspace = true }
+nuah-prefs = { path = "../nuah-prefs" }
+tower = { version = "0.5", features = ["util"] }
+tokio = { version = "1.54.1", features = ["rt", "macros"] }
