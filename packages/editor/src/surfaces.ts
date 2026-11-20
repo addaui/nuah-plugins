@@ -27,7 +27,7 @@ export function openerFor(host: CardHost, chosen: Map<string, string>, kind: str
   return k.plugin;
 }
 
-const refOf = (n: PmNode): BlockRef => ({ blockId: n.attrs.blockId, type: n.type.name, kind: typeof n.attrs.kind === "string" && n.attrs.kind ? n.attrs.kind : null, attrs: { ...n.attrs } });
+const refOf = (n: PmNode): BlockRef => ({ blockId: n.attrs.blockId, type: n.type.name, kind: typeof n.attrs.kind === "string" && n.attrs.kind ? n.attrs.kind : null, attrs: { ...n.attrs }, text: n.textContent });
 export const findBlock = (state: EditorState, blockId: string): { node: PmNode; pos: number } | null => {
   let out: { node: PmNode; pos: number } | null = null;
   state.doc.descendants((node, pos) => { if (!out && node.attrs.blockId === blockId) out = { node, pos }; return !out; });

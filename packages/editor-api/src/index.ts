@@ -135,7 +135,7 @@ export interface EditorApi {
 }
 
 /** A block, as margin actions and menus see it. */
-export interface BlockRef { blockId: string; type: string; kind: string | null; attrs: Record<string, unknown> }
+export interface BlockRef { blockId: string; type: string; kind: string | null; attrs: Record<string, unknown>; /** The block's text. */ text: string }
 export interface MarginAction { id: string; icon: string; label: Label; count?: (b: BlockRef) => number; run: (b: BlockRef, anchor: HTMLElement) => void }
 
 export type { ElementKindDecl };

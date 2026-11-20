@@ -183,3 +183,5 @@ export function runElementCompliance(p: PluginUnderTest, { describe, it, expect 
     });
   }
 }
+
+export { commandsFor } from "./commands";
