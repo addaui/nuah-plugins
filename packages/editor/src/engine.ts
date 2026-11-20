@@ -3,7 +3,7 @@
  * The engine (ADR 0062, 0094): ProseMirror's libraries, bound to the page's Live document through loro-prosemirror (ADR 0093).
  * Undo is the person's own, from Loro. Every block a plugin marks `ids`, and every element, carries a stable id (ADR 0043).
  */
-import { EditorState, Plugin, PluginKey, type Transaction } from "prosemirror-state";
+import { EditorState, NodeSelection, Plugin, PluginKey, type Command, type TextSelection, type Transaction } from "prosemirror-state";
 import { EditorView, Decoration, DecorationSet, type NodeViewConstructor } from "prosemirror-view";
 import { keymap } from "prosemirror-keymap";
 import { baseKeymap } from "prosemirror-commands";
@@ -123,7 +123,7 @@ export function createEngine(o: EngineOptions): Engine {
       if (o.live.ephemeral) plugins.push(LoroEphemeralCursorPlugin(drawableCursors(o.live.ephemeral, o.live.doc), { user: o.live.user }) as never);
       plugins.push(keymap({ "Mod-z": loroUndo, "Mod-y": loroRedo, "Shift-Mod-z": loroRedo }));
     }
-    plugins.push(keymap(baseKeymap));
+    plugins.push(keymap({ Backspace: selectAtomBeside(-1), Delete: selectAtomBeside(1) }), keymap(baseKeymap));
     const doc: PmNode = !o.live && o.content ? schema.nodeFromJSON(o.content) : schema.topNodeType.createAndFill()!;
     return EditorState.create({ schema, doc, plugins });
   };
@@ -160,5 +160,25 @@ export function createEngine(o: EngineOptions): Engine {
     redo: () => run(loroRedo as never),
     setEditable(on) { editable = on; view.setProps({}); },
     destroy() { unsub?.(); view.destroy(); },
+  };
+}
+
+/**
+ * Backspace at the start of a line, or Delete at its end, next to a card or another atom: the first press selects it, the second removes it.
+ * ProseMirror's own keys remove it at once, and with it everything the element held (a whole sketch).
+ * An empty line is left to ProseMirror, which removes the line and selects the neighbour already.
+ */
+function selectAtomBeside(dir: -1 | 1): Command {
+  return (state, dispatch) => {
+    const sel = state.selection;
+    // only a text selection has a cursor
+    const $c = (sel as Partial<TextSelection>).$cursor ?? null;
+    if (!$c || !$c.parent.isTextblock || !$c.parent.content.size || $c.depth < 1) return false;
+    if (dir < 0 ? $c.parentOffset > 0 : $c.parentOffset < $c.parent.content.size) return false;
+    const $edge = state.doc.resolve(dir < 0 ? $c.before() : $c.after());
+    const beside = dir < 0 ? $edge.nodeBefore : $edge.nodeAfter;
+    if (!beside?.isAtom || beside.isInline) return false;
+    if (dispatch) dispatch(state.tr.setSelection(NodeSelection.create(state.doc, dir < 0 ? $edge.pos - beside.nodeSize : $edge.pos)).scrollIntoView());
+    return true;
   };
 }

@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { LoroText } from "loro-crdt";
 import { Slice } from "prosemirror-model";
+import { TextSelection } from "prosemirror-state";
 import { elementsOf, insertCard, kind, listWith, page, tick } from "./helpers";
 
 const D = "@t/diagram/chart", S = "@t/sketch/canvas";
@@ -187,5 +188,40 @@ describe("the slash menu's order", () => {
     expect(filterItems(items, "").map((i) => i.id)).toEqual(["link", "task", "check", "quote"]);
     const mixed = [item("sketch", "Sketch", "media"), item("task", "Task", "list"), item("image", "Image", "media"), item("bullets", "Bullet list", "list")];
     expect(filterItems(mixed, "").map((i) => i.id)).toEqual(["sketch", "image", "task", "bullets"]);
+  });
+});
+
+describe("deleting next to a card", () => {
+  const setup = async () => {
+    const p = await page({ list: listWith(kind(S, "@t/sketch")), modules: { "@t/sketch": card(S) } });
+    const v = p.engine.view;
+    v.dispatch(v.state.tr.insertText("a", 1));
+    insertCard(v, { blockId: "e1", kind: S, plugin: "@t/sketch" });
+    const s = v.state;
+    v.dispatch(s.tr.insert(s.doc.content.size, s.schema.nodes.paragraph.create(null, s.schema.text("b"))));
+    await tick();
+    return { p, v };
+  };
+  const cards = (v: any) => { const n: string[] = []; v.state.doc.forEach((c: any) => { if (c.type.name === "element") n.push(c.attrs.blockId); }); return n; };
+
+  it("delete_at_the_end_of_a_line_selects_the_card_after_it_first", async () => {
+    const { p, v } = await setup();
+    v.dispatch(v.state.tr.setSelection(TextSelection.create(v.state.doc, 2)));
+    key(v, "Delete");
+    expect(cards(v)).toEqual(["e1"]);
+    expect((v.state.selection as any).node?.attrs.blockId).toBe("e1");
+    key(v, "Delete");
+    expect(cards(v)).toEqual([]);
+    p.handle.destroy();
+  });
+
+  it("backspace_at_the_start_of_a_line_selects_the_card_before_it_first", async () => {
+    const { p, v } = await setup();
+    const start = v.state.doc.content.size - 2; // inside the last paragraph, before "b"
+    v.dispatch(v.state.tr.setSelection(TextSelection.create(v.state.doc, start)));
+    key(v, "Backspace");
+    expect(cards(v)).toEqual(["e1"]);
+    expect((v.state.selection as any).node?.attrs.blockId).toBe("e1");
+    p.handle.destroy();
   });
 });
