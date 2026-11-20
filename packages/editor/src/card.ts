@@ -74,7 +74,9 @@ export class Card implements NodeView {
     if (!plugin || !this.decl) return { why: "missing", plugin: this.node.attrs.plugin || plugin || "" };
     if (this.host.loader.failed(plugin)) return { why: "failed", plugin };
     const def = this.host.elements.defFor(this.kind, plugin);
-    if (!def || !this.host.loader.loaded(plugin)) return { why: "loading", plugin };
+    if (!this.host.loader.loaded(plugin)) return { why: "loading", plugin };
+    // loaded, yet it does not define this kind (its declaration and its code disagree): drawn as a failure, never loaded again in a loop
+    if (!def) return { why: "failed", plugin };
     if ((this.node.attrs.v ?? 1) > (this.decl.version ?? 1)) return { why: "newer", plugin };
     return { def, plugin };
   }

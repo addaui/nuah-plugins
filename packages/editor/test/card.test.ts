@@ -133,6 +133,18 @@ describe("card elements", () => {
     p.handle.destroy(); seed.handle.destroy();
   });
 
+  it("a_module_that_loads_without_the_kind_shows_the_fallback_and_does_not_loop", async () => {
+    let registered = 0;
+    const other = { default: (api: any) => { registered++; api.element({ kind: "@t/sketch/other" }); } };
+    const p = await page({ list: listWith(kind(K, "@t/sketch")), modules: { "@t/sketch": other } });
+    insertCard(p.engine.view, { blockId: "e1", kind: K, plugin: "@t/sketch", fallback: { text: "a sketch of the plan" } });
+    await tick(20);
+    expect(p.place.textContent).toContain("a sketch of the plan");
+    expect(p.place.textContent).toContain("Could not load @t/sketch");
+    expect(registered).toBe(1);
+    p.handle.destroy();
+  });
+
   it("older_version_upgraded_on_open", async () => {
     const seen: any[] = [];
     const mod = { default: (api: any) => api.element({ kind: K, upgrade: { 1: (d: any) => ({ ...d, colour: d.color, color: undefined }), 2: (d: any) => ({ ...d, size: d.size ?? "m" }) },
