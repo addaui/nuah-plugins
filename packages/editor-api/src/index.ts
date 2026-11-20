@@ -103,6 +103,10 @@ export interface FormatItem {
   label: Label;
   icon?: string;
   group?: string;
+  /** The group's name where it is shown as a section (the Element tab); the first item of a group that has one names it. */
+  groupLabel?: Label;
+  /** The node attribute the item writes (alignment: `align`): where the Element tab shows the item, it leaves out the option of the same attribute. */
+  attr?: string;
   basic?: boolean;
   /** `insert` adds something new (a sticker, an element): kept out of the Element tab, which formats the element itself. */
   applies?: "text" | "block" | "both" | "insert";

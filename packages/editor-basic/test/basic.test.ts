@@ -100,7 +100,12 @@ describe("Format items (ADR 0097)", () => {
     v.dispatch(v.state.tr.insertText("hello", 1));
     const id = v.state.doc.child(0).attrs.blockId;
     const ids = m.handle.format(id).map((f: any) => f.id);
-    for (const x of ["bold", "italic", "underline", "strike", "code", "highlight", "link", "paragraph", "heading-1", "quote", "bullet-list", "ordered-list", "checklist", "align-center"]) expect(ids).toContain(x);
+    for (const x of ["bold", "italic", "underline", "strike", "code", "highlight", "link", "paragraph", "heading-1", "quote", "bullet-list", "ordered-list", "checklist", "align-center", "align-justify"]) expect(ids).toContain(x);
+    // grouped and named, so the Element tab can show them as sections
+    const groups = [...new Set(m.handle.format(id).map((f: any) => f.groupLabel))];
+    expect(groups).toEqual(["Text effects", "Level", "Block", "Lists", "Alignment"]);
+    // the items say which attribute they write, so the Element tab does not also show that option
+    expect(m.handle.format(id).find((f: any) => f.id === "align-justify")).toMatchObject({ attr: "align" });
     await m.handle.applyFormat(id, "bold");
     expect(v.state.doc.child(0).firstChild!.marks.map((x) => x.type.name)).toEqual(["bold"]);
     await m.handle.applyFormat(id, "heading-1");

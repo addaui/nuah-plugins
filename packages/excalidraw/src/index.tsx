@@ -84,7 +84,8 @@ function full(place: HTMLElement, ctx: ElementCtx): View {
     const root = createRoot(holder);
     unmount = () => root.unmount();
     root.render(react.createElement(x.Excalidraw as never, {
-      initialData: { elements: readScene(map(cur)), appState: { viewBackgroundColor: "transparent" } },
+      // the full view is Excalidraw's own canvas, background included; only the card's preview follows the page
+      initialData: { elements: readScene(map(cur)) },
       viewModeEnabled: !cur.editable,
       // the full view is opened to draw: its shortcuts work at once
       autoFocus: true,

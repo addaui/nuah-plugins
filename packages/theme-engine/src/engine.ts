@@ -109,7 +109,11 @@ export function tokens(T: Resolved, preset: Preset): Record<string, string> {
     "--glass": al(pal.surface), "--glass-side": al(pal.side), "--p-high": pal.warn, "--p-urgent": pal.danger,
     "--r-lg": R.r + "px", "--r-md": R.card + "px", "--r-sm": Math.min(R.btn, 12) + "px", "--r-btn": R.btn + "px", "--r-chip": R.chip + "px",
     "--bw": g("bw") + "px", "--bstyle": mat === "terminal" ? "dashed" : "solid", "--bc": glass ? (dark ? "rgba(255,255,255,.12)" : "rgba(255,255,255,.7)") : (mat === "brutal" || P.bcol === "text" ? pal.text : bcol),
-    "--sh": dark ? "0,0,0" : pal.sh, "--sunk": pal.sunk, "--shadow-1": sh.e2, "--shadow-card": sh.e1, "--shadow-2": sh.e3, "--shadow-btn": sh.eb, "--blur": blur + "px",
+    "--sh": dark ? "0,0,0" : pal.sh, "--sunk": pal.sunk, "--shadow-1": sh.e2, "--shadow-card": sh.e1, "--shadow-2": sh.e3,
+    // a floating surface (a menu, a popover, the Format bar before it sticks) always lifts off what is under it, whatever the
+    // material: a background one step off the page's, and a medium shadow (as shadcn's popover: bg-popover, border, shadow-md)
+    "--float-bg": floatBg(pal.surface, dark),
+    "--shadow-float": mat === "brutal" ? sh.e2 : `0 1px 2px rgba(${dark ? "0,0,0" : pal.sh},${dark ? .3 : .06}),0 6px 16px -4px rgba(${dark ? "0,0,0" : pal.sh},${dark ? .5 : .16})`, "--shadow-btn": sh.eb, "--blur": blur + "px",
     "--gap": g("gap") + "px", "--frame": g("frame") + "px", "--d": String(density), "--fs": g("fs") + "px",
     "--font": ff(g("font")), "--head": ff(g("head")), "--hw": String(g("hw")), "--hls": P.hls, "--ls": P.ls, "--tt": g("tt"),
     "--bg-image": tex === "dots" ? `radial-gradient(${ln} 1.2px,transparent 1.4px)` : tex === "grid" ? `linear-gradient(${ln} 1px,transparent 1px),linear-gradient(90deg,${ln} 1px,transparent 1px)` : "none",
@@ -150,4 +154,8 @@ export function apply(preset: Preset, ov: Overrides | undefined, schemePref: str
   return T;
 }
 
-
+/** A floating surface's background: one step lighter than the surface in the dark, nearer white in the light; a white surface gets a faint grey so the two still differ. */
+export function floatBg(surface: string, dark: boolean): string {
+  const up = mix(surface, "#ffffff", dark ? .06 : .7);
+  return up.toLowerCase() !== surface.toLowerCase() ? up : mix(surface, "#000000", .03);
+}

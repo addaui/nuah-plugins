@@ -101,11 +101,14 @@ export function formatPlugin(host: CardHost): Plugin {
 }
 
 /** The items for a whole element (the Element tab), each with whether it is on for all of the element's text. */
-export function formatOf(view: EditorView, host: CardHost, blockId: string): { id: string; label: string; icon?: string; group?: string; applies: string; active: boolean }[] {
+export function formatOf(view: EditorView, host: CardHost, blockId: string): { id: string; label: string; icon?: string; group?: string; groupLabel?: string; attr?: string; applies: string; active: boolean }[] {
   if (!blockText(view.state, blockId)) return [];
   const c = commandsFor(shimAt(view, blockId) as never, host);
-  return formatItems(host).filter((i) => i.applies !== "insert")
-    .map((i) => ({ id: i.id, label: labelOf(i, host.hooks.lang), icon: i.icon, group: i.group, applies: i.applies ?? "both", active: !!i.isActive && safe(() => i.isActive!(c), false) }));
+  const items = formatItems(host).filter((i) => i.applies !== "insert");
+  const lang = host.hooks.lang;
+  const named = new Map<string, string>();
+  for (const i of items) if (i.group && i.groupLabel && !named.has(i.group)) named.set(i.group, (lang === "ar" && i.groupLabel.ar) || i.groupLabel.en);
+  return items.map((i) => ({ id: i.id, label: labelOf(i, lang), icon: i.icon, group: i.group, groupLabel: i.group ? named.get(i.group) : undefined, attr: i.attr, applies: i.applies ?? "both", active: !!i.isActive && safe(() => i.isActive!(c), false) }));
 }
 
 /**

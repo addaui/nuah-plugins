@@ -149,6 +149,25 @@ export function gutterFor(view: EditorView, host: CardHost, chosen: Map<string, 
   if (hi) handle.append(hi);
   handle.addEventListener("mousedown", () => { const at = findBlock(view.state, blockId); if (at) view.dispatch(view.state.tr.setSelection(NodeSelection.create(view.state.doc, at.pos))); });
   handle.addEventListener("click", (e) => { const r = handle.getBoundingClientRect(); host.hooks.ui.menu(r.left, r.bottom, menuFor(view, host, chosen, blockId)); e.preventDefault(); });
+  // dragging the handle carries its block: the editor is told what moves (it lies outside the editor, so the editor never saw the start)
+  handle.addEventListener("dragstart", (e) => {
+    const at = findBlock(view.state, blockId);
+    if (!at || !e.dataTransfer) return;
+    const sel = NodeSelection.create(view.state.doc, at.pos);
+    view.dispatch(view.state.tr.setSelection(sel));
+    const slice = sel.content();
+    const { dom, text } = (view as unknown as { serializeForClipboard(s: typeof slice): { dom: HTMLElement; text: string } }).serializeForClipboard(slice);
+    e.dataTransfer.setData("text/html", dom.innerHTML);
+    e.dataTransfer.setData("text/plain", text);
+    e.dataTransfer.effectAllowed = "copyMove";
+    const shown = view.nodeDOM(at.pos);
+    if (shown instanceof HTMLElement) e.dataTransfer.setDragImage(shown, 0, 0);
+    (view as unknown as { dragging: unknown }).dragging = { slice, move: true, node: sel };
+  });
+  handle.addEventListener("dragend", () => {
+    (view as unknown as { dragging: unknown }).dragging = null;
+    document.querySelectorAll<HTMLElement>(".nuah-drop-line").forEach((l) => { l.hidden = true; });
+  });
   g.append(handle);
   return g;
 }

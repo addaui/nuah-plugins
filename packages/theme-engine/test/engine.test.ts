@@ -26,6 +26,19 @@ describe("theme engine", () => {
     expect(dark["--bg"]).toBe("#0f1112");
   });
 
+  it("a floating surface always lifts: its own background and a shadow whatever the material", () => {
+    for (const material of ["hairline", "flat", "glass", "clay", "brutal"]) {
+      const p = { ...preset, tokens: { ...preset.tokens, material } } as Preset;
+      for (const scheme of ["light", "dark"] as const) {
+        const t = tokens(resolve(p, {}, scheme, false), p);
+        expect(t["--shadow-float"], material + scheme).toBeTruthy();
+        expect(t["--shadow-float"]).not.toBe("none");
+        expect(t["--float-bg"]).toBeTruthy();
+        expect(t["--float-bg"]).not.toBe(t["--surface"]);
+      }
+    }
+  });
+
   it("a person's colour override wins, and a new background re-derives the surfaces", () => {
     const t = tokens(resolve(preset, { "light:accent": "#ff0000", "light:bg": "#ddeeff" }, "light", false), preset);
     expect(t["--accent"]).toBe("#ff0000");
