@@ -19,6 +19,12 @@ export function insertAt(view: EditorView, content: PmNode | PmNode[], pos?: num
 
 /** A new element of `kind` (its module need not be loaded): a block between blocks, or inline at the cursor. Returns its id. */
 export function insertElement(view: EditorView, host: CardHost, kind: string, init: ElementInit = {}, pos?: number): string {
+  if (init.node) {
+    // a content element's way in gives the node itself
+    const n = view.state.schema.nodeFromJSON(init.node);
+    if (n.isInline) view.dispatch(view.state.tr.replaceSelectionWith(n)); else insertAt(view, n, pos);
+    return (n.attrs.blockId as string) ?? "";
+  }
   const decl = host.list.kinds.find((k) => k.kind === kind);
   if (!decl) throw new Error(`no enabled plugin brings ${kind}`);
   const id = newBlockId();

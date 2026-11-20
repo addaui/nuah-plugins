@@ -63,7 +63,12 @@ export interface View { update(ctx: ElementCtx): void; destroy(): void }
 export type ViewFactory = (place: HTMLElement, ctx: ElementCtx) => View;
 
 /** What makes a new element: its settings and, for its own state, a function that fills the new container. */
-export interface ElementInit { data?: Record<string, unknown>; fill?: (state: unknown) => void }
+export interface ElementInit {
+  data?: Record<string, unknown>;
+  fill?: (state: unknown) => void;
+  /** For a content element: the node to put in (a picture, a card) instead of an element. */
+  node?: unknown;
+}
 
 /** What a content element's slash item may do to the block the person is in. */
 export interface EditorCommands {

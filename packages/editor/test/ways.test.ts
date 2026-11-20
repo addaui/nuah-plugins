@@ -146,3 +146,13 @@ describe("commands for plugins", () => {
     p.handle.destroy();
   });
 });
+
+describe("ways in for content elements", () => {
+  it("a_file_rule_may_insert_a_node", async () => {
+    const mod = { default: (api: any) => api.element({ kind: "@t/pic/image", nodes: [{ id: "pic", group: "block", atom: true, ids: true, attrs: { src: { default: "" } } }], ways: { files: [{ accept: ["image/png"], make: async () => ({ node: { type: "pic", attrs: { src: "/files/f1" } } }) }] } }) };
+    const p = await page({ list: { kinds: [...listWith().kinds, { kind: "@t/pic/image", version: 1, shape: "content", placement: "block", label: { en: "Picture" }, plugin: "@t/pic", module: "/plugins/t/pic/index.js", openers: ["@t/pic"], default: null, accepts: ["image/png"] } as never], runners: [] }, modules: { "@t/pic": mod } });
+    await p.host.files!([new File(["x"], "a.png", { type: "image/png" })], 1);
+    expect(JSON.stringify(p.handle.json())).toContain('"src":"/files/f1"');
+    p.handle.destroy();
+  });
+});
