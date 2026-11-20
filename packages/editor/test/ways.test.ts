@@ -133,6 +133,21 @@ describe("commands for plugins", () => {
     p.handle.destroy();
   });
 
+  it("say_where_on_screen_the_insertion_happens_so_a_picker_opens_there", async () => {
+    const { commandsFor } = await import("../src/commands");
+    const p = await page({ list: listWith() });
+    const v = p.engine.view;
+    v.dispatch(v.state.tr.insertText("hi", 1));
+    const asked: number[] = [];
+    // jsdom lays nothing out: the view's own measure stands in
+    (v as any).coordsAtPos = (pos: number) => { asked.push(pos); return { left: 40, right: 40, top: 100, bottom: 118 }; };
+    expect(commandsFor(v, p.host).spot()).toEqual({ left: 40, top: 100, bottom: 118 });
+    expect(asked).toEqual([v.state.selection.from]);
+    expect(commandsFor(v, p.host, 1).spot()).toEqual({ left: 40, top: 100, bottom: 118 });
+    expect(asked.at(-1)).toBe(1);
+    p.handle.destroy();
+  });
+
   it("block_menu_items_get_the_commands", async () => {
     const seen: unknown[] = [];
     const mod = { default: (api: any) => { api.element({ kind: "@t/m/none" }); api.menu((b: any, c: any) => { seen.push([b.blockId, typeof c?.replaceBlock]); return []; }); } };

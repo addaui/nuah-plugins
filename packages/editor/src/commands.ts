@@ -56,5 +56,14 @@ export function commandsFor(view: EditorView, host: CardHost, pos?: number): Edi
       if (at >= 0) view.dispatch(view.state.tr.replaceWith(at, at + size, view.state.schema.nodeFromJSON(json)));
     },
     insertElement: (kind, init) => insertElement(view, host, kind, init, pos),
+    spot: () => {
+      try {
+        const r = view.coordsAtPos(Math.min(pos ?? view.state.selection.from, view.state.doc.content.size));
+        return { left: r.left, top: r.top, bottom: r.bottom };
+      } catch {
+        const r = view.dom.getBoundingClientRect();
+        return { left: r.left, top: r.top, bottom: r.top };
+      }
+    },
   };
 }

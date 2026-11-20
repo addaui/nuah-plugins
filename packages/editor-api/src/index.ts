@@ -82,6 +82,8 @@ export interface EditorCommands {
   /** Puts other content in the place of a block. */
   replaceBlock(blockId: string, json: unknown): void;
   insertElement(kind: string, init?: ElementInit): string;
+  /** Where on screen the insertion happens, for a picker or popover to open there. */
+  spot(): Spot;
 }
 
 export interface Ways {
