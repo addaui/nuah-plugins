@@ -119,6 +119,24 @@ describe("card elements", () => {
     p.handle.destroy();
   });
 
+  it("writing_the_fallback_is_not_a_step_in_the_pages_undo", async () => {
+    const a = await page({ list: listWith(kind(K, "@t/sketch")), modules: { "@t/sketch": recorder([]) } });
+    const v = a.engine.view;
+    insertCard(v, { blockId: "e1", kind: K, plugin: "@t/sketch" });
+    await tick(1100); // apart from the typing, so undo does not take both in one step
+    v.dispatch(v.state.tr.insertText("typed", 1));
+    await tick(10);
+    // the element's own change (as its full view commits it), then the Fallback follows
+    (a.doc.getMap("elements").ensureMergeableText("e1") as LoroText).insert(0, "drawn");
+    a.doc.commit({ origin: "el:e1" });
+    await tick(1200);
+    expect(elementsOf(a.doc)[0].attributes.fallback).toEqual({ text: "drawn" });
+    a.engine.undo(); await tick(10);
+    expect(a.engine.text()).not.toContain("typed");
+    expect(elementsOf(a.doc)[0].attributes.fallback).toEqual({ text: "drawn" });
+    a.handle.destroy();
+  });
+
   it("failed_module_shows_fallback_and_page_stays_editable", async () => {
     const seed = await page({ list: listWith(kind(K, "@t/sketch")), modules: { "@t/sketch": recorder([]) } });
     insertCard(seed.engine.view, { blockId: "e1", kind: K, plugin: "@t/sketch", fallback: { text: "a sketch of the plan" } });

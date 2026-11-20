@@ -141,7 +141,7 @@ export class Card implements NodeView {
     data = Object.fromEntries(Object.entries(data).filter(([, x]) => x !== undefined));
     queueMicrotask(() => {
       const p = this.getPos();
-      if (p !== undefined && !this.dead) this.view.dispatch(this.view.state.tr.setNodeMarkup(p, undefined, { ...this.node.attrs, v: to, data }));
+      if (p !== undefined && !this.dead) asElement(this.host.doc, this.node.attrs.blockId, () => this.view.dispatch(this.view.state.tr.setNodeMarkup(p, undefined, { ...this.node.attrs, v: to, data })));
     });
     return true;
   }
@@ -236,7 +236,7 @@ export class Card implements NodeView {
       if (pos === undefined) return;
       const fb = def.fallback!(this.ctx(def));
       if (same(fb, this.node.attrs.fallback)) return;
-      this.view.dispatch(this.view.state.tr.setNodeMarkup(pos, undefined, { ...this.node.attrs, fallback: fb }).setMeta("addToHistory", false));
+      asElement(this.host.doc, this.node.attrs.blockId, () => this.view.dispatch(this.view.state.tr.setNodeMarkup(pos, undefined, { ...this.node.attrs, fallback: fb }).setMeta("addToHistory", false)));
     }, FALLBACK_MS);
   }
 
@@ -266,4 +266,20 @@ export class Card implements NodeView {
 /** Shows an element's raw data (the right-click menu's "View raw data"). */
 export function viewRaw(host: CardHost, node: PmNode) {
   showRaw(host.hooks.ui, host.hooks.lang, { ...node.attrs }, host.doc ? stateJson(host.doc, node.attrs.blockId) : null);
+}
+
+/**
+ * Runs a change the editor makes on an element's behalf (its Fallback, an upgrade) as the element's own commit (`el:<id>`),
+ * which the page's undo leaves out (ADR 0094): undo is for what the person did. The text sync commits inside the dispatch with
+ * its own fixed origin, so for that one dispatch the document's commit is given the element's origin instead.
+ */
+function asElement(doc: LoroDoc | null | undefined, blockId: string | null, fn: () => void): void {
+  if (!doc || !blockId) return fn();
+  const commit = doc.commit.bind(doc);
+  (doc as { commit: (o?: { origin?: string }) => void }).commit = (o) => commit({ ...(o ?? {}), origin: `el:${blockId}` });
+  try {
+    fn();
+  } finally {
+    delete (doc as { commit?: unknown }).commit;
+  }
 }
