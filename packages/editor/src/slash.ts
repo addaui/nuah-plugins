@@ -133,11 +133,27 @@ export function slashPlugin(host: CardHost): Plugin {
             row.addEventListener("mousedown", (e) => { e.preventDefault(); choose(v, open, it); });
             menu!.append(row);
           });
-          try { const c = v.coordsAtPos(open.from); Object.assign(menu.style, { position: "fixed", left: `${c.left}px`, top: `${c.bottom + 4}px` }); } catch { /* jsdom has no layout */ }
+          try {
+            const c = v.coordsAtPos(open.from);
+            const line = v.domAtPos(open.from).node;
+            const rtl = getComputedStyle((line.nodeType === 1 ? line : line.parentElement) as Element).direction === "rtl";
+            menu.style.position = "fixed";
+            const at = placeMenu(c, { width: menu.offsetWidth, height: menu.offsetHeight }, { width: innerWidth, height: innerHeight }, rtl);
+            Object.assign(menu.style, { left: `${at.left}px`, top: `${at.top}px` });
+          } catch { /* jsdom has no layout */ }
           void view;
         },
         destroy: close,
       };
     },
   });
+}
+
+/** Where the menu goes: under the caret, starting where the line starts (its right edge at the caret in right-to-left text), above the line when there is no room below, never off the screen. */
+export function placeMenu(caret: { left: number; right: number; top: number; bottom: number }, size: { width: number; height: number }, screen: { width: number; height: number }, rtl: boolean): { left: number; top: number } {
+  const gap = 4, margin = 8;
+  const left = Math.max(margin, Math.min(rtl ? caret.right - size.width : caret.left, screen.width - size.width - margin));
+  const below = caret.bottom + gap;
+  const top = below + size.height > screen.height - margin && caret.top - gap - size.height >= margin ? caret.top - gap - size.height : below;
+  return { left, top };
 }

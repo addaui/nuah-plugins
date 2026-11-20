@@ -225,3 +225,18 @@ describe("deleting next to a card", () => {
     p.handle.destroy();
   });
 });
+
+describe("where the slash menu opens", () => {
+  const caret = { left: 900, right: 900, top: 200, bottom: 218 };
+  const size = { width: 260, height: 300 };
+  const screen = { width: 1024, height: 768 };
+  it("starts_at_the_caret_in_the_lines_direction_and_stays_on_screen", async () => {
+    const { placeMenu } = await import("../src/slash");
+    // right to left: the menu's right edge at the caret
+    expect(placeMenu(caret, size, screen, true)).toEqual({ left: 640, top: 222 });
+    // left to right near the edge: pulled back inside
+    expect(placeMenu(caret, size, screen, false)).toEqual({ left: 1024 - 260 - 8, top: 222 });
+    // no room below: above the line
+    expect(placeMenu({ ...caret, top: 600, bottom: 618 }, size, screen, false).top).toBe(600 - 300 - 4);
+  });
+});
