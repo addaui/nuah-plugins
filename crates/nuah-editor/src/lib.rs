@@ -103,8 +103,10 @@ fn elements(tx: &mut Tx) -> Result<Value> {
         k["openers"] = Value::Array(openers);
         k["default"] = default;
     }
+    // a plugin with a module and no kinds (margin actions, block menus) still loads with the page
+    let modules: Vec<Value> = providers.iter().filter(|p| p["data"]["kinds"].as_array().is_none_or(|k| k.is_empty()) && p["module"].is_string()).map(|p| json!({"plugin": p["plugin"], "module": p["module"]})).collect();
     let runners: Vec<Value> = tx.provided("editor.runner")?.into_iter().map(|p| json!({"plugin": p["plugin"], "module": p["module"], "languages": p["data"]["languages"]})).collect();
-    Ok(json!({"kinds": kinds, "runners": runners}))
+    Ok(json!({"kinds": kinds, "runners": runners, "modules": modules}))
 }
 
 pub struct Editor;
@@ -125,7 +127,7 @@ impl Plugin for Editor {
             "permissions": {"editor.manage": {"description": "Choose which plugin opens each kind of element", "default": ["admin", "owner"]}},
             "operations": {
                 "editor.elements": {"kind": "query", "description": "Every element kind the enabled plugins bring, with its plugin, module address, Openers and the Owner's default; every Runner",
-                    "output": {"type": "object", "required": ["kinds", "runners"]}},
+                    "output": {"type": "object", "required": ["kinds", "runners", "modules"]}},
                 "editor.opener.set": {"kind": "command", "permission": "editor.manage", "description": "Set (or clear, with null) the plugin that opens a kind by default",
                     "input": {"type": "object", "required": ["kind", "plugin"], "properties": {"kind": {"type": "string", "maxLength": 200}, "plugin": {"type": ["string", "null"], "maxLength": 120}}},
                     "output": {"type": "object"},

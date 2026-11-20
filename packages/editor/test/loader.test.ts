@@ -61,3 +61,15 @@ describe("the loader", () => {
     expect(seen).toEqual(["@nuah/mermaid"]);
   });
 });
+
+describe("plugins without kinds", () => {
+  it("load_with_the_page", async () => {
+    const { modulesOf } = await import("../src/face");
+    const list = { kinds: [], runners: [], modules: [{ plugin: "@t/talk", module: "/plugins/t/talk/index.js" }] };
+    const entries = modulesOf(list as never);
+    const importer = vi.fn(async () => ({ default: () => {} }));
+    const l = createLoader({ list: entries, importer, ui: { loading: () => () => {} } as never, api: () => ({}) as never });
+    await l.loadContent();
+    expect(importer).toHaveBeenCalledWith("/plugins/t/talk/index.js");
+  });
+});

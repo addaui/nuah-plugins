@@ -33,6 +33,8 @@ import type { NodeViewConstructor } from "prosemirror-view";
 export interface ElementsList {
   kinds: (ElementKindDecl & { plugin: string; module: string; openers: string[]; default: string | null })[];
   runners: { plugin: string; module: string; languages: string[] }[];
+  /** Plugins with a module and no kinds (margin actions, block menus). */
+  modules?: { plugin: string; module: string }[];
 }
 export interface FaceHooks {
   ui: Ui;
@@ -103,6 +105,7 @@ export function modulesOf(list: ElementsList): ModuleEntry[] {
     by.set(plugin, e);
   }
   for (const r of list.runners) if (!by.has(r.plugin)) by.set(r.plugin, { plugin: r.plugin, url: r.module, data: { languages: r.languages } });
+  for (const m of list.modules ?? []) if (!by.has(m.plugin)) by.set(m.plugin, { plugin: m.plugin, url: m.module, data: { kinds: [] } });
   return [...by.values()];
 }
 

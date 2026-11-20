@@ -61,7 +61,8 @@ export function createLoader(o: LoaderOptions): Loader {
   };
   const entries = (plugins: Iterable<ModuleEntry | undefined>) => Promise.all([...new Set([...plugins].filter((x): x is ModuleEntry => !!x))].map(load)).then(() => undefined);
   return {
-    loadContent: () => entries(o.list.filter((e) => e.data?.kinds?.some((k) => k.shape === "content"))),
+    // content plugins make the schema, and a plugin with no kinds adds margin actions or menus: both load with the page
+    loadContent: () => entries(o.list.filter((e) => e.data?.kinds?.some((k) => k.shape === "content") || (Array.isArray(e.data?.kinds) && e.data!.kinds!.length === 0))),
     loadFor: (kinds) => entries([...kinds].map((k) => byKind.get(k))),
     loadPlugin: (plugin) => entries([o.list.find((e) => e.plugin === plugin)]),
     loaded: (plugin) => ok.has(plugin),

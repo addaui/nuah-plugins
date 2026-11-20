@@ -116,3 +116,12 @@ fn reimplementation_satisfies_element_plugins() {
     start(vec![Arc::new(Other), el()], &["@t/editor", "@t/mermaid"]);
     start(vec![Arc::new(Editor), el()], &["@nuah/editor", "@t/mermaid"]);
 }
+
+#[test]
+fn plugins_with_a_module_and_no_kinds_are_listed_too() {
+    let core = start(vec![Arc::new(Editor), Arc::new(element_plugin("@t/talk", json!([])))], &["@nuah/editor", "@t/talk"]);
+    let out = core.call_as(&who(&["member"]), "editor.elements", json!({}), None).unwrap().output;
+    assert_eq!(out["kinds"], json!([]));
+    assert_eq!(out["modules"][0]["plugin"], "@t/talk");
+    assert!(out["modules"][0]["module"].as_str().unwrap().starts_with("/plugins/t/talk/index.js?v="));
+}
