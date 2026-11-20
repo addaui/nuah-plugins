@@ -117,3 +117,32 @@ describe("ways in", () => {
     p.handle.destroy();
   });
 });
+
+describe("commands for plugins", () => {
+  it("insert_inline_and_replace_a_block", async () => {
+    const { commandsFor } = await import("../src/commands");
+    const p = await page({ list: listWith() });
+    const v = p.engine.view;
+    v.dispatch(v.state.tr.insertText("hello ", 1));
+    const c = commandsFor(v, p.host);
+    c.insertInline([{ type: "text", text: "world" }]);
+    expect(p.engine.text()).toBe("hello world");
+    const id = v.state.doc.child(0).attrs.blockId;
+    c.replaceBlock(id, { type: "paragraph", content: [{ type: "text", text: "replaced" }] });
+    expect(p.engine.text()).toBe("replaced");
+    p.handle.destroy();
+  });
+
+  it("block_menu_items_get_the_commands", async () => {
+    const seen: unknown[] = [];
+    const mod = { default: (api: any) => { api.element({ kind: "@t/m/none" }); api.menu((b: any, c: any) => { seen.push([b.blockId, typeof c?.replaceBlock]); return []; }); } };
+    const p = await page({ list: listWith(kind("@t/m/none", "@t/m")), modules: { "@t/m": mod } });
+    await p.loader.loadFor(new Set(["@t/m/none"]));
+    const v = p.engine.view;
+    v.dispatch(v.state.tr.insertText("x", 1));
+    const { menuFor } = await import("../src/surfaces");
+    menuFor(v, p.host, new Map(), v.state.doc.child(0).attrs.blockId);
+    expect(seen).toEqual([[v.state.doc.child(0).attrs.blockId, "function"]]);
+    p.handle.destroy();
+  });
+});

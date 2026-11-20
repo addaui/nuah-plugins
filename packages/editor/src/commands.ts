@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 /** What the ways in do to the page: put an element in, change the block the person is in (ADR 0094). */
 import type { EditorView } from "prosemirror-view";
-import type { Node as PmNode } from "prosemirror-model";
+import { Fragment, Slice, type Node as PmNode } from "prosemirror-model";
 import { setBlockType, wrapIn } from "prosemirror-commands";
 import { wrapInList } from "prosemirror-schema-list";
 import type { EditorCommands, ElementInit } from "@nuah/editor-api";
@@ -40,6 +40,15 @@ export function commandsFor(view: EditorView, host: CardHost, pos?: number): Edi
     wrapIn: (t, attrs) => !!type(t) && wrapIn(type(t)!, attrs)(view.state, view.dispatch),
     toggleList: (list, item) => !!type(list) && !!type(item) && wrapInList(type(list)!)(view.state, view.dispatch),
     insertNode: (json) => insertAt(view, view.state.schema.nodeFromJSON(json), pos),
+    insertInline: (json) => {
+      const nodes = json.map((j) => view.state.schema.nodeFromJSON(j));
+      view.dispatch(view.state.tr.replaceSelection(new Slice(Fragment.from(nodes), 0, 0)).scrollIntoView());
+    },
+    replaceBlock: (blockId, json) => {
+      let at = -1, size = 0;
+      view.state.doc.descendants((n, p) => { if (at < 0 && n.attrs.blockId === blockId) { at = p; size = n.nodeSize; } return at < 0; });
+      if (at >= 0) view.dispatch(view.state.tr.replaceWith(at, at + size, view.state.schema.nodeFromJSON(json)));
+    },
     insertElement: (kind, init) => insertElement(view, host, kind, init, pos),
   };
 }

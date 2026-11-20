@@ -10,7 +10,7 @@ import type { BlockRef, MenuItem } from "@nuah/editor-api";
 import type { OptionDecl } from "@nuah/editor-core";
 import type { CardHost } from "./card";
 import { viewRaw } from "./card";
-import { insertElement } from "./commands";
+import { commandsFor, insertElement } from "./commands";
 import { msg } from "./messages";
 import { stateFor, type StateType } from "./state";
 
@@ -112,7 +112,7 @@ export function menuFor(view: EditorView, host: CardHost, chosen: Map<string, st
     const to = def?.convert?.to ?? [];
     if (to.length) items.push({ label: msg(lang, "turnInto"), sub: to.map((t) => { const d = host.list.kinds.find((x) => x.kind === t.kind); return { label: d ? d.label[lang as "en"] ?? d.label.en : t.kind, onclick: () => void host.turnInto?.(blockId, t.kind) }; }) });
   }
-  for (const m of host.elements.menus) items.push(...m.items(ref));
+  for (const m of host.elements.menus) items.push(...m.items(ref, commandsFor(view, host)));
   if (kind) items.push({ label: msg(lang, "viewRaw"), onclick: () => viewRaw(host, b.node) });
   return items;
 }

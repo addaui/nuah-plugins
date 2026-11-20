@@ -72,6 +72,10 @@ export interface EditorCommands {
   /** A list: wraps the block in `list` holding `item`. */
   toggleList(list: string, item: string): boolean;
   insertNode(json: unknown): void;
+  /** Inline content (text, an inline node) at the cursor. */
+  insertInline(json: unknown[]): void;
+  /** Puts other content in the place of a block. */
+  replaceBlock(blockId: string, json: unknown): void;
   insertElement(kind: string, init?: ElementInit): string;
 }
 
@@ -121,8 +125,8 @@ export interface EditorApi {
   files: { upload(file: Blob, name?: string): Promise<string> };
   /** A button in every block's margin (comments, reactions), whatever the block's kind. */
   margin(action: MarginAction): void;
-  /** Items for the right-click menu of every block. */
-  menu(items: (block: BlockRef) => MenuItem[]): void;
+  /** Items for the right-click menu of every block; the items may change the page through the commands. */
+  menu(items: (block: BlockRef, commands: EditorCommands) => MenuItem[]): void;
   /**
    * A service the Face offers by name (a product's own: open a page, pick something to link to, make a page), or undefined when this
    * Face has none of that name. A plugin that needs one says what it does without it.
