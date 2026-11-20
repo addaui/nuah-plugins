@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 use nuah_adapters::*;
-use nuah_editor::{check_elements, Editor};
+use nuah_editor::{check_elements, check_elements_since, Editor};
 use nuah_kernel::*;
 use serde_json::{json, Value};
 use std::collections::BTreeMap;
@@ -94,6 +94,32 @@ fn check_elements_refuses_bad_data() {
     check_elements(&body(json!({"kind": "@t/mermaid/diagram", "plugin": "@t/mermaid", "data": {"theme": "dark", "x:@other/p": {"kept": true}}})), &kinds()).unwrap();
     let e = check_elements(&body(json!({"kind": "@t/mermaid/diagram", "plugin": "@t/mermaid", "data": {"theme": "neon"}})), &kinds()).unwrap_err();
     assert_eq!(e.category, Category::Invalid);
+}
+
+#[test]
+fn an_unchanged_element_does_not_block_the_rest_of_the_page() {
+    // stored before its schema got stricter; the person only typed in a paragraph
+    let stale = json!({"blockId": "e1", "kind": "@t/mermaid/diagram", "plugin": "@t/mermaid", "v": 1, "data": {"theme": "neon"}});
+    let before = body(stale.clone());
+    let mut after = body(stale);
+    after["content"][0] = json!({"type": "paragraph", "content": [{"type": "text", "text": "typed"}]});
+    check_elements_since(&after, Some(&before), &kinds()).unwrap();
+    // its settings changed in this push: checked
+    let mut changed = after.clone();
+    changed["content"][1]["attrs"]["data"]["theme"] = json!("neon2");
+    assert!(check_elements_since(&changed, Some(&before), &kinds()).is_err());
+    // a new element is always checked
+    assert!(check_elements_since(&after, None, &kinds()).is_err());
+}
+
+#[test]
+fn an_element_of_another_version_is_not_held_to_this_versions_schema() {
+    let mut k = kinds();
+    k.get_mut("@t/mermaid/diagram").unwrap()["version"] = json!(2);
+    let old = body(json!({"blockId": "e1", "kind": "@t/mermaid/diagram", "plugin": "@t/mermaid", "v": 1, "data": {"color": "red"}}));
+    check_elements_since(&old, None, &k).unwrap();
+    let current = body(json!({"blockId": "e1", "kind": "@t/mermaid/diagram", "plugin": "@t/mermaid", "v": 2, "data": {"color": "red"}}));
+    assert!(check_elements_since(&current, None, &k).is_err());
 }
 
 #[test]

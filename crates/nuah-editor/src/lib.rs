@@ -42,7 +42,25 @@ pub fn plugin_of(kind: &str) -> Option<&str> {
 /// fit its schema (keys under another plugin's name, `x:@…`, are that plugin's and are kept). A kind no enabled plugin declares is
 /// left as it is: its plugin may be switched off, and its content must survive.
 pub fn check_elements(body: &Value, kinds: &BTreeMap<String, Value>) -> Result<()> {
-    fn walk(n: &Value, kinds: &BTreeMap<String, Value>) -> Result<()> {
+    check_elements_since(body, None, kinds)
+}
+
+/// The same for an edit to a body that was stored as `before`: an element whose kind, version and settings are as they were is not
+/// checked against the schema again, so one element stored under an older or looser schema never blocks the rest of the page. An
+/// element of another version than its kind's is not held to this version's schema (it is brought up to date when it opens).
+pub fn check_elements_since(body: &Value, before: Option<&Value>, kinds: &BTreeMap<String, Value>) -> Result<()> {
+    fn collect<'a>(n: &'a Value, out: &mut BTreeMap<&'a str, &'a Value>) {
+        let t = n["type"].as_str().unwrap_or("");
+        if t == "element" || t == "elementInline" {
+            if let Some(id) = n["attrs"]["blockId"].as_str() {
+                out.insert(id, &n["attrs"]);
+            }
+        }
+        for c in n["content"].as_array().into_iter().flatten() {
+            collect(c, out);
+        }
+    }
+    fn walk(n: &Value, kinds: &BTreeMap<String, Value>, old: &BTreeMap<&str, &Value>) -> Result<()> {
         let t = n["type"].as_str().unwrap_or("");
         if t == "element" || t == "elementInline" {
             let a = &n["attrs"];
@@ -53,18 +71,26 @@ pub fn check_elements(body: &Value, kinds: &BTreeMap<String, Value>) -> Result<(
                     return Err(Error::invalid("body", &format!("an element of {kind} says it belongs to {p}")));
                 }
             }
-            if let Some(schema) = kinds.get(kind).and_then(|d| d.get("schema")) {
-                let mut data = a["data"].as_object().cloned().unwrap_or_default();
-                data.retain(|k, _| !k.starts_with("x:"));
-                schema::validate(schema, &Value::Object(data)).map_err(|e| Error::invalid("body", &format!("the settings of a {kind}: {}", e.message)))?;
+            let unchanged = a["blockId"].as_str().and_then(|id| old.get(id)).is_some_and(|o| o["kind"] == a["kind"] && o["v"] == a["v"] && o["data"] == a["data"]);
+            if let Some(d) = kinds.get(kind).filter(|_| !unchanged) {
+                let version = |v: &Value| v.as_u64().unwrap_or(1);
+                if let Some(schema) = d.get("schema").filter(|_| version(&a["v"]) == version(&d["version"])) {
+                    let mut data = a["data"].as_object().cloned().unwrap_or_default();
+                    data.retain(|k, _| !k.starts_with("x:"));
+                    schema::validate(schema, &Value::Object(data)).map_err(|e| Error::invalid("body", &format!("the settings of a {kind}: {}", e.message)))?;
+                }
             }
         }
         for c in n["content"].as_array().into_iter().flatten() {
-            walk(c, kinds)?;
+            walk(c, kinds, old)?;
         }
         Ok(())
     }
-    walk(body, kinds)
+    let mut old = BTreeMap::new();
+    if let Some(b) = before {
+        collect(b, &mut old);
+    }
+    walk(body, kinds, &old)
 }
 
 /// The enabled kinds by name (for `check_elements`), read through the Core by any plugin that requires `editor.element`.
