@@ -221,14 +221,15 @@ function formats(api: EditorApi): FormatItem[] {
   const mark = (id: string, en: string, ar: string, icon = id): FormatItem => ({ id, label: L(en, ar), icon, group: "marks", basic: true, applies: "text", isActive: (c) => c.markActive(id), run: (c) => { c.toggleMark(id); } });
   const block = (id: string, en: string, ar: string, icon: string, type: string, attrs?: Record<string, unknown>): FormatItem => ({ id, label: L(en, ar), icon, group: "blocks", applies: "block", isActive: (c) => c.blockActive(type, attrs), run: (c) => { c.setBlock(type, attrs); } });
   const list = (id: string, en: string, ar: string, icon: string, l: string, item: string): FormatItem => ({ id, label: L(en, ar), icon, group: "lists", applies: "block", run: (c) => { c.toggleList(l, item); } });
-  const align = (v: string, en: string, ar: string): FormatItem => ({ id: `align-${v}`, label: L(en, ar), icon: `align-${v}`, group: "align", applies: "block", isActive: (c) => ["paragraph", "heading"].some((t) => c.blockActive(t, { align: v })), run: (c) => { c.setAlign(v === "start" ? null : v); } });
+  const align = (v: string, en: string, ar: string): FormatItem => ({ id: `align-${v}`, label: L(en, ar), icon: `align-${v}`, group: "align", applies: "block", isActive: (c) => ["paragraph", "heading"].some((t) => c.blockActive(t, { align: v })), run: (c) => { c.setAlign(v); } });
   return [
     mark("bold", "Bold", "عريض"), mark("italic", "Italic", "مائل"), mark("underline", "Underline", "تسطير"), mark("strike", "Strikethrough", "يتوسطه خط"),
     mark("code", "Code", "شيفرة"), mark("highlight", "Highlight", "تظليل"),
     { id: "link", label: L("Link", "رابط"), icon: "link", group: "marks", basic: true, applies: "text", isActive: (c) => c.markActive("link"),
-      run: (c) => {
+      run: async (c) => {
         if (c.markActive("link")) { c.toggleMark("link"); return; }
-        void api.ui.askUrl(api.lang() === "ar" ? "الرابط" : "Link").then((href) => { if (href && safeUrl(href)) c.toggleMark("link", { href }); });
+        const href = await api.ui.askUrl(api.lang() === "ar" ? "الرابط" : "Link");
+        if (href && safeUrl(href)) c.toggleMark("link", { href });
       } },
     block("paragraph", "Text", "نص", "type", "paragraph"),
     block("heading-1", "Heading 1", "عنوان 1", "heading-1", "heading", { level: 1 }), block("heading-2", "Heading 2", "عنوان 2", "heading-2", "heading", { level: 2 }), block("heading-3", "Heading 3", "عنوان 3", "heading-3", "heading", { level: 3 }),
@@ -240,7 +241,8 @@ function formats(api: EditorApi): FormatItem[] {
 }
 
 export default function register(api: EditorApi) {
-  for (const f of formats(api)) api.format(f);
+  // an editor before API 1.1 has no Format items: the elements still register
+  for (const f of formats(api)) api.format?.(f);
   let pmExtras: ReturnType<typeof prosemirror> | null = null;
   for (const def of defs()) {
     // the extras are made once and handed to the first definition; the engine merges every definition's

@@ -4,7 +4,8 @@
  * place the Face gives; the Selection bar appears over selected text with the basic items, when the person switched it on; the
  * Element tab asks the handle for the items of a whole element and applies one to all of its text.
  */
-import { Plugin, TextSelection, type EditorState } from "prosemirror-state";
+import { Plugin, Selection, TextSelection, type EditorState, type Transaction } from "prosemirror-state";
+import { Mapping } from "prosemirror-transform";
 import type { EditorView } from "prosemirror-view";
 import type { FormatItem } from "@nuah/editor-api";
 import type { CardHost } from "./card";
@@ -35,7 +36,7 @@ function drawItems(el: HTMLElement, items: FormatItem[], view: EditorView, host:
     const icon = it.icon ? host.hooks.ui.icon(it.icon) : null;
     if (icon) b.append(icon); else b.textContent = label;
     b.addEventListener("mousedown", (e) => e.preventDefault());
-    b.addEventListener("click", () => { safe(() => it.run(commandsFor(view, host)), undefined); view.focus(); });
+    b.addEventListener("click", () => { if (!view.editable) return; safe(() => void it.run(commandsFor(view, host)), undefined); view.focus(); });
     el.append(b);
   }
   if (!el.getAttribute("role")) { el.setAttribute("role", "toolbar"); el.setAttribute("aria-label", host.hooks.lang === "ar" ? "التنسيق" : "Formatting"); }
@@ -88,33 +89,42 @@ export function formatPlugin(host: CardHost): Plugin {
         }, undefined);
         requestAnimationFrame(() => sel.classList.add("is-shown"));
       };
+      // it is placed against the window: it goes when the page scrolls or the editor loses focus, and comes back with the next selection
+      const hide = () => { sel.hidden = true; sel.classList.remove("is-shown"); };
+      const onBlur = (e: FocusEvent) => { if (!sel.contains(e.relatedTarget as Node | null)) hide(); };
+      document.addEventListener("scroll", hide, true);
+      view.dom.addEventListener("blur", onBlur);
       update();
-      return { update, destroy: () => { sel.remove(); bar?.replaceChildren(); } };
+      return { update, destroy: () => { document.removeEventListener("scroll", hide, true); view.dom.removeEventListener("blur", onBlur); sel.remove(); bar?.replaceChildren(); } };
     },
   });
 }
 
 /** The items for a whole element (the Element tab), each with whether it is on for all of the element's text. */
 export function formatOf(view: EditorView, host: CardHost, blockId: string): { id: string; label: string; icon?: string; group?: string; applies: string; active: boolean }[] {
-  const range = blockText(view.state, blockId);
-  if (!range) return [];
-  const shim = shimAt(view, range);
-  const c = commandsFor(shim as never, host);
-  return formatItems(host).map((i) => ({ id: i.id, label: labelOf(i, host.hooks.lang), icon: i.icon, group: i.group, applies: i.applies ?? "both", active: !!i.isActive && safe(() => i.isActive!(c), false) }));
+  if (!blockText(view.state, blockId)) return [];
+  const c = commandsFor(shimAt(view, blockId) as never, host);
+  return formatItems(host).filter((i) => i.applies !== "insert")
+    .map((i) => ({ id: i.id, label: labelOf(i, host.hooks.lang), icon: i.icon, group: i.group, applies: i.applies ?? "both", active: !!i.isActive && safe(() => i.isActive!(c), false) }));
 }
 
-/** Runs one item over all of an element's text; the person's cursor stays where it was. */
-export function applyFormat(view: EditorView, host: CardHost, blockId: string, id: string): void {
-  const item = formatItems(host).find((i) => i.id === id);
-  const range = blockText(view.state, blockId);
-  if (!item || !range) return;
+/**
+ * Runs one item over all of an element's text (nothing on a page that cannot be written). The person's selection is mapped
+ * through what the item changed, so it stays on the same text; an item that finishes later applies to the document as it is then.
+ */
+export async function applyFormat(view: EditorView, host: CardHost, blockId: string, id: string): Promise<void> {
+  const item = formatItems(host).find((i) => i.id === id && i.applies !== "insert");
+  if (!item || !view.editable || !blockText(view.state, blockId)) return;
   const before = view.state.selection;
-  safe(() => item.run(commandsFor(shimAt(view, range) as never, host)), undefined);
+  const shim = shimAt(view, blockId);
+  try { await item.run(commandsFor(shim as never, host)); } catch { /* the item's own failure leaves the page as it was */ }
   const s = view.state;
-  view.dispatch(s.tr.setSelection(before.map(s.doc, s.tr.mapping)));
+  // changes others made meanwhile are not in the shim's mapping: if the old selection no longer fits, the nearest place will do
+  const back = safe(() => before.map(s.doc, shim.mapping), null) ?? Selection.near(s.doc.resolve(Math.min(before.from, s.doc.content.size)));
+  view.dispatch(s.tr.setSelection(back));
 }
 
-/** The text of a block: from the start to the end of its content (the first textblock inside, for a container like a callout). */
+/** The range of a block: from the start to the end of its content (all of a container's text, a callout's or a list's). */
 function blockText(state: EditorState, blockId: string): { from: number; to: number } | null {
   let found: { from: number; to: number } | null = null;
   state.doc.descendants((n, pos) => {
@@ -126,12 +136,21 @@ function blockText(state: EditorState, blockId: string): { from: number; to: num
   return found;
 }
 
-/** A view whose selection is the element's whole text: commands read and write through it, changes go to the real view. */
-function shimAt(view: EditorView, range: { from: number; to: number }) {
-  let state = view.state.apply(view.state.tr.setSelection(TextSelection.between(view.state.doc.resolve(range.from), view.state.doc.resolve(range.to))));
+/**
+ * A view whose selection is the element's whole text, read afresh from the real view each time (so an item that finishes later
+ * works on the document as it is then); what it dispatches goes to the real view, and its mapping is kept for the person's selection.
+ */
+function shimAt(view: EditorView, blockId: string) {
+  const mapping = new Mapping();
+  const at = () => {
+    const s = view.state, r = blockText(s, blockId);
+    return r ? s.apply(s.tr.setSelection(TextSelection.between(s.doc.resolve(r.from), s.doc.resolve(r.to)))) : s;
+  };
   return {
-    get state() { return state; },
-    dispatch(tr: import("prosemirror-state").Transaction) { view.dispatch(tr); state = state.apply(tr); },
+    mapping,
+    get state() { return at(); },
+    get editable() { return view.editable; },
+    dispatch(tr: Transaction) { if (!view.editable) return; view.dispatch(tr); mapping.appendMapping(tr.mapping); },
     get dom() { return view.dom; },
     coordsAtPos: (p: number) => view.coordsAtPos(p),
     domAtPos: (p: number) => view.domAtPos(p),

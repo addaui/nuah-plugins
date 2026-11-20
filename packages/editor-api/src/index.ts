@@ -104,9 +104,11 @@ export interface FormatItem {
   icon?: string;
   group?: string;
   basic?: boolean;
-  applies?: "text" | "block" | "both";
+  /** `insert` adds something new (a sticker, an element): kept out of the Element tab, which formats the element itself. */
+  applies?: "text" | "block" | "both" | "insert";
   isActive?(c: EditorCommands): boolean;
-  run(c: EditorCommands): void;
+  /** May finish later (asking for a link first): it then applies to the document as it is at that moment. */
+  run(c: EditorCommands): void | Promise<void>;
 }
 
 export interface Ways {

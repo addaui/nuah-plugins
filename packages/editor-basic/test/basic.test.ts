@@ -101,12 +101,20 @@ describe("Format items (ADR 0097)", () => {
     const id = v.state.doc.child(0).attrs.blockId;
     const ids = m.handle.format(id).map((f: any) => f.id);
     for (const x of ["bold", "italic", "underline", "strike", "code", "highlight", "link", "paragraph", "heading-1", "quote", "bullet-list", "ordered-list", "checklist", "align-center"]) expect(ids).toContain(x);
-    m.handle.applyFormat(id, "bold");
+    await m.handle.applyFormat(id, "bold");
     expect(v.state.doc.child(0).firstChild!.marks.map((x) => x.type.name)).toEqual(["bold"]);
-    m.handle.applyFormat(id, "heading-1");
+    await m.handle.applyFormat(id, "heading-1");
     expect(v.state.doc.child(0).type.name).toBe("heading");
-    m.handle.applyFormat(v.state.doc.child(0).attrs.blockId, "align-center");
+    await m.handle.applyFormat(v.state.doc.child(0).attrs.blockId, "align-center");
     expect(v.state.doc.child(0).attrs.align).toBe("center");
+    await m.handle.applyFormat(v.state.doc.child(0).attrs.blockId, "align-start");
+    expect(v.state.doc.child(0).attrs.align).toBe("start");
+    // the cursor stays in the same text when the element is wrapped (positions shift)
+    v.dispatch(v.state.tr.setSelection((v.state.selection.constructor as any).create(v.state.doc, 3)));
+    await m.handle.applyFormat(v.state.doc.child(0).attrs.blockId, "quote");
+    expect(v.state.doc.child(0).type.name).toBe("blockquote");
+    expect(v.state.selection.$from.parent.textContent).toBe("hello");
+    expect(v.state.selection.$from.parentOffset).toBe(2);
     m.handle.destroy();
   });
 });

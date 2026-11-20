@@ -93,8 +93,8 @@ export interface EditorHandle {
   setWraps(list: unknown[]): void;
   /** The Format items for a whole element, with whether each is on for all of its text (the Element tab, ADR 0097). */
   format(blockId: string): { id: string; label: string; icon?: string; group?: string; applies: string; active: boolean }[];
-  /** Applies one Format item to all of an element's text. */
-  applyFormat(blockId: string, id: string): void;
+  /** Applies one Format item to all of an element's text (an item may finish later, asking for a link first). */
+  applyFormat(blockId: string, id: string): Promise<void>;
   destroy(): void;
 }
 /** What the editor shares with the element modules it loads (a module never bundles these, ADR 0095). */

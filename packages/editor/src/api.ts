@@ -6,7 +6,7 @@
 import { parseKind, Registry } from "@nuah/editor-core";
 import type { BlockRef, EditorApi, EditorCommands, ElementDef, MarginAction, MenuItem, RunReport, RunResult, Ui, FormatItem } from "@nuah/editor-api";
 
-export const API_VERSION = "1.0.0";
+export const API_VERSION = "1.1.0"; // 1.1: format (ADR 0097)
 export interface Declared { plugin: string; def: ElementDef }
 type Run = (req: { language: string; source: string }, report: (r: RunReport) => void) => Promise<RunResult>;
 
