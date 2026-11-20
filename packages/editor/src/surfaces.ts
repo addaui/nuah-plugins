@@ -152,6 +152,7 @@ export function gutterFor(view: EditorView, host: CardHost, chosen: Map<string, 
   // dragging the handle carries its block: the editor is told what moves (it lies outside the editor, so the editor never saw the start)
   handle.addEventListener("dragstart", (e) => {
     const at = findBlock(view.state, blockId);
+    if (!view.editable) { e.preventDefault(); return; } // a page that cannot be written is not reordered
     if (!at || !e.dataTransfer) return;
     const sel = NodeSelection.create(view.state.doc, at.pos);
     view.dispatch(view.state.tr.setSelection(sel));

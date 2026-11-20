@@ -10,12 +10,22 @@ import type { EditorView } from "prosemirror-view";
 type Dragging = { slice: import("prosemirror-model").Slice; move: boolean; node?: NodeSelection };
 const dragging = (view: EditorView) => (view as unknown as { dragging: Dragging | null }).dragging;
 
-/** The dragged thing, when it is one whole top-level block. */
-function movedBlock(view: EditorView): { from: number; to: number } | null {
-  const d = dragging(view);
-  const sel = d?.node;
-  if (!d || !sel || !(sel instanceof NodeSelection) || sel.$from.depth !== 0 || !sel.node.isBlock) return null;
-  return { from: sel.from, to: sel.to };
+/** Whether this drag carries files (from the desktop): those are the files' to handle, never a block move. */
+const carriesFiles = (e: DragEvent) => [...(e.dataTransfer?.types ?? [])].includes("Files");
+
+/**
+ * The dragged thing, when it is one whole top-level block on a page that can be written. Positions taken when the drag began
+ * may have moved (someone else typed meanwhile): the block is found again by its id, and nothing moves when it is gone.
+ */
+function movedBlock(view: EditorView, e: DragEvent): { from: number; to: number } | null {
+  if (!view.editable || carriesFiles(e)) return null;
+  const sel = dragging(view)?.node;
+  if (!sel || !(sel instanceof NodeSelection) || sel.$from.depth !== 0 || !sel.node.isBlock) return null;
+  const id = sel.node.attrs.blockId;
+  if (view.state.doc.nodeAt(sel.from) === sel.node) return { from: sel.from, to: sel.to };
+  let found: { from: number; to: number } | null = null;
+  if (id) view.state.doc.forEach((n, offset) => { if (!found && n.attrs.blockId === id) found = { from: offset, to: offset + n.nodeSize }; });
+  return found;
 }
 
 /** The gap nearest a height on screen: the position between two top-level blocks (before the first block whose middle is below it). */
@@ -56,7 +66,7 @@ export function movePlugin(): Plugin {
     props: {
       handleDOMEvents: {
         dragover(view, e) {
-          if (!movedBlock(view)) return false;
+          if (!movedBlock(view, e)) { hide(); return false; }
           e.preventDefault();
           const g = gapAt(view, e.clientY);
           if (g && line) {
@@ -69,7 +79,8 @@ export function movePlugin(): Plugin {
         dragleave(view, e) { if (!view.dom.contains(e.relatedTarget as Node | null)) hide(); return false; },
         dragend() { hide(); return false; },
         drop(view, e) {
-          const block = movedBlock(view);
+          hide();
+          const block = movedBlock(view, e);
           if (!block) return false;
           e.preventDefault();
           hide();
