@@ -181,3 +181,47 @@ fn a_version_opens_the_content_it_had_and_restore_keeps_later_history() {
     assert_eq!(to_json(&d), body(&[("a", "first draft")]));
     assert!(call(&c, "docs.at", json!({"key": "p1", "version": "nope"})).is_err());
 }
+
+/// A browser's change to an element's own state and to the floating layer (ADR 0094), as an update the server takes.
+fn state_change(d: &LoroDoc, text: &str, sticker: Option<&str>) -> String {
+    let before = d.oplog_vv();
+    let t = d.get_map("elements").get_or_create_container("e1", nuah_live::loro::LoroText::new()).unwrap();
+    let len = t.len_unicode();
+    if len > 0 {
+        t.delete(0, len).unwrap();
+    }
+    t.insert(0, text).unwrap();
+    match sticker {
+        Some(id) => { d.get_map("floating").insert(id, nuah_live::loro::LoroValue::from(json!({"id": id, "x": 0.1}).to_string())).unwrap(); }
+        None => { let _ = d.get_map("floating").delete("s1"); }
+    }
+    d.commit();
+    b64(&d.export(ExportMode::updates(&before)).unwrap())
+}
+
+#[test]
+fn restore_brings_back_element_state() {
+    let c = core();
+    call(&c, "docs.create", json!({"key": "p1", "json": body(&[("b1", "one")])})).unwrap();
+    let d = browser(&c, "p1");
+    call(&c, "docs.push", json!({"key": "p1", "update": state_change(&d, "first drawing", Some("s1")), "client": "x"})).unwrap();
+    let v = call(&c, "docs.mark", json!({"key": "p1"})).unwrap()["id"].as_str().unwrap().to_string();
+    call(&c, "docs.push", json!({"key": "p1", "update": state_change(&d, "second drawing", None), "client": "x"})).unwrap();
+    assert_eq!(call(&c, "docs.restore", json!({"key": "p1", "version": v})).unwrap()["changed"], true);
+    let back = browser(&c, "p1");
+    assert_eq!(back.get_map("elements").get("e1").and_then(|x| x.into_container().ok()).and_then(|c| c.into_text().ok()).map(|t| t.to_string()), Some("first drawing".to_string()));
+    assert!(back.get_map("floating").get("s1").is_some(), "the sticker is back");
+}
+
+#[test]
+fn the_json_copy_carries_the_floating_layer() {
+    let c = core();
+    call(&c, "docs.create", json!({"key": "p1", "json": body(&[("b1", "one")])})).unwrap();
+    let d = browser(&c, "p1");
+    let before = d.oplog_vv();
+    d.get_map("floating").insert("s1", nuah_live::loro::LoroValue::from(std::collections::HashMap::from([("id".to_string(), nuah_live::loro::LoroValue::from("s1")), ("x".to_string(), nuah_live::loro::LoroValue::from(0.5))]))).unwrap();
+    d.commit();
+    call(&c, "docs.push", json!({"key": "p1", "update": b64(&d.export(ExportMode::updates(&before)).unwrap()), "client": "x"})).unwrap();
+    let j = call(&c, "docs.json", json!({"key": "p1"})).unwrap();
+    assert_eq!(j["attrs"]["floating"], json!([{"id": "s1", "x": 0.5}]));
+}

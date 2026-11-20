@@ -203,9 +203,19 @@ impl LiveStore {
     }
 
     /// Bring a Version's content back as a new change; the history after it is kept.
+    /// Brings the whole document back to a Version, as new changes after everything since (ADR 0093): the text, every element's own
+    /// state and the floating layer (ADR 0094). Nothing in the history is lost; the Version stays where it was.
     pub fn restore(&self, tx: &mut Tx, key: &str, version_id: &str) -> Result<Option<Written>> {
-        let old = self.at(tx, key, version_id)?;
-        self.write(tx, key, &old)
+        let v = self.version(tx, key, version_id)?;
+        let f = Frontiers::decode(&unb64("frontiers", v.body["frontiers"].as_str().unwrap_or(""))?).map_err(lerr)?;
+        let d = self.load(tx, key)?;
+        let before = d.oplog_vv();
+        d.revert_to(&f).map_err(lerr)?;
+        d.commit();
+        if d.oplog_vv() == before {
+            return Ok(None);
+        }
+        self.keep(tx, key, &d, &before).map(Some)
     }
 
     /// Forget a document, its updates and its Versions.

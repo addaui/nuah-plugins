@@ -7,8 +7,20 @@ use serde_json::{json, Map, Value};
 
 /// The document as ProseMirror JSON: what the owning plugin keeps as its plain copy. Marks come in name order; an empty text run gives nothing.
 pub fn to_json(doc: &LoroDoc) -> Value {
-    node(&doc.get_map(ROOT))
+    let mut out = node(&doc.get_map(ROOT));
+    // the floating layer (stickers) lives beside the body, one entry per element (ADR 0094); readers of the JSON copy get it as the
+    // document's `floating` attribute, in its stacking order
+    let floating = value(&doc.get_map(FLOATING).get_deep_value());
+    if let Some(m) = floating.as_object().filter(|m| !m.is_empty()) {
+        let mut list: Vec<Value> = m.values().cloned().collect();
+        list.sort_by(|a, b| (a["z"].as_str().unwrap_or(""), a["id"].as_str().unwrap_or("")).cmp(&(b["z"].as_str().unwrap_or(""), b["id"].as_str().unwrap_or(""))));
+        out["attrs"]["floating"] = Value::Array(list);
+    }
+    out
 }
+
+/// The root map of the floating layer.
+pub const FLOATING: &str = "floating";
 
 pub(crate) fn node(m: &LoroMap) -> Value {
     let name = match m.get(NODE_NAME) {
