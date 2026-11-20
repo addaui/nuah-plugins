@@ -101,9 +101,15 @@ export function slashPlugin(host: CardHost): Plugin {
             const row = document.createElement("div");
             row.className = "nuah-slash-item" + (i === index ? " is-active" : "");
             row.setAttribute("role", "option");
+            row.dataset.id = it.id;
+            const ico = document.createElement("span");
+            ico.className = "nuah-slash-ico";
             const icon = it.icon ? host.hooks.ui.icon(it.icon) : null;
-            if (icon) row.append(icon);
-            row.append(document.createTextNode(it.label));
+            if (icon) ico.append(icon);
+            const label = document.createElement("span");
+            label.className = "nuah-slash-label";
+            label.textContent = it.label;
+            row.append(ico, label);
             row.addEventListener("mousedown", (e) => { e.preventDefault(); choose(v, open, it); });
             menu!.append(row);
           });
