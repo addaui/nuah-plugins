@@ -23,3 +23,25 @@ describe("the floating layer", () => {
     a.handle.destroy();
   });
 });
+
+describe("text around floating elements", () => {
+  it("a_wrap_is_a_shaped_float_at_the_start_of_its_block", async () => {
+    const a = await openPage([BASIC]);
+    const v = a.engine.view;
+    v.dispatch(v.state.tr.insertText("text that flows around a sticker", 1));
+    const id = v.state.doc.child(0).attrs.blockId;
+    a.handle.setWraps([{ anchor: id, side: "end", width: 80, height: 60, inset: 4, top: 2, margin: 6, shape: "oval" }]);
+    await tick();
+    const w = a.place.querySelector(".sticker-wrap") as HTMLElement;
+    expect(w).not.toBeNull();
+    expect(w.style.getPropertyValue("float")).toBe("inline-end");
+    expect(w.style.width).toBe("80px");
+    expect(w.style.getPropertyValue("shape-outside")).toBe("ellipse(50% 50%)");
+    a.handle.setWraps([]);
+    await tick();
+    expect(a.place.querySelector(".sticker-wrap")).toBeNull();
+    // a wrap never enters the document
+    expect(JSON.stringify(a.handle.json())).not.toContain("sticker-wrap");
+    a.handle.destroy();
+  });
+});

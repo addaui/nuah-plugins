@@ -23,7 +23,7 @@ import { slashPlugin } from "./slash";
 import { fileRouter, waysPlugin } from "./ways";
 import { clipboardPlugin } from "./clipboard";
 import { contextPlugin, gutterFor, marginPlugin, openerFor, setOption, turnInto } from "./surfaces";
-import { blockAt, floatingOf, floatingPlugin, lineTop, setFloating, type FloatingHooks } from "./floating";
+import { blockAt, floatingOf, floatingPlugin, lineTop, setFloating, wrapsLayer, type FloatingHooks } from "./floating";
 
 const IDLE_MS = 1500;
 import { localPresence, type PresenceStore } from "./state";
@@ -82,6 +82,8 @@ export interface EditorHandle {
   /** The top-level block at a point (its id, and the character under the point), and the top of the line a character is on. */
   blockAt(x: number, y: number): { id: string; at?: number } | null;
   lineTop(id: string, at: number): number | null;
+  /** Text flowing around floating elements: shaped floats, and spacers where an element covers part of a line (ADR 0071). */
+  setWraps(list: unknown[]): void;
   destroy(): void;
 }
 /** What the editor shares with the element modules it loads (a module never bundles these, ADR 0095). */
@@ -122,6 +124,7 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
   const chosen = new Map<string, string>();
   const card: NodeViewConstructor = (node, view, getPos) => new Card(node, view, getPos as () => number | undefined, host);
   let engineRef: Engine | null = null;
+  const wraps = wrapsLayer(() => engineRef!.view);
   const files = fileRouter(host, () => engineRef!.view);
   const ways = waysPlugin(host, files);
   // what content plugins add for a ProseMirror engine: plugins, node views, spec additions
@@ -132,7 +135,7 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
   const engine = createEngine({
     place, registry: elements.registry(version), live: hooks.live, content: hooks.content, editable, extras, placeholder: hooks.placeholder, onChange: hooks.onChange,
     nodeViews: { ...(Object.assign({}, ...extra.map((x) => x.nodeViews ?? {})) as Record<string, NodeViewConstructor>), element: card, elementInline: card },
-    plugins: (schema) => [floatingPlugin(place, hooks.floating, hooks.live?.doc, () => hooks.content), slashPlugin(host), ways.plugin, clipboardPlugin(host), contextPlugin(host), marginPlugin(host, chosen), ...(extra.flatMap((x) => (typeof x.plugins === "function" ? x.plugins(schema) : x.plugins ?? [])) as pmState.Plugin[])],
+    plugins: (schema) => [floatingPlugin(place, hooks.floating, hooks.live?.doc, () => hooks.content), wraps.plugin, slashPlugin(host), ways.plugin, clipboardPlugin(host), contextPlugin(host), marginPlugin(host, chosen), ...(extra.flatMap((x) => (typeof x.plugins === "function" ? x.plugins(schema) : x.plugins ?? [])) as pmState.Plugin[])],
   });
   engineRef = engine;
   host.files = files;
@@ -171,6 +174,7 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
     setFloating: (list) => setFloating(hooks.live?.doc, list),
     blockAt: (x, y) => blockAt(engine.view, x, y),
     lineTop: (id, at) => lineTop(engine.view, id, at),
+    setWraps: (list) => wraps.set(list as never),
     refreshComments: () => { engine.view.dom.parentElement?.querySelectorAll(".nuah-gutter").forEach((g) => g.remove()); },
     destroy: () => { clearTimeout(later); engine.destroy(); },
   };
