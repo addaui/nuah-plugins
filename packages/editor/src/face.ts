@@ -19,6 +19,7 @@ import { apiFor, Elements } from "./api";
 import { createEngine, type Engine, type Live } from "./engine";
 import { createLoader, type Loader, type ModuleEntry } from "./loader";
 import { Card, type CardHost } from "./card";
+import { applyFormat, formatOf, formatPlugin } from "./format";
 import { slashPlugin } from "./slash";
 import { fileRouter, waysPlugin } from "./ways";
 import { clipboardPlugin } from "./clipboard";
@@ -57,6 +58,10 @@ export interface FaceHooks {
   services?: Record<string, unknown>;
   /** The floating layer (stickers): the layers to draw in, the list, and when to lay them out again. */
   floating?: FloatingHooks;
+  /** Where the Format bar goes (ADR 0097): the Face places it (under the title) and styles it. */
+  formatBar?: HTMLElement;
+  /** Format items of the Face's own (Madar: add a sticker). */
+  format?: import("@nuah/editor-api").FormatItem[];
   /** Loads a module (tests hand in their own). */
   importer?(url: string): Promise<{ default?: unknown }>;
 }
@@ -86,6 +91,10 @@ export interface EditorHandle {
   lineTop(id: string, at: number): number | null;
   /** Text flowing around floating elements: shaped floats, and spacers where an element covers part of a line (ADR 0071). */
   setWraps(list: unknown[]): void;
+  /** The Format items for a whole element, with whether each is on for all of its text (the Element tab, ADR 0097). */
+  format(blockId: string): { id: string; label: string; icon?: string; group?: string; applies: string; active: boolean }[];
+  /** Applies one Format item to all of an element's text. */
+  applyFormat(blockId: string, id: string): void;
   destroy(): void;
 }
 /** What the editor shares with the element modules it loads (a module never bundles these, ADR 0095). */
@@ -138,7 +147,7 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
   const engine = createEngine({
     place, registry: elements.registry(version), live: hooks.live, content: hooks.content, editable, extras, placeholder: hooks.placeholder, onChange: hooks.onChange,
     nodeViews: { ...(Object.assign({}, ...extra.map((x) => x.nodeViews ?? {})) as Record<string, NodeViewConstructor>), element: card, elementInline: card },
-    plugins: (schema) => [floatingPlugin(place, hooks.floating, hooks.live?.doc, () => hooks.content), wraps.plugin, slashPlugin(host), ways.plugin, clipboardPlugin(host), contextPlugin(host), marginPlugin(host, chosen), ...(extra.flatMap((x) => (typeof x.plugins === "function" ? x.plugins(schema) : x.plugins ?? [])) as pmState.Plugin[])],
+    plugins: (schema) => [floatingPlugin(place, hooks.floating, hooks.live?.doc, () => hooks.content), wraps.plugin, slashPlugin(host), ways.plugin, clipboardPlugin(host), contextPlugin(host), formatPlugin(host), marginPlugin(host, chosen), ...(extra.flatMap((x) => (typeof x.plugins === "function" ? x.plugins(schema) : x.plugins ?? [])) as pmState.Plugin[])],
   });
   engineRef = engine;
   host.files = files;
@@ -178,6 +187,8 @@ export async function open(place: HTMLElement, hooks: FaceHooks): Promise<Mounte
     blockAt: (x, y) => blockAt(engine.view, x, y),
     lineTop: (id, at) => lineTop(engine.view, id, at),
     setWraps: (list) => wraps.set(list as never),
+    format: (id) => formatOf(engine.view, host, id),
+    applyFormat: (id, item) => applyFormat(engine.view, host, id, item),
     refreshComments: () => { engine.view.dom.parentElement?.querySelectorAll(".nuah-gutter").forEach((g) => g.remove()); },
     destroy: () => { clearTimeout(later); engine.destroy(); },
   };

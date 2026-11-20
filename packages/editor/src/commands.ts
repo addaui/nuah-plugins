@@ -2,7 +2,7 @@
 /** What the ways in do to the page: put an element in, change the block the person is in (ADR 0094). */
 import type { EditorView } from "prosemirror-view";
 import { Fragment, Slice, type Node as PmNode } from "prosemirror-model";
-import { setBlockType, wrapIn } from "prosemirror-commands";
+import { setBlockType, toggleMark, wrapIn } from "prosemirror-commands";
 import { wrapInList } from "prosemirror-schema-list";
 import type { EditorCommands, ElementInit } from "@nuah/editor-api";
 import { newBlockId } from "./engine";
@@ -56,6 +56,22 @@ export function commandsFor(view: EditorView, host: CardHost, pos?: number): Edi
       if (at >= 0) view.dispatch(view.state.tr.replaceWith(at, at + size, view.state.schema.nodeFromJSON(json)));
     },
     insertElement: (kind, init) => insertElement(view, host, kind, init, pos),
+    toggleMark: (name, attrs) => {
+      const t = view.state.schema.marks[name];
+      return !!t && toggleMark(t, attrs ?? null, { removeWhenPresent: false })(view.state, view.dispatch);
+    },
+    markActive: (name) => markActive(view.state, name),
+    blockActive: (t, attrs) => {
+      const p = view.state.selection.$from.parent;
+      return p.type.name === t && Object.entries(attrs ?? {}).every(([k, v]) => p.attrs[k] === v);
+    },
+    setAlign: (value) => {
+      const { from, to } = view.state.selection, tr = view.state.tr;
+      view.state.doc.nodesBetween(from, to, (n, pos) => { if (n.isTextblock && "align" in n.attrs) tr.setNodeMarkup(pos, undefined, { ...n.attrs, align: value }); });
+      if (!tr.docChanged) return false;
+      view.dispatch(tr);
+      return true;
+    },
     spot: () => {
       try {
         const r = view.coordsAtPos(Math.min(pos ?? view.state.selection.from, view.state.doc.content.size));
@@ -66,4 +82,15 @@ export function commandsFor(view: EditorView, host: CardHost, pos?: number): Edi
       }
     },
   };
+}
+
+/** Whether all text of the selection has the mark; at a cursor, whether what is typed next would. */
+export function markActive(state: import("prosemirror-state").EditorState, name: string): boolean {
+  const t = state.schema.marks[name];
+  if (!t) return false;
+  const { from, to, empty, $from } = state.selection;
+  if (empty) return !!t.isInSet(state.storedMarks ?? $from.marks());
+  let all = true, any = false;
+  state.doc.nodesBetween(from, to, (n) => { if (n.isText) { any = true; if (!t.isInSet(n.marks)) all = false; } });
+  return any && all;
 }

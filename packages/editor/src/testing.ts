@@ -169,7 +169,7 @@ export function runElementCompliance(p: PluginUnderTest, { describe, it, expect 
       it("upgrades from each older version", async () => {
         const mod = p.module as { default: (api: unknown) => void };
         let def: ElementDef | undefined;
-        mod.default({ version: "1.0.0", element: (d: ElementDef) => { if (d.kind === decl.kind) def = d; }, runner() {}, margin() {}, menu() {}, service: () => undefined, lang: () => "en", ui: testUi(), call: async () => null, files: { upload: async () => "" } });
+        mod.default({ version: "1.0.0", element: (d: ElementDef) => { if (d.kind === decl.kind) def = d; }, runner() {}, margin() {}, menu() {}, format() {}, service: () => undefined, lang: () => "en", ui: testUi(), call: async () => null, files: { upload: async () => "" } });
         const steps = Object.keys(def?.upgrade ?? {}).map(Number);
         for (const from of steps) {
           if (decl.shape !== "card") continue;

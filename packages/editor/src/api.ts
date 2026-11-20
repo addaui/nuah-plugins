@@ -4,7 +4,7 @@
  * kinds it brings. A plugin declares only its own kinds; opening another's is what `opens` is for.
  */
 import { parseKind, Registry } from "@nuah/editor-core";
-import type { BlockRef, EditorApi, EditorCommands, ElementDef, MarginAction, MenuItem, RunReport, RunResult, Ui } from "@nuah/editor-api";
+import type { BlockRef, EditorApi, EditorCommands, ElementDef, MarginAction, MenuItem, RunReport, RunResult, Ui, FormatItem } from "@nuah/editor-api";
 
 export const API_VERSION = "1.0.0";
 export interface Declared { plugin: string; def: ElementDef }
@@ -16,6 +16,7 @@ export class Elements {
   private byPlugin = new Map<string, ElementDef[]>();
   readonly margins: { plugin: string; action: MarginAction }[] = [];
   readonly menus: { plugin: string; items: (b: BlockRef, c: EditorCommands) => MenuItem[] }[] = [];
+  readonly formats: { plugin: string; item: FormatItem }[] = [];
   private runners = new Map<string, { plugin: string; run: Run }>();
   add(plugin: string, def: ElementDef) { this.kinds.set(def.kind, { plugin, def }); this.byPlugin.set(plugin, [...(this.byPlugin.get(plugin) ?? []), def]); }
   /** The definition `plugin` draws `kind` with: its own, or one of its kinds that `opens` it (ADR 0094 "Open with"). */
@@ -62,6 +63,7 @@ export function apiFor(plugin: string, els: Elements, host: HostServices): Edito
     runner(languages, run) { els.addRunner(plugin, languages, run); },
     margin(action) { els.margins.push({ plugin, action }); },
     menu(items) { els.menus.push({ plugin, items }); },
+    format(item) { if (!els.formats.some((f) => f.item.id === item.id)) els.formats.push({ plugin, item }); },
     service: <T,>(name: string) => host.services?.[name] as T | undefined,
     lang: () => host.lang ?? "en",
     ui: host.ui,

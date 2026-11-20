@@ -84,6 +84,29 @@ export interface EditorCommands {
   insertElement(kind: string, init?: ElementInit): string;
   /** Where on screen the insertion happens, for a picker or popover to open there. */
   spot(): Spot;
+  /** A mark on the selection: added when not all of it has the mark, else removed; at a cursor, for what is typed next (ADR 0097). */
+  toggleMark(name: string, attrs?: Record<string, unknown>): boolean;
+  /** Whether all of the selection (or the cursor's position) has the mark. */
+  markActive(name: string): boolean;
+  /** Whether the cursor's block is of this type (and has these attributes). */
+  blockActive(type: string, attrs?: Record<string, unknown>): boolean;
+  /** The alignment of the blocks in the selection that have one (`null`: the default). */
+  setAlign(value: string | null): boolean;
+}
+
+/**
+ * One formatting action a plugin (or the Face) adds (ADR 0097): drawn in the Format bar, in the Selection bar when `basic`, and in
+ * the Element tab, where it applies to a whole element. `applies` says whether it works on text, on a block, or both.
+ */
+export interface FormatItem {
+  id: string;
+  label: Label;
+  icon?: string;
+  group?: string;
+  basic?: boolean;
+  applies?: "text" | "block" | "both";
+  isActive?(c: EditorCommands): boolean;
+  run(c: EditorCommands): void;
 }
 
 export interface Ways {
@@ -132,6 +155,8 @@ export interface EditorApi {
   files: { upload(file: Blob, name?: string): Promise<string> };
   /** A button in every block's margin (comments, reactions), whatever the block's kind. */
   margin(action: MarginAction): void;
+  /** A Format item (ADR 0097). */
+  format(item: FormatItem): void;
   /** Items for the right-click menu of every block; the items may change the page through the commands. */
   menu(items: (block: BlockRef, commands: EditorCommands) => MenuItem[]): void;
   /**

@@ -87,8 +87,26 @@ describe("the basic elements", () => {
 describe("paragraph", () => {
   it("is the default block, so Enter never makes another plugin's block", () => {
     const defs: any[] = [];
-    basic({ element: (d: any) => defs.push(d), lang: () => "en" } as never);
+    basic({ element: (d: any) => defs.push(d), format() {}, lang: () => "en" } as never);
     const p = defs.find((d) => d.kind.endsWith("/paragraph"));
     expect(p.nodes.find((n: any) => n.id === "paragraph")).toMatchObject({ defaultBlock: true });
+  });
+});
+
+describe("Format items (ADR 0097)", () => {
+  it("adds_marks_blocks_lists_and_alignment_and_bold_formats_a_whole_paragraph", async () => {
+    const m = await opened();
+    const v = m.engine.view;
+    v.dispatch(v.state.tr.insertText("hello", 1));
+    const id = v.state.doc.child(0).attrs.blockId;
+    const ids = m.handle.format(id).map((f: any) => f.id);
+    for (const x of ["bold", "italic", "underline", "strike", "code", "highlight", "link", "paragraph", "heading-1", "quote", "bullet-list", "ordered-list", "checklist", "align-center"]) expect(ids).toContain(x);
+    m.handle.applyFormat(id, "bold");
+    expect(v.state.doc.child(0).firstChild!.marks.map((x) => x.type.name)).toEqual(["bold"]);
+    m.handle.applyFormat(id, "heading-1");
+    expect(v.state.doc.child(0).type.name).toBe("heading");
+    m.handle.applyFormat(v.state.doc.child(0).attrs.blockId, "align-center");
+    expect(v.state.doc.child(0).attrs.align).toBe("center");
+    m.handle.destroy();
   });
 });
