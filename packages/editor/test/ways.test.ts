@@ -229,10 +229,10 @@ describe("the slash menu's order", () => {
       item("quote", "Quote", "text"),
     ];
     expect(filterItems(items, "task").map((i) => i.id)).toEqual(["task", "check", "link"]);
-    // with nothing typed, the order is the plugins' own, each group once
-    expect(filterItems(items, "").map((i) => i.id)).toEqual(["link", "task", "check", "quote"]);
+    // with nothing typed: the usual order (text, lists, ...), each group once
+    expect(filterItems(items, "").map((i) => i.id)).toEqual(["quote", "task", "check", "link"]);
     const mixed = [item("sketch", "Sketch", "media"), item("task", "Task", "list"), item("image", "Image", "media"), item("bullets", "Bullet list", "list")];
-    expect(filterItems(mixed, "").map((i) => i.id)).toEqual(["sketch", "image", "task", "bullets"]);
+    expect(filterItems(mixed, "").map((i) => i.id)).toEqual(["task", "bullets", "sketch", "image"]);
   });
 });
 
@@ -283,5 +283,50 @@ describe("where the slash menu opens", () => {
     expect(placeMenu(caret, size, screen, false)).toEqual({ left: 1024 - 260 - 8, top: 222 });
     // no room below: above the line
     expect(placeMenu({ ...caret, top: 600, bottom: 618 }, size, screen, false).top).toBe(600 - 300 - 4);
+  });
+});
+
+describe("typing while a card is selected", () => {
+  it("starts_a_new_line_after_the_card_and_keeps_the_card", async () => {
+    const p = await page({ list: listWith(kind(S, "@t/sketch")), modules: { "@t/sketch": card(S) } });
+    const v = p.engine.view;
+    insertCard(v, { blockId: "e1", kind: S, plugin: "@t/sketch" });
+    await tick();
+    let at = -1; v.state.doc.descendants((n, pos) => { if (n.attrs.blockId === "e1") at = pos; });
+    v.dispatch(v.state.tr.setSelection(NodeSelection.create(v.state.doc, at)));
+    typeText(v, "/x");
+    const names: string[] = []; v.state.doc.forEach((n: any) => names.push(n.type.name + (n.isTextblock ? ":" + n.textContent : "")));
+    expect(names).toContain("element");
+    expect(names[names.indexOf("element") + 1]).toBe("paragraph:/x");
+    p.handle.destroy();
+  });
+});
+
+describe("the line after the last element", () => {
+  it("shows_when_the_page_ends_with_a_card_and_a_click_adds_a_line_there", async () => {
+    const p = await page({ list: listWith(kind(S, "@t/sketch")), modules: { "@t/sketch": card(S) } });
+    const v = p.engine.view;
+    const tail = () => p.place.querySelector(".nuah-tail") as HTMLElement | null;
+    expect(tail()?.hidden).toBe(true); // an empty page ends with an empty line already
+    insertCard(v, { blockId: "e1", kind: S, plugin: "@t/sketch" });
+    await tick();
+    v.dispatch(v.state.tr.delete(0, v.state.doc.child(0).nodeSize)); // only the card is left
+    expect(v.state.doc.lastChild!.type.name).toBe("element");
+    expect(tail()!.hidden).toBe(false);
+    tail()!.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
+    expect(v.state.doc.lastChild!.type.name).toBe("paragraph");
+    expect(v.state.selection.$from.parent).toBe(v.state.doc.lastChild);
+    expect(tail()!.hidden).toBe(true);
+    p.handle.destroy();
+  });
+});
+
+describe("the slash menu's groups", () => {
+  const item = (id: string, group: string) => ({ id, label: id, group, keywords: id, run: () => {} });
+  const items = [item("sketch", "media"), item("link", "reference"), item("task", "list"), item("text", "text"), item("callout", "layout")];
+  it("put_text_first_then_the_usual_order_and_then_what_this_person_uses_most_goes_first", async () => {
+    const { filterItems } = await import("../src/slash");
+    expect(filterItems(items, "").map((i) => i.group)).toEqual(["text", "list", "layout", "media", "reference"]);
+    expect(filterItems(items, "", { link: 5, sketch: 2 }).map((i) => i.group)).toEqual(["reference", "media", "text", "list", "layout"]);
   });
 });

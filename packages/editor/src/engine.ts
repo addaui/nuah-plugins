@@ -3,7 +3,7 @@
  * The engine (ADR 0062, 0094): ProseMirror's libraries, bound to the page's Live document through loro-prosemirror (ADR 0093).
  * Undo is the person's own, from Loro. Every block a plugin marks `ids`, and every element, carries a stable id (ADR 0043).
  */
-import { EditorState, NodeSelection, Plugin, PluginKey, type Command, type TextSelection, type Transaction } from "prosemirror-state";
+import { EditorState, NodeSelection, Plugin, PluginKey, type Command, TextSelection, type Transaction } from "prosemirror-state";
 import { EditorView, Decoration, DecorationSet, type NodeViewConstructor } from "prosemirror-view";
 import { keymap } from "prosemirror-keymap";
 import { baseKeymap } from "prosemirror-commands";
@@ -123,7 +123,7 @@ export function createEngine(o: EngineOptions): Engine {
       if (o.live.ephemeral) plugins.push(LoroEphemeralCursorPlugin(drawableCursors(o.live.ephemeral, o.live.doc), { user: o.live.user }) as never);
       plugins.push(keymap({ "Mod-z": loroUndo, "Mod-y": loroRedo, "Shift-Mod-z": loroRedo }));
     }
-    plugins.push(keymap({ Backspace: selectAtomBeside(-1), Delete: selectAtomBeside(1) }), keymap(baseKeymap));
+    plugins.push(tailLine(), typeAfterSelectedCard(), keymap({ Backspace: selectAtomBeside(-1), Delete: selectAtomBeside(1) }), keymap(baseKeymap));
     const doc: PmNode = !o.live && o.content ? schema.nodeFromJSON(o.content) : schema.topNodeType.createAndFill()!;
     return EditorState.create({ schema, doc, plugins });
   };
@@ -181,4 +181,58 @@ function selectAtomBeside(dir: -1 | 1): Command {
     if (dispatch) dispatch(state.tr.setSelection(NodeSelection.create(state.doc, dir < 0 ? $edge.pos - beside.nodeSize : $edge.pos)).scrollIntoView());
     return true;
   };
+}
+
+/**
+ * Typing while a card (or another block atom) is selected starts a new line after it with what was typed; the card stays.
+ * ProseMirror would replace the selection with the text, and a click near a card selects it, so one "/" removed a sketch.
+ */
+function typeAfterSelectedCard(): Plugin {
+  return new Plugin({
+    props: {
+      handleTextInput(view, _from, _to, text) {
+        const sel = view.state.selection as NodeSelection;
+        const node = sel.node;
+        if (!node || node.isInline || !node.isAtom) return false;
+        const para = view.state.schema.topNodeType.contentMatch.defaultType;
+        if (!para?.isTextblock) return false;
+        const after = sel.to;
+        const tr = view.state.tr.insert(after, para.create(null, view.state.schema.text(text)));
+        tr.setSelection(TextSelection.create(tr.doc, after + 1 + text.length)).scrollIntoView();
+        view.dispatch(tr);
+        return true;
+      },
+    },
+  });
+}
+
+/**
+ * A line after the last element, so a mouse can always start writing at the end: shown when the page does not end with an empty
+ * line; a click adds one there and puts the cursor in it. Nothing is stored until the click.
+ */
+function tailLine(): Plugin {
+  return new Plugin({
+    view(view) {
+      const tail = document.createElement("div");
+      tail.className = "nuah-tail";
+      tail.setAttribute("aria-hidden", "true");
+      view.dom.after(tail);
+      const sync = () => {
+        const last = view.state.doc.lastChild;
+        tail.hidden = !view.editable || (!!last && last.isTextblock && last.content.size === 0);
+      };
+      tail.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        const { state } = view;
+        const para = state.schema.topNodeType.contentMatch.defaultType;
+        if (!para) return;
+        const end = state.doc.content.size;
+        const tr = state.tr.insert(end, para.create());
+        view.dispatch(tr.setSelection(TextSelection.create(tr.doc, end + 1)).scrollIntoView());
+        view.focus();
+      });
+      sync();
+      return { update: sync, destroy: () => tail.remove() };
+    },
+  });
 }

@@ -65,18 +65,35 @@ function fit(i: SlashItem, q: string): number | null {
   return i.keywords.includes(q) ? 4 : null;
 }
 
-/** What fits the query, best first, so Enter picks it. A group stays together and goes where its best item goes; with nothing typed the order is the plugins' own, each group once. */
-export function filterItems(items: SlashItem[], query: string): SlashItem[] {
+/** The usual order of groups when nothing else decides: text first. Groups not named here follow, in the plugins' order. */
+const GROUPS = ["text", "list", "layout", "media", "code", "reference"];
+const groupRank = (g: string) => { const i = GROUPS.indexOf(g); return i < 0 ? GROUPS.length : i; };
+
+/**
+ * What fits the query, best first, so Enter picks it. A group stays together and is placed by its best match, then by how often
+ * this person picked its items (`used`, by item id), then by the usual order; inside a group the same.
+ */
+export function filterItems(items: SlashItem[], query: string, used: Record<string, number> = {}): SlashItem[] {
   const q = query.toLowerCase();
-  const found = items.map((i, at) => ({ i, at, f: fit(i, q) })).filter((x): x is { i: SlashItem; at: number; f: number } => x.f !== null);
-  const best = new Map<string, { f: number; at: number }>();
-  for (const x of found) { const b = best.get(x.i.group); best.set(x.i.group, { f: Math.min(x.f, b?.f ?? x.f), at: b?.at ?? x.at }); }
+  const found = items.map((i, at) => ({ i, at, f: fit(i, q), u: used[i.id] ?? 0 })).filter((x): x is { i: SlashItem; at: number; f: number; u: number } => x.f !== null);
+  const best = new Map<string, { f: number; u: number; at: number }>();
+  for (const x of found) { const b = best.get(x.i.group); best.set(x.i.group, { f: Math.min(x.f, b?.f ?? x.f), u: Math.max(x.u, b?.u ?? 0), at: b?.at ?? x.at }); }
   return found
     .sort((a, b) => {
       const ga = best.get(a.i.group)!, gb = best.get(b.i.group)!;
-      return ga.f - gb.f || ga.at - gb.at || (a.i.group === b.i.group ? a.f - b.f || a.at - b.at : a.at - b.at);
+      if (a.i.group !== b.i.group) return ga.f - gb.f || gb.u - ga.u || groupRank(a.i.group) - groupRank(b.i.group) || ga.at - gb.at;
+      return a.f - b.f || b.u - a.u || a.at - b.at;
     })
     .map((x) => x.i);
+}
+
+const USED = "nuah.editor.slash.used";
+/** How often this person picked each item, kept on this device only (a convenience, not shared). */
+function readUsed(): Record<string, number> {
+  try { return JSON.parse(localStorage.getItem(USED) ?? "{}") as Record<string, number>; } catch { return {}; }
+}
+function noteUsed(id: string) {
+  try { const u = readUsed(); u[id] = (u[id] ?? 0) + 1; localStorage.setItem(USED, JSON.stringify(u)); } catch { /* nothing kept */ }
 }
 
 export function slashPlugin(host: CardHost): Plugin {
@@ -84,6 +101,7 @@ export function slashPlugin(host: CardHost): Plugin {
   let shown: SlashItem[] = [];
   const choose = (view: EditorView, open: Open, item: SlashItem | undefined) => {
     if (!item) return;
+    noteUsed(item.id);
     view.dispatch(view.state.tr.delete(open.from, open.to));
     void item.run(view, open.from);
   };
@@ -108,7 +126,7 @@ export function slashPlugin(host: CardHost): Plugin {
         update(v) {
           const open = key.getState(v.state);
           if (!open) { close(); return; }
-          const items = filterItems(slashItems(host), open.query);
+          const items = filterItems(slashItems(host), open.query, readUsed());
           if (items.length === 0) { close(); return; }
           if (items.map((i) => i.id).join() !== shown.map((i) => i.id).join()) index = 0;
           shown = items;
@@ -120,6 +138,7 @@ export function slashPlugin(host: CardHost): Plugin {
             if (it.group !== group) { group = it.group; if (group) menu!.append(Object.assign(document.createElement("div"), { className: "nuah-slash-group", textContent: groupLabel(host.hooks.lang, group) })); }
             const row = document.createElement("div");
             row.className = "nuah-slash-item" + (i === index ? " is-active" : "");
+            if (i === index) queueMicrotask(() => row.scrollIntoView?.({ block: "nearest" }));
             row.setAttribute("role", "option");
             row.dataset.id = it.id;
             const ico = document.createElement("span");
