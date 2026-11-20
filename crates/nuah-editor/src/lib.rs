@@ -187,7 +187,10 @@ impl Plugin for Editor {
         b.provide("prefs.item", |tx, _| {
             let all = elements(tx)?;
             let mut items = vec![json!({"key": "editor.element_type_in_tab", "group": "appearance", "type": "boolean", "default": false,
-                "label": {"en": "Show the element's type under the Element tab's name", "ar": "إظهار نوع العنصر تحت اسم تبويب العنصر"}})];
+                "label": {"en": "Show the element's type under the Element tab's name", "ar": "إظهار نوع العنصر تحت اسم تبويب العنصر"}}),
+                // ADR 0097: a small bar of the basic Format items over selected text
+                json!({"key": "editor.selection_bar", "group": "appearance", "type": "boolean", "default": false,
+                "label": {"en": "Show a formatting bar over selected text", "ar": "إظهار شريط تنسيق فوق النص المحدد"}})];
             for k in all["kinds"].as_array().into_iter().flatten() {
                 let openers = k["openers"].as_array().cloned().unwrap_or_default();
                 if openers.len() < 2 {
