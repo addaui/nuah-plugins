@@ -56,6 +56,7 @@ export function slashItems(host: CardHost): SlashItem[] {
 
 /** How well an item fits what was typed (lower is better): the label itself, its start, a word of it, inside it, then a keyword; null when it does not fit. */
 function fit(i: SlashItem, q: string): number | null {
+  if (!q) return 0;
   const l = i.label.toLowerCase();
   if (l === q) return 0;
   if (l.startsWith(q)) return 1;
@@ -64,10 +65,9 @@ function fit(i: SlashItem, q: string): number | null {
   return i.keywords.includes(q) ? 4 : null;
 }
 
-/** What fits the query, best first, so Enter picks it. A group stays together and goes where its best item goes; with nothing typed the order is the plugins' own. */
+/** What fits the query, best first, so Enter picks it. A group stays together and goes where its best item goes; with nothing typed the order is the plugins' own, each group once. */
 export function filterItems(items: SlashItem[], query: string): SlashItem[] {
   const q = query.toLowerCase();
-  if (!q) return items;
   const found = items.map((i, at) => ({ i, at, f: fit(i, q) })).filter((x): x is { i: SlashItem; at: number; f: number } => x.f !== null);
   const best = new Map<string, { f: number; at: number }>();
   for (const x of found) { const b = best.get(x.i.group); best.set(x.i.group, { f: Math.min(x.f, b?.f ?? x.f), at: b?.at ?? x.at }); }

@@ -168,7 +168,9 @@ describe("the slash menu's order", () => {
       item("quote", "Quote", "text"),
     ];
     expect(filterItems(items, "task").map((i) => i.id)).toEqual(["task", "check", "link"]);
-    // with nothing typed, the order is the plugins' own
+    // with nothing typed, the order is the plugins' own, each group once
     expect(filterItems(items, "").map((i) => i.id)).toEqual(["link", "task", "check", "quote"]);
+    const mixed = [item("sketch", "Sketch", "media"), item("task", "Task", "list"), item("image", "Image", "media"), item("bullets", "Bullet list", "list")];
+    expect(filterItems(mixed, "").map((i) => i.id)).toEqual(["sketch", "image", "task", "bullets"]);
   });
 });
