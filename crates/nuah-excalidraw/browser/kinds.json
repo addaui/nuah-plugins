@@ -17,6 +17,25 @@
     ".excalidraw",
     "application/vnd.excalidraw+json"
    ],
+   "input": {
+    "content": "scene",
+    "schema": {
+     "type": "object",
+     "additionalProperties": false,
+     "properties": {
+      "scene": {
+       "type": "object",
+       "description": "The drawing as Excalidraw keeps it: {elements: [...], appState: {...}, files: {...}}"
+      },
+      "height": {
+       "type": "number",
+       "minimum": 120,
+       "maximum": 1200,
+       "description": "Its height on the page, in pixels"
+      }
+     }
+    }
+   },
    "schema": {
     "type": "object",
     "properties": {

@@ -53,7 +53,7 @@ const TEXT_KEY: &str = "#text";
 
 // The browser binding creates these children with getOrCreateContainer too, so both sides make the same kind of child.
 #[allow(deprecated)]
-fn update_node(m: &LoroMap, j: &Value) -> Result<()> {
+pub(crate) fn update_node(m: &LoroMap, j: &Value) -> Result<()> {
     let name = j["type"].as_str().ok_or_else(|| Error::invalid("body", "has a node without a type"))?;
     let same_name = matches!(m.get(NODE_NAME), Some(ValueOrContainer::Value(LoroValue::String(s))) if s.as_str() == name);
     if !same_name {

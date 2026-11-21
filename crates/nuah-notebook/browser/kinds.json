@@ -17,6 +17,37 @@
     ".py",
     "text/x-python"
    ],
+   "input": {
+    "content": "code",
+    "fallback": "code",
+    "schema": {
+     "type": "object",
+     "required": [
+      "code"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "code": {
+       "type": "string",
+       "maxLength": 100000,
+       "description": "The cell's code"
+      },
+      "language": {
+       "enum": [
+        "python"
+       ]
+      },
+      "view": {
+       "enum": [
+        "both",
+        "code",
+        "output"
+       ],
+       "description": "What the cell shows"
+      }
+     }
+    }
+   },
    "schema": {
     "type": "object",
     "properties": {

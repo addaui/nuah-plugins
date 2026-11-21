@@ -6,6 +6,9 @@ export const KIND = "@nuah/notebook/cell";
 export const DECL: ElementKindDecl = {
   kind: KIND, version: 1, shape: "card", placement: "block", label: { en: "Code cell", ar: "خلية شيفرة" }, icon: "code", group: "code",
   keywords: "python notebook run code cell jupyter", state: "text", accepts: [".py", "text/x-python"],
+  input: { content: "code", fallback: "code", schema: { type: "object", required: ["code"], additionalProperties: false, properties: {
+    code: { type: "string", maxLength: 100000, description: "The cell's code" },
+    language: { enum: ["python"] }, view: { enum: ["both", "code", "output"], description: "What the cell shows" } } } },
   schema: { type: "object", properties: {
     language: { enum: ["python"] }, view: { enum: ["both", "code", "output"] },
     output: { type: "object", properties: { text: { type: "string", maxLength: 100000 }, files: { type: "array", maxItems: 20, items: { type: "string" } }, hash: { type: "string" }, at: { type: "number" }, ok: { type: "boolean" } } },

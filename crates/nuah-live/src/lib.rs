@@ -7,6 +7,7 @@
 //!
 //! [ADR 0093]: https://docs.addaui.com/nuah/adr/0093-page-bodies-are-live-documents-on-loro-in-the-browser-and-on-the-server-edits-travel-as-operations-and-pulse-presence-as-signals-versions-are-points-in-the-history/
 
+pub mod blocks;
 mod diff;
 mod json;
 pub mod store;

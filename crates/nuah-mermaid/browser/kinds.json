@@ -31,6 +31,33 @@
      }
     }
    },
+   "input": {
+    "content": "source",
+    "fallback": "source",
+    "schema": {
+     "type": "object",
+     "required": [
+      "source"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "source": {
+       "type": "string",
+       "maxLength": 100000,
+       "description": "The diagram in Mermaid's language (flowchart, sequenceDiagram, ...)"
+      },
+      "theme": {
+       "enum": [
+        "default",
+        "dark",
+        "neutral",
+        "forest"
+       ],
+       "description": "How it is drawn"
+      }
+     }
+    }
+   },
    "options": [
     {
      "id": "theme",

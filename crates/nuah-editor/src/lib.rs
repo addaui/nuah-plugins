@@ -7,6 +7,8 @@
 //! [ADR 0094]: https://docs.addaui.com/nuah/adr/0094-the-editor-is-a-host-that-knows-no-feature-plugins-bring-elements-with-their-own-data-views-options-and-capabilities-an-element-names-its-plugin-and-keeps-a-fallback-another-plugin-may-open-it/
 //! [ADR 0095]: https://docs.addaui.com/nuah/adr/0095-plugins-ship-browser-modules-for-another-plugins-host-and-require-an-extension-point-at-a-version-never-a-plugin-by-id/
 
+pub mod blocks;
+
 use nuah_kernel::*;
 use serde_json::{json, Value};
 use std::collections::BTreeMap;
@@ -24,7 +26,10 @@ fn kinds_schema() -> Value {
             "label": {"type": "object", "required": ["en"]}, "icon": {"type": "string"}, "group": {"type": "string"}, "keywords": {"type": "string"},
             "schema": {"type": "object"}, "state": {"enum": ["text", "map", "list", "movableList", "tree"]},
             "accepts": {"type": "array", "items": {"type": "string"}}, "opens": {"type": "array", "items": {"type": "string"}},
-            "options": {"type": "array"}}}}}})
+            "options": {"type": "array"},
+            // ADR 0103: the input a caller gives to write a block of this kind, and how it becomes the block (see `blocks`)
+            "input": {"type": "object", "required": ["schema"], "properties": {"schema": {"type": "object"}, "content": {"type": "string"},
+                "fallback": {"type": "string"}, "node": {"type": "object"}}}}}}}})
 }
 
 /// `@scope/plugin/name`: the plugin part, or None when it is not a kind.
@@ -157,7 +162,10 @@ impl Plugin for Editor {
                 "editor.opener.set": {"kind": "command", "permission": "editor.manage", "description": "Set (or clear, with null) the plugin that opens a kind by default",
                     "input": {"type": "object", "required": ["kind", "plugin"], "properties": {"kind": {"type": "string", "maxLength": 200}, "plugin": {"type": ["string", "null"], "maxLength": 120}}},
                     "output": {"type": "object"},
-                    "reasons": {"editor.not_an_opener": "That plugin cannot open this kind of element"}}
+                    "reasons": {"editor.not_an_opener": "That plugin cannot open this kind of element"}},
+                "editor.inputs": {"kind": "query", "description": "Every kind of block that can be written through block operations (a page's blocks.insert and blocks.update), with the input each takes as a JSON Schema: give {kind, input} and the element builds itself",
+                    "output": {"type": "object", "required": ["kinds"], "properties": {"kinds": {"type": "array", "items": {"type": "object", "properties": {
+                        "kind": {"type": "string"}, "label": {"type": "string"}, "shape": {"type": "string"}, "input": {"type": "object"}}}}}}}
             }
         }))
         .expect("the editor's manifest")
@@ -165,6 +173,7 @@ impl Plugin for Editor {
 
     fn bind(&self, b: &mut Bindings) {
         b.op("editor.elements", |tx, _| elements(tx));
+        b.op("editor.inputs", |tx, _| Ok(blocks::inputs(&kinds_of(&elements(tx)?))));
         b.op("editor.opener.set", |tx, i| {
             let kind = i["kind"].as_str().unwrap_or("").to_string();
             let id = hex(&kind);

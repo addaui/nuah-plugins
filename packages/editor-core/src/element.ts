@@ -28,6 +28,21 @@ export interface ElementKindDecl {
   options?: OptionDecl[];
   /** A content kind's node types (the schema's names), so a Face can show the kind's options without an element selected. */
   nodes?: string[];
+  /** ADR 0103: the input a caller gives to write a block of this kind through operations, and how it becomes the block. */
+  input?: InputDecl;
+}
+
+/**
+ * How a kind is written from an input (ADR 0103). `schema` is what callers see. A card names the field that becomes its own content
+ * (`content`) and the one shown as its fallback text (`fallback`); its other settings come from the fields its settings schema names.
+ * A content kind gives a node template: an attribute `{ $: field, default? }`, and in content `{ $text: field }` (inline Markdown),
+ * `{ $plain: field }` (text as it is) or `{ $each: field, as: template }`; the field `.` is the value itself.
+ */
+export interface InputDecl {
+  schema: Record<string, unknown>;
+  content?: string;
+  fallback?: string;
+  node?: Record<string, unknown>;
 }
 
 /** What every element stores as its attributes. */

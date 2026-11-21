@@ -151,3 +151,14 @@ fn plugins_with_a_module_and_no_kinds_are_listed_too() {
     assert_eq!(out["modules"][0]["plugin"], "@t/talk");
     assert!(out["modules"][0]["module"].as_str().unwrap().starts_with("/plugins/t/talk/index.js?v="));
 }
+
+#[test]
+fn inputs_lists_the_kinds_that_declare_an_input_with_its_schema() {
+    let input = json!({"schema": {"type": "object", "properties": {"source": {"type": "string"}}}, "content": "source"});
+    let core = start(vec![
+        Arc::new(Editor),
+        Arc::new(element_plugin("@t/mermaid", json!([decl("@t/mermaid/diagram", json!({"state": "text", "input": input})), decl("@t/mermaid/other", json!({}))]))),
+    ], &["@nuah/editor", "@t/mermaid"]);
+    let out = core.call_as(&who(&["member"]), "editor.inputs", json!({}), None).unwrap().output;
+    assert_eq!(out["kinds"], json!([{"kind": "@t/mermaid/diagram", "label": "@t/mermaid/diagram", "shape": "card", "input": input["schema"]}]));
+}

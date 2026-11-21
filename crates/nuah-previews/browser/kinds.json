@@ -15,6 +15,56 @@
    "nodes": [
     "linkPreview"
    ],
+   "input": {
+    "schema": {
+     "type": "object",
+     "required": [
+      "url"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "url": {
+       "type": "string",
+       "maxLength": 2000,
+       "description": "The web address"
+      },
+      "title": {
+       "type": "string",
+       "maxLength": 300
+      },
+      "description": {
+       "type": "string",
+       "maxLength": 1000
+      },
+      "mode": {
+       "enum": [
+        "card",
+        "compact",
+        "stack",
+        "side"
+       ]
+      }
+     }
+    },
+    "node": {
+     "type": "linkPreview",
+     "attrs": {
+      "url": {
+       "$": "url"
+      },
+      "title": {
+       "$": "title"
+      },
+      "description": {
+       "$": "description"
+      },
+      "mode": {
+       "$": "mode",
+       "default": "card"
+      }
+     }
+    }
+   },
    "options": [
     {
      "id": "mode",
@@ -70,6 +120,40 @@
    "nodes": [
     "youtube"
    ],
+   "input": {
+    "schema": {
+     "type": "object",
+     "required": [
+      "url"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "url": {
+       "type": "string",
+       "maxLength": 2000,
+       "description": "The YouTube address"
+      },
+      "start": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 86400,
+       "description": "Where it starts, in seconds"
+      }
+     }
+    },
+    "node": {
+     "type": "youtube",
+     "attrs": {
+      "src": {
+       "$": "url"
+      },
+      "start": {
+       "$": "start",
+       "default": 0
+      }
+     }
+    }
+   },
    "options": [
     {
      "id": "size",

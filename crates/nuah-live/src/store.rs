@@ -148,6 +148,20 @@ impl LiveStore {
         self.keep(tx, key, &d, &before).map(Some)
     }
 
+    /// Change the document with `f` (block edits, ADR 0103) as a change of its own, checked like a browser's update. None (and nothing
+    /// written) when `f` changed nothing; refused (with the store's reason code) when `check` refuses the result.
+    pub fn edit<T>(&self, tx: &mut Tx, key: &str, check: &dyn Fn(&Value) -> Result<()>, f: impl FnOnce(&LoroDoc) -> Result<T>) -> Result<(Option<Written>, T)> {
+        let d = self.load(tx, key)?;
+        let before = d.oplog_vv();
+        let out = f(&d)?;
+        d.commit();
+        if d.oplog_vv() == before {
+            return Ok((None, out));
+        }
+        check(&to_json(&d)).map_err(|e| self.reject(&e.message))?;
+        Ok((Some(self.keep(tx, key, &d, &before)?), out))
+    }
+
     /// What a browser at `since` lacks (everything, as a snapshot, without `since`), and the server's version.
     pub fn pull(&self, tx: &Tx, key: &str, since: Option<&[u8]>) -> Result<(Vec<u8>, Vec<u8>)> {
         let d = self.load(tx, key)?;

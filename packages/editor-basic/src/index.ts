@@ -39,6 +39,33 @@ export const KINDS: ElementKindDecl[] = [
   kind("hard-break", L("Line break", "سطر جديد"), "text", "type", "br", ["hardBreak"], [], "inline"),
 ];
 
+const T = (description: string) => ({ type: "string", maxLength: 20000, description });
+const ALIGN = { enum: ["start", "center", "end", "justify"] };
+const MD = "inline Markdown: **bold**, *italic*, ~~strike~~, `code`, [text](address); a new line is a line break";
+const obj = (required: string[], properties: Record<string, unknown>) => ({ type: "object", required, additionalProperties: false, properties });
+const para = (f: string) => ({ type: "paragraph", content: [{ $text: f }] });
+/** ADR 0103: the input each kind takes when written through operations, and the node it becomes. */
+const INPUTS: Record<string, ElementKindDecl["input"]> = {
+  paragraph: { schema: obj(["text"], { text: T(`The text, ${MD}`), align: ALIGN }), node: { type: "paragraph", attrs: { align: { $: "align" } }, content: [{ $text: "text" }] } },
+  heading: { schema: obj(["text"], { text: T(`The heading, ${MD}`), level: { enum: [1, 2, 3] }, align: ALIGN }),
+    node: { type: "heading", attrs: { level: { $: "level", default: 1 }, align: { $: "align" } }, content: [{ $text: "text" }] } },
+  "bullet-list": { schema: obj(["items"], { items: { type: "array", maxItems: 500, items: T(`An item, ${MD}`) } }),
+    node: { type: "bulletList", content: [{ $each: "items", as: { type: "listItem", content: [para(".")] } }] } },
+  "ordered-list": { schema: obj(["items"], { items: { type: "array", maxItems: 500, items: T(`An item, ${MD}`) }, start: { type: "integer", minimum: 1, maximum: 9999 } }),
+    node: { type: "orderedList", attrs: { start: { $: "start", default: 1 } }, content: [{ $each: "items", as: { type: "listItem", content: [para(".")] } }] } },
+  checklist: { schema: obj(["items"], { items: { type: "array", maxItems: 500, items: obj(["text"], { text: T(`The item, ${MD}`), done: { type: "boolean" } }) } }),
+    node: { type: "taskList", content: [{ $each: "items", as: { type: "taskItem", attrs: { checked: { $: "done", default: false } }, content: [para("text")] } }] } },
+  quote: { schema: obj(["text"], { text: T(`The quote, ${MD}`), align: ALIGN }), node: { type: "blockquote", attrs: { align: { $: "align" } }, content: [para("text")] } },
+  divider: { schema: obj([], {}), node: { type: "horizontalRule" } },
+  code: { schema: obj(["code"], { code: { type: "string", maxLength: 100000, description: "The code, as it is" }, language: { type: "string", maxLength: 40, description: "Its language, for highlighting (python, rust, json, ...)" } }),
+    node: { type: "codeBlock", attrs: { language: { $: "language" } }, content: [{ $plain: "code" }] } },
+  callout: { schema: obj(["text"], { title: T(`Its title, ${MD}`), text: T(`What it says, ${MD}`), tone: { enum: [...TONES] } }),
+    node: { type: "callout", attrs: { tone: { $: "tone", default: "info" } }, content: [para("title"), para("text")] } },
+  toggle: { schema: obj(["summary"], { summary: T(`What shows when it is folded, ${MD}`), text: T(`What it holds, ${MD}`) }),
+    node: { type: "toggle", attrs: { open: true }, content: [para("summary"), para("text")] } },
+};
+for (const k of KINDS) { const i = INPUTS[k.kind.slice(P.length + 1)]; if (i) k.input = i; }
+
 /** Addresses a link may have: web, the instance's own, an anchor, mail. Anything else (javascript:, data:) is refused. */
 export const safeUrl = (u: string) => /^(https?:\/\/|\/|#|mailto:)/i.test(u || "");
 

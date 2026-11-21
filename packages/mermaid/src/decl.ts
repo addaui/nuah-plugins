@@ -8,5 +8,8 @@ export const DECL: ElementKindDecl = {
   kind: KIND, version: 1, shape: "card", placement: "block", label: { en: "Diagram", ar: "مخطط" }, icon: "flow", group: "media",
   keywords: "mermaid flowchart sequence chart graph", state: "text", accepts: [".mmd", ".mermaid", "text/vnd.mermaid"],
   schema: { type: "object", properties: { theme: { enum: [...THEMES] } } },
+  input: { content: "source", fallback: "source", schema: { type: "object", required: ["source"], additionalProperties: false, properties: {
+    source: { type: "string", maxLength: 100000, description: "The diagram in Mermaid's language (flowchart, sequenceDiagram, ...)" },
+    theme: { enum: [...THEMES], description: "How it is drawn" } } } },
   options: [{ id: "theme", type: "choice", pinned: true, inherit: true, default: "default", label: { en: "Theme", ar: "النمط" }, choices: THEMES.map((t) => ({ value: t, label: { en: t } })) }],
 };

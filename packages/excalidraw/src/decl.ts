@@ -6,6 +6,9 @@ export const KIND = "@nuah/excalidraw/sketch";
 export const DECL: ElementKindDecl = {
   kind: KIND, version: 1, shape: "card", placement: "block", label: { en: "Sketch", ar: "رسم" }, icon: "pen", group: "media",
   keywords: "excalidraw drawing whiteboard sketch canvas", state: "map", accepts: [".excalidraw", "application/vnd.excalidraw+json"],
+  input: { content: "scene", schema: { type: "object", additionalProperties: false, properties: {
+    scene: { type: "object", description: "The drawing as Excalidraw keeps it: {elements: [...], appState: {...}, files: {...}}" },
+    height: { type: "number", minimum: 120, maximum: 1200, description: "Its height on the page, in pixels" } } } },
   schema: { type: "object", properties: { height: { type: "number", minimum: 120, maximum: 1200 }, picture: { type: "string", maxLength: 300 } } },
 };
 

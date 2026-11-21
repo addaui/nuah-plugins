@@ -51,7 +51,44 @@
       }
      ]
     }
-   ]
+   ],
+   "input": {
+    "schema": {
+     "type": "object",
+     "required": [
+      "text"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "text": {
+       "type": "string",
+       "maxLength": 20000,
+       "description": "The text, inline Markdown: **bold**, *italic*, ~~strike~~, `code`, [text](address); a new line is a line break"
+      },
+      "align": {
+       "enum": [
+        "start",
+        "center",
+        "end",
+        "justify"
+       ]
+      }
+     }
+    },
+    "node": {
+     "type": "paragraph",
+     "attrs": {
+      "align": {
+       "$": "align"
+      }
+     },
+     "content": [
+      {
+       "$text": "text"
+      }
+     ]
+    }
+   }
   },
   {
    "kind": "@nuah/editor-basic/heading",
@@ -135,7 +172,55 @@
       }
      ]
     }
-   ]
+   ],
+   "input": {
+    "schema": {
+     "type": "object",
+     "required": [
+      "text"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "text": {
+       "type": "string",
+       "maxLength": 20000,
+       "description": "The heading, inline Markdown: **bold**, *italic*, ~~strike~~, `code`, [text](address); a new line is a line break"
+      },
+      "level": {
+       "enum": [
+        1,
+        2,
+        3
+       ]
+      },
+      "align": {
+       "enum": [
+        "start",
+        "center",
+        "end",
+        "justify"
+       ]
+      }
+     }
+    },
+    "node": {
+     "type": "heading",
+     "attrs": {
+      "level": {
+       "$": "level",
+       "default": 1
+      },
+      "align": {
+       "$": "align"
+      }
+     },
+     "content": [
+      {
+       "$text": "text"
+      }
+     ]
+    }
+   }
   },
   {
    "kind": "@nuah/editor-basic/bullet-list",
@@ -152,7 +237,48 @@
    "nodes": [
     "bulletList",
     "listItem"
-   ]
+   ],
+   "input": {
+    "schema": {
+     "type": "object",
+     "required": [
+      "items"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "items": {
+       "type": "array",
+       "maxItems": 500,
+       "items": {
+        "type": "string",
+        "maxLength": 20000,
+        "description": "An item, inline Markdown: **bold**, *italic*, ~~strike~~, `code`, [text](address); a new line is a line break"
+       }
+      }
+     }
+    },
+    "node": {
+     "type": "bulletList",
+     "content": [
+      {
+       "$each": "items",
+       "as": {
+        "type": "listItem",
+        "content": [
+         {
+          "type": "paragraph",
+          "content": [
+           {
+            "$text": "."
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    }
+   }
   },
   {
    "kind": "@nuah/editor-basic/ordered-list",
@@ -182,7 +308,59 @@
      "max": 9999,
      "default": 1
     }
-   ]
+   ],
+   "input": {
+    "schema": {
+     "type": "object",
+     "required": [
+      "items"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "items": {
+       "type": "array",
+       "maxItems": 500,
+       "items": {
+        "type": "string",
+        "maxLength": 20000,
+        "description": "An item, inline Markdown: **bold**, *italic*, ~~strike~~, `code`, [text](address); a new line is a line break"
+       }
+      },
+      "start": {
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 9999
+      }
+     }
+    },
+    "node": {
+     "type": "orderedList",
+     "attrs": {
+      "start": {
+       "$": "start",
+       "default": 1
+      }
+     },
+     "content": [
+      {
+       "$each": "items",
+       "as": {
+        "type": "listItem",
+        "content": [
+         {
+          "type": "paragraph",
+          "content": [
+           {
+            "$text": "."
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    }
+   }
   },
   {
    "kind": "@nuah/editor-basic/checklist",
@@ -199,7 +377,66 @@
    "nodes": [
     "taskList",
     "taskItem"
-   ]
+   ],
+   "input": {
+    "schema": {
+     "type": "object",
+     "required": [
+      "items"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "items": {
+       "type": "array",
+       "maxItems": 500,
+       "items": {
+        "type": "object",
+        "required": [
+         "text"
+        ],
+        "additionalProperties": false,
+        "properties": {
+         "text": {
+          "type": "string",
+          "maxLength": 20000,
+          "description": "The item, inline Markdown: **bold**, *italic*, ~~strike~~, `code`, [text](address); a new line is a line break"
+         },
+         "done": {
+          "type": "boolean"
+         }
+        }
+       }
+      }
+     }
+    },
+    "node": {
+     "type": "taskList",
+     "content": [
+      {
+       "$each": "items",
+       "as": {
+        "type": "taskItem",
+        "attrs": {
+         "checked": {
+          "$": "done",
+          "default": false
+         }
+        },
+        "content": [
+         {
+          "type": "paragraph",
+          "content": [
+           {
+            "$text": "text"
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    }
+   }
   },
   {
    "kind": "@nuah/editor-basic/quote",
@@ -252,7 +489,49 @@
       }
      ]
     }
-   ]
+   ],
+   "input": {
+    "schema": {
+     "type": "object",
+     "required": [
+      "text"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "text": {
+       "type": "string",
+       "maxLength": 20000,
+       "description": "The quote, inline Markdown: **bold**, *italic*, ~~strike~~, `code`, [text](address); a new line is a line break"
+      },
+      "align": {
+       "enum": [
+        "start",
+        "center",
+        "end",
+        "justify"
+       ]
+      }
+     }
+    },
+    "node": {
+     "type": "blockquote",
+     "attrs": {
+      "align": {
+       "$": "align"
+      }
+     },
+     "content": [
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "$text": "text"
+        }
+       ]
+      }
+     ]
+    }
+   }
   },
   {
    "kind": "@nuah/editor-basic/divider",
@@ -268,7 +547,18 @@
    "keywords": "line hr separator",
    "nodes": [
     "horizontalRule"
-   ]
+   ],
+   "input": {
+    "schema": {
+     "type": "object",
+     "required": [],
+     "additionalProperties": false,
+     "properties": {}
+    },
+    "node": {
+     "type": "horizontalRule"
+    }
+   }
   },
   {
    "kind": "@nuah/editor-basic/code",
@@ -296,7 +586,41 @@
      },
      "pinned": true
     }
-   ]
+   ],
+   "input": {
+    "schema": {
+     "type": "object",
+     "required": [
+      "code"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "code": {
+       "type": "string",
+       "maxLength": 100000,
+       "description": "The code, as it is"
+      },
+      "language": {
+       "type": "string",
+       "maxLength": 40,
+       "description": "Its language, for highlighting (python, rust, json, ...)"
+      }
+     }
+    },
+    "node": {
+     "type": "codeBlock",
+     "attrs": {
+      "language": {
+       "$": "language"
+      }
+     },
+     "content": [
+      {
+       "$plain": "code"
+      }
+     ]
+    }
+   }
   },
   {
    "kind": "@nuah/editor-basic/callout",
@@ -355,7 +679,63 @@
       }
      ]
     }
-   ]
+   ],
+   "input": {
+    "schema": {
+     "type": "object",
+     "required": [
+      "text"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "title": {
+       "type": "string",
+       "maxLength": 20000,
+       "description": "Its title, inline Markdown: **bold**, *italic*, ~~strike~~, `code`, [text](address); a new line is a line break"
+      },
+      "text": {
+       "type": "string",
+       "maxLength": 20000,
+       "description": "What it says, inline Markdown: **bold**, *italic*, ~~strike~~, `code`, [text](address); a new line is a line break"
+      },
+      "tone": {
+       "enum": [
+        "info",
+        "tip",
+        "warning",
+        "danger"
+       ]
+      }
+     }
+    },
+    "node": {
+     "type": "callout",
+     "attrs": {
+      "tone": {
+       "$": "tone",
+       "default": "info"
+      }
+     },
+     "content": [
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "$text": "title"
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "$text": "text"
+        }
+       ]
+      }
+     ]
+    }
+   }
   },
   {
    "kind": "@nuah/editor-basic/toggle",
@@ -371,7 +751,52 @@
    "keywords": "collapse fold details",
    "nodes": [
     "toggle"
-   ]
+   ],
+   "input": {
+    "schema": {
+     "type": "object",
+     "required": [
+      "summary"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "summary": {
+       "type": "string",
+       "maxLength": 20000,
+       "description": "What shows when it is folded, inline Markdown: **bold**, *italic*, ~~strike~~, `code`, [text](address); a new line is a line break"
+      },
+      "text": {
+       "type": "string",
+       "maxLength": 20000,
+       "description": "What it holds, inline Markdown: **bold**, *italic*, ~~strike~~, `code`, [text](address); a new line is a line break"
+      }
+     }
+    },
+    "node": {
+     "type": "toggle",
+     "attrs": {
+      "open": true
+     },
+     "content": [
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "$text": "summary"
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "$text": "text"
+        }
+       ]
+      }
+     ]
+    }
+   }
   },
   {
    "kind": "@nuah/editor-basic/hard-break",
