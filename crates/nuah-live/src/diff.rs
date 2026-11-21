@@ -20,61 +20,8 @@ pub fn write_json(doc: &LoroDoc, json: &Value) -> Result<()> {
     if json["type"] != "doc" {
         return Err(Error::invalid("body", "must be a document: {\"type\":\"doc\",\"content\":[..]}"));
     }
-    // an element's own content given with it (an import, an agent): kept where the editor keeps it, never as an attribute
-    let mut body = json.clone();
-    let mut states = vec![];
-    take_states(&mut body, &mut states)?;
-    update_node(&doc.get_map(ROOT), &body)?;
-    let elements = doc.get_map(ELEMENTS);
-    for (id, state) in states {
-        if elements.get(&id).is_some() {
-            continue; // only a first value: what the element holds may have been edited since
-        }
-        match &state {
-            Value::String(s) => {
-                let t = elements.ensure_mergeable_text(&id).map_err(lerr)?;
-                t.insert(0, s).map_err(lerr)?;
-            }
-            Value::Object(o) => {
-                let m = elements.ensure_mergeable_map(&id).map_err(lerr)?;
-                for (k, v) in o {
-                    m.insert(k, loro_value(v)).map_err(lerr)?;
-                }
-            }
-            Value::Array(a) => {
-                let l = elements.ensure_mergeable_list(&id).map_err(lerr)?;
-                for (i, v) in a.iter().enumerate() {
-                    l.insert(i, loro_value(v)).map_err(lerr)?;
-                }
-            }
-            _ => {}
-        }
-    }
+    update_node(&doc.get_map(ROOT), json)?;
     doc.commit();
-    Ok(())
-}
-
-/// The root map where elements keep their own content, by block id (ADR 0094).
-pub const ELEMENTS: &str = "elements";
-
-/// Takes `attrs.state` out of every element node, with its block id: (block id, state).
-fn take_states(n: &mut Value, out: &mut Vec<(String, Value)>) -> Result<()> {
-    let is_element = matches!(n["type"].as_str(), Some("element" | "elementInline"));
-    if is_element {
-        if let Some(attrs) = n.get_mut("attrs").and_then(|a| a.as_object_mut()) {
-            if let Some(state) = attrs.remove("state").filter(|s| !s.is_null()) {
-                let Some(id) = attrs.get("blockId").and_then(|b| b.as_str()).filter(|b| !b.is_empty()) else {
-                    return Err(Error::invalid("body", "an element given its own content (state) needs a blockId"));
-                };
-                out.push((id.to_string(), state));
-            }
-        }
-    }
-    if let Some(children) = n.get_mut("content").and_then(|c| c.as_array_mut()) {
-        for c in children {
-            take_states(c, out)?;
-        }
-    }
     Ok(())
 }
 

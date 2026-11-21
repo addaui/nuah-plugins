@@ -137,29 +137,3 @@ fn something_that_is_not_a_document_is_refused() {
     assert!(write_json(&d, &json!({"type": "paragraph"})).is_err());
     assert!(write_json(&d, &json!([1, 2])).is_err());
 }
-
-/// An element written with `state` (an import, an agent) gets that as its own content, kept where the editor keeps it (the root map
-/// `elements`, by block id); the attribute itself is not stored, and a later write never replaces content that is there (ADR 0094).
-#[test]
-fn an_element_written_with_state_keeps_it_as_its_own_content() {
-    let d = new_doc(&styles());
-    let body = |state: &str| json!({"type": "doc", "content": [
-        {"type": "paragraph", "content": [{"type": "text", "text": "Flow:"}]},
-        {"type": "element", "attrs": {"blockId": "e1", "kind": "@nuah/mermaid/diagram", "plugin": "@nuah/mermaid", "v": 1, "data": {}, "fallback": {"text": state}, "state": state}},
-    ]});
-    write_json(&d, &body("flowchart LR\n  A --> B")).unwrap();
-    let text = d.get_map("elements").get("e1").and_then(|v| v.into_container().ok()).and_then(|c| c.into_text().ok()).expect("a text of its own");
-    assert_eq!(text.to_string(), "flowchart LR\n  A --> B");
-    let out = to_json(&d);
-    assert!(out["content"][1]["attrs"].get("state").is_none(), "{out}");
-    assert_eq!(out["content"][1]["attrs"]["kind"], "@nuah/mermaid/diagram");
-    // written again with other state: what the element holds stays (someone may have edited it)
-    write_json(&d, &body("flowchart LR\n  X --> Y")).unwrap();
-    assert_eq!(text.to_string(), "flowchart LR\n  A --> B");
-    // a map for an element whose state is a map
-    write_json(&d, &json!({"type": "doc", "content": [{"type": "element", "attrs": {"blockId": "s1", "kind": "@t/x/y", "plugin": "@t/x", "state": {"ink": "blue"}}}]})).unwrap();
-    let m = d.get_map("elements").get("s1").and_then(|v| v.into_container().ok()).and_then(|c| c.into_map().ok()).expect("a map of its own");
-    assert_eq!(serde_json::to_value(m.get_deep_value()).unwrap(), json!({"ink": "blue"}));
-    // state without a block id has nowhere to go
-    assert!(write_json(&d, &json!({"type": "doc", "content": [{"type": "element", "attrs": {"kind": "@t/x/y", "state": "x"}}]})).is_err());
-}
