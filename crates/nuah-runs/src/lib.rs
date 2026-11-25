@@ -143,6 +143,7 @@ impl Plugin for Runs {
                 "runs.resume": {"kind": "outbound", "permission": "runs.use", "description": "Start the executor again for a run that was interrupted",
                     "input": {"type": "object", "required": ["run"], "properties": {"run": {"type": "string"}}, "additionalProperties": false}},
                 "runs.create": id("Create the record of a run (used by runs.start)", json!({"executor": {"type": "string"}, "ref": {"type": "string"}, "kind": {"type": "string"}, "input": {"type": "object"}, "meta": {"type": "object"}}), &["executor"]),
+                "runs.remove": id("Delete the runs of a ref and their logs (when the product deletes what they belong to)", json!({"ref": {"type": "string"}}), &["ref"]),
                 "runs.reopen": id("Mark an interrupted run as running again (used by runs.resume)", json!({"run": {"type": "string"}}), &["run"]),
                 "runs.input": {"kind": "query", "permission": "runs.use", "description": "What a run was started with (used by runs.resume)", "input": {"type": "object", "required": ["run"], "properties": {"run": {"type": "string"}}, "additionalProperties": false}},
                 "runs.get": {"kind": "query", "permission": "runs.use", "input": {"type": "object", "required": ["id"], "properties": {"id": {"type": "string"}}, "additionalProperties": false}},
@@ -189,6 +190,33 @@ impl Plugin for Runs {
             let full = cx.call("runs.input", json!({"run": run}))?;
             launcher.launch(cx.who().clone(), run.clone(), full, true)?;
             Ok(json!({"run": run}))
+        });
+        b.op("runs.remove", |tx, i| {
+            let rf = text(&i, "ref");
+            if rf.is_empty() {
+                return Err(Error::invalid("ref", "is empty"));
+            }
+            let mut n = 0;
+            loop {
+                let page = tx.query(RUNS, &Query::new().eq("ref", rf).limit(100))?;
+                if page.items.is_empty() {
+                    break;
+                }
+                for d in page.items {
+                    loop {
+                        let ev = tx.query(EVENTS, &Query::new().eq("run", d.id.as_str()).limit(200))?;
+                        if ev.items.is_empty() {
+                            break;
+                        }
+                        for e in ev.items {
+                            tx.delete(EVENTS, &e.id)?;
+                        }
+                    }
+                    tx.delete(RUNS, &d.id)?;
+                    n += 1;
+                }
+            }
+            Ok(json!({"removed": n}))
         });
         b.op("runs.reopen", |tx, i| {
             let run = text(&i, "run");
