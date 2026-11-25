@@ -1468,8 +1468,8 @@ dependencies = [
 
 [[package]]
 name = "nuah-adapters"
-version = "0.19.1"
-source = "git+https://github.com/addaui/nuah?tag=v0.19.1#f23516f59ead0f15fad1aab0748c2118165dbfc6"
+version = "0.20.0"
+source = "git+https://github.com/addaui/nuah?tag=v0.20.0#e05c7ab845fc3c16302f44cb5a3de4e41b083cfb"
 dependencies = [
  "argon2",
  "nuah-kernel",
@@ -1489,7 +1489,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-appearance"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1499,7 +1499,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-editor"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1508,7 +1508,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-editor-basic"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1518,7 +1518,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-emoji"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1528,7 +1528,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-entities"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1538,7 +1538,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-excalidraw"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1548,7 +1548,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-features"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-emoji",
@@ -1563,7 +1563,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-fonts"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "base64 0.22.1",
  "nuah-adapters",
@@ -1574,7 +1574,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-gifs"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1583,7 +1583,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-gifs-giphy"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-gifs",
@@ -1593,8 +1593,8 @@ dependencies = [
 
 [[package]]
 name = "nuah-kernel"
-version = "0.19.1"
-source = "git+https://github.com/addaui/nuah?tag=v0.19.1#f23516f59ead0f15fad1aab0748c2118165dbfc6"
+version = "0.20.0"
+source = "git+https://github.com/addaui/nuah?tag=v0.20.0#e05c7ab845fc3c16302f44cb5a3de4e41b083cfb"
 dependencies = [
  "semver",
  "serde",
@@ -1605,7 +1605,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-link-analyzer"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "base64 0.22.1",
  "nuah-adapters",
@@ -1617,7 +1617,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-live"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "base64 0.22.1",
  "loro",
@@ -1629,7 +1629,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-mcp"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "axum",
  "nuah-adapters",
@@ -1642,7 +1642,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-mermaid"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1652,7 +1652,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-metric-prometheus"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1661,7 +1661,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-notebook"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1671,7 +1671,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-prefs"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1680,7 +1680,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-previews"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1692,7 +1692,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-python"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1702,7 +1702,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-runs"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1712,8 +1712,8 @@ dependencies = [
 
 [[package]]
 name = "nuah-shell"
-version = "0.19.1"
-source = "git+https://github.com/addaui/nuah?tag=v0.19.1#f23516f59ead0f15fad1aab0748c2118165dbfc6"
+version = "0.20.0"
+source = "git+https://github.com/addaui/nuah?tag=v0.20.0#e05c7ab845fc3c16302f44cb5a3de4e41b083cfb"
 dependencies = [
  "clap",
  "nuah-adapters",
@@ -1958,7 +1958,7 @@ dependencies = [
  "md-5",
  "memchr",
  "rand 0.10.4",
- "sha2 0.11.1",
+ "sha2 0.11.2",
  "stringprep",
 ]
 
@@ -2136,7 +2136,7 @@ checksum = "d902046e6a28a1e4c3cab97258a0ce11e994903f01c2d97a9447a0b3df85f4f6"
 
 [[package]]
 name = "registry"
-version = "0.12.1"
+version = "0.13.0"
 dependencies = [
  "nuah-adapters",
  "nuah-appearance",
@@ -2384,9 +2384,9 @@ dependencies = [
 
 [[package]]
 name = "sha2"
-version = "0.11.1"
+version = "0.11.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "47d7069beb7d6ac7b9acd1039986e73443f24234f41074da099d6f994ac9ad19"
+checksum = "5b0e5c7d67bc53f435386b2130fdc900488c5703770f6d8a4633060e34288a27"
 dependencies = [
  "cfg-if",
  "cpufeatures 0.3.1",
@@ -2715,7 +2715,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4c2ad44aa0ae96db89c4742212ed41645b2f597311ff6e1945542a4d9fadc2fb"
 dependencies = [
  "rustls",
- "sha2 0.11.1",
+ "sha2 0.11.2",
  "tokio",
  "tokio-postgres",
  "tokio-rustls",
