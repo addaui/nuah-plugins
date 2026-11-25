@@ -348,6 +348,44 @@
       "version": "0.3.0"
     },
     {
+      "crate": "nuah-runs",
+      "defines": [],
+      "description": "Long work that has an id, steps you can follow, a stop button and survives a restart: a product names the operation that does the work",
+      "fills": null,
+      "id": "@nuah/runs",
+      "kind": "plugin",
+      "name": "Runs",
+      "operations": [
+        "runs.cancel",
+        "runs.create",
+        "runs.delta",
+        "runs.events",
+        "runs.finish",
+        "runs.get",
+        "runs.input",
+        "runs.list",
+        "runs.record",
+        "runs.remove",
+        "runs.reopen",
+        "runs.resume",
+        "runs.start",
+        "runs.status"
+      ],
+      "provides": [],
+      "requires": {
+        "capabilities": [
+          "emit",
+          "serve",
+          "call"
+        ],
+        "extension_points": [],
+        "plugins": [],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
       "crate": "nuah-appearance",
       "defines": [],
       "description": "pastel, puffy, round",

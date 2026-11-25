@@ -31,6 +31,7 @@ fn the_class_of_every_plugin_is_the_one_written_down() {
     use nuah_kernel::PluginClass::{Feature, Platform};
     let expected = [
         ("@nuah/prefs", Feature),
+        ("@nuah/runs", Platform),
         ("@nuah/entities", Feature),
         ("@nuah/appearance", Feature),
         ("@nuah/emoji", Feature),

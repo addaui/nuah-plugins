@@ -10,13 +10,14 @@ checksum = "320119579fcad9c21884f5c4861d16174d0e06250625266f50fe6898340abefa"
 
 [[package]]
 name = "ahash"
-version = "0.8.12"
+version = "0.8.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5a15f179cd60c4584b8a8c596927aadc462e27f2ca70c04e0071964a73ba7a75"
+checksum = "54dae3d1d7b8956f3506c4e999a74e77f932a59153ccf38ab8cf96db74bb9dc0"
 dependencies = [
  "cfg-if",
- "getrandom 0.3.4",
+ "getrandom 0.4.3",
  "once_cell",
+ "serde",
  "version_check",
  "zerocopy",
 ]
@@ -313,9 +314,9 @@ dependencies = [
 
 [[package]]
 name = "clap"
-version = "4.6.9"
+version = "4.6.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "844c5c0b65be192cb68d570cca1b21a6444431d24e39c084dc0336177015337c"
+checksum = "50066ca966813ca8957ee15361752f19424a8ff620dbe9c8993d9f99d99b04b3"
 dependencies = [
  "clap_builder",
  "clap_derive",
@@ -323,9 +324,9 @@ dependencies = [
 
 [[package]]
 name = "clap_builder"
-version = "4.6.7"
+version = "4.6.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec0797fb7aeb1406c84efac526901f7ec3ead2124f946b494e72879d4b54704d"
+checksum = "a0ed97c96ef4efb3cc84e09fa388df4463e7cc3224ec38d7b1d9e45749333590"
 dependencies = [
  "anstream",
  "anstyle",
@@ -404,9 +405,9 @@ dependencies = [
 
 [[package]]
 name = "crc32fast"
-version = "1.5.5"
+version = "1.5.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2b929dd2a135771f40afabd1073f85eed59c800b7c61901e5c254270497dad64"
+checksum = "fd9ae8fcb3ea71b0b26338b4ffb13006bb175de8fd07921089a906ce7e5e6945"
 dependencies = [
  "cfg-if",
 ]
@@ -685,9 +686,9 @@ checksum = "77ce24cb58228fbb8aa041425bb1050850ac19177686ea6e0f41a70416f56fdb"
 
 [[package]]
 name = "form_urlencoded"
-version = "1.2.2"
+version = "1.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cb4cb245038516f5f85277875cdaa4f7d2c9a0fa0468de06ed190163b1581fcf"
+checksum = "afa489199eaffb1211795df1c6236ce1ad0d41a6fa45250add73e3b02420f06e"
 dependencies = [
  "percent-encoding",
 ]
@@ -786,26 +787,16 @@ dependencies = [
 
 [[package]]
 name = "getrandom"
-version = "0.3.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "899def5c37c4fd7b2664648c28120ecec138e4d395b459e5ca34f9cce2dd77fd"
-dependencies = [
- "cfg-if",
- "libc",
- "r-efi 5.3.0",
- "wasip2",
-]
-
-[[package]]
-name = "getrandom"
 version = "0.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "300e883d756b2e4ec94e02791f39b04b522276138852cfc41d9fb7e904106099"
 dependencies = [
  "cfg-if",
+ "js-sys",
  "libc",
- "r-efi 6.0.0",
+ "r-efi",
  "rand_core 0.10.1",
+ "wasm-bindgen",
 ]
 
 [[package]]
@@ -834,9 +825,9 @@ checksum = "841d1cc9bed7f9236f321df977030373f4a4163ae1a7dbfe1a51a2c1a51d9100"
 
 [[package]]
 name = "hashbrown"
-version = "0.17.1"
+version = "0.17.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ed5909b6e89a2db4456e54cd5f673791d7eca6732202bbf2a9cc504fe2f9b84a"
+checksum = "735eaa21a6a5ffb2e84362faaeb90c05ba8e19797ca30428478cb6ea3a4921bc"
 dependencies = [
  "foldhash",
 ]
@@ -847,7 +838,7 @@ version = "0.12.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a596f1b20ed2cc5ecac41a164aaebc7258057060f06c0cf7a2ba3991ee7990fb"
 dependencies = [
- "hashbrown 0.17.1",
+ "hashbrown 0.17.2",
 ]
 
 [[package]]
@@ -961,9 +952,9 @@ dependencies = [
 
 [[package]]
 name = "hyper"
-version = "1.12.0"
+version = "1.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2c3e324da4c95177d6291d4c8730197c0d1822f8a9766814a4a44fa5ab797c9c"
+checksum = "229c6ff5584df4c6becbfe00567128bac768c8cd32ebc8a8366bd81ed072e8f3"
 dependencies = [
  "atomic-waker",
  "bytes",
@@ -1268,9 +1259,9 @@ dependencies = [
 
 [[package]]
 name = "loro-common"
-version = "1.18.0"
+version = "1.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2bc76e378b98f08fd308eeff42461d60566053076f4884a881d3429a29081e0e"
+checksum = "059f7fe8069d29b4b490fa707769ffb7ff6c6bb4fcfb124a9e7c28f1abf99629"
 dependencies = [
  "arbitrary",
  "enum-as-inner 0.6.1",
@@ -1287,9 +1278,9 @@ dependencies = [
 
 [[package]]
 name = "loro-delta"
-version = "1.18.0"
+version = "1.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8c36a724d99ddb1ec26036545db181c2b623c78d356385016a73f93e98c8d38d"
+checksum = "6145e8f26d6b3d8ff2f35799daca72645bff643abd13144fdd28990b75a61c1e"
 dependencies = [
  "arrayvec",
  "enum-as-inner 0.5.1",
@@ -1299,9 +1290,9 @@ dependencies = [
 
 [[package]]
 name = "loro-internal"
-version = "1.18.0"
+version = "1.19.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d55e9581255de97cf6e66fafff019f79fa0fb005fdb5197195bc6f5048381b74"
+checksum = "e9ebc2a8d21db73a1b13b618cd4409f0962116c724c360e5213ec2bb5cc45b08"
 dependencies = [
  "append-only-bytes",
  "arref",
@@ -1344,9 +1335,9 @@ dependencies = [
 
 [[package]]
 name = "loro-kv-store"
-version = "1.18.0"
+version = "1.19.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3a169f32c2d2d6ffe67d03603b61bd17d8d90b1a7f8c2f2585304f3181be8089"
+checksum = "b2b2dfb97ef81bc4c1af522c7232d7543b339721e70b86d3bc7bd6e10357e6a7"
 dependencies = [
  "bytes",
  "ensure-cov",
@@ -1477,8 +1468,8 @@ dependencies = [
 
 [[package]]
 name = "nuah-adapters"
-version = "0.18.0"
-source = "git+https://github.com/addaui/nuah?tag=v0.18.0#9332404ea20bc619defa13ff0d133e5be6cd9081"
+version = "0.19.0"
+source = "git+https://github.com/addaui/nuah?tag=v0.19.0#2e2a24490587dedc940779ce2d6f7181fc874bd1"
 dependencies = [
  "argon2",
  "nuah-kernel",
@@ -1498,7 +1489,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-appearance"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1508,7 +1499,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-editor"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1517,7 +1508,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-editor-basic"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1527,7 +1518,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-emoji"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1537,7 +1528,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-entities"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1547,7 +1538,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-excalidraw"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1557,7 +1548,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-features"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-emoji",
@@ -1572,7 +1563,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-fonts"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "base64 0.22.1",
  "nuah-adapters",
@@ -1583,7 +1574,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-gifs"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1592,7 +1583,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-gifs-giphy"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-gifs",
@@ -1602,8 +1593,8 @@ dependencies = [
 
 [[package]]
 name = "nuah-kernel"
-version = "0.18.0"
-source = "git+https://github.com/addaui/nuah?tag=v0.18.0#9332404ea20bc619defa13ff0d133e5be6cd9081"
+version = "0.19.0"
+source = "git+https://github.com/addaui/nuah?tag=v0.19.0#2e2a24490587dedc940779ce2d6f7181fc874bd1"
 dependencies = [
  "semver",
  "serde",
@@ -1614,7 +1605,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-link-analyzer"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "base64 0.22.1",
  "nuah-adapters",
@@ -1626,7 +1617,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-live"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "base64 0.22.1",
  "loro",
@@ -1638,7 +1629,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-mcp"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "axum",
  "nuah-adapters",
@@ -1651,7 +1642,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-mermaid"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1661,7 +1652,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-metric-prometheus"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1670,7 +1661,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-notebook"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1680,7 +1671,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-prefs"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1689,7 +1680,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-previews"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1701,7 +1692,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-python"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1710,9 +1701,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "nuah-runs"
+version = "0.12.0"
+dependencies = [
+ "nuah-adapters",
+ "nuah-kernel",
+ "parking_lot 0.12.5",
+ "serde_json",
+]
+
+[[package]]
 name = "nuah-shell"
-version = "0.18.0"
-source = "git+https://github.com/addaui/nuah?tag=v0.18.0#9332404ea20bc619defa13ff0d133e5be6cd9081"
+version = "0.19.0"
+source = "git+https://github.com/addaui/nuah?tag=v0.19.0#2e2a24490587dedc940779ce2d6f7181fc874bd1"
 dependencies = [
  "clap",
  "nuah-adapters",
@@ -1918,9 +1919,9 @@ checksum = "f6b464fbc74e149a392436b17d523f769e057cb6877f6a5c4618bc6f11800548"
 
 [[package]]
 name = "postcard"
-version = "1.1.3"
+version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6764c3b5dd454e283a30e6dfe78e9b31096d9e32036b5d1eaac7a6119ccb9a24"
+checksum = "5431b3dcfdf6d1985c87d11f267a171c0dec0a8cd544c6727b747d36365f1fca"
 dependencies = [
  "cobs",
  "embedded-io 0.4.0",
@@ -2032,12 +2033,6 @@ dependencies = [
 
 [[package]]
 name = "r-efi"
-version = "5.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "69cdb34c158ceb288df11e18b4bd39de994f6657d83847bdffdbd7f346754b0f"
-
-[[package]]
-name = "r-efi"
 version = "6.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f8dcc9c7d52a811697d2151c701e0d08956f92b0e24136cf4cf27b57a6a0d9bf"
@@ -2141,7 +2136,7 @@ checksum = "d902046e6a28a1e4c3cab97258a0ce11e994903f01c2d97a9447a0b3df85f4f6"
 
 [[package]]
 name = "registry"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "nuah-adapters",
  "nuah-appearance",
@@ -2154,6 +2149,7 @@ dependencies = [
  "nuah-link-analyzer",
  "nuah-metric-prometheus",
  "nuah-prefs",
+ "nuah-runs",
  "serde_json",
 ]
 
@@ -2916,9 +2912,9 @@ dependencies = [
 
 [[package]]
 name = "url"
-version = "2.5.8"
+version = "2.5.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ff67a8a4397373c3ef660812acab3268222035010ab8680ec4215f38ba3d0eed"
+checksum = "f00cd2407bb42c0ef17be88d4cf020f5cceffd121665bac9b8b9493a369b3b1a"
 dependencies = [
  "form_urlencoded",
  "idna",
@@ -3309,18 +3305,18 @@ dependencies = [
 
 [[package]]
 name = "zerocopy"
-version = "0.8.63"
+version = "0.8.65"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e5fe1f8f1b06191a00962174c61aa5005e0bb391a6d80d07e24d115c01a92ed8"
+checksum = "32bc8a75f879cd6fe53a6bedf3c28f0e1b914c77424fc2be9e2ec85d7d25aff5"
 dependencies = [
  "zerocopy-derive",
 ]
 
 [[package]]
 name = "zerocopy-derive"
-version = "0.8.63"
+version = "0.8.65"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "863ad3ac83293fb4d740aedbfdc9240dd8d1a50c1099acd76ce80ce7c7230c7f"
+checksum = "b8bfd2644ea1681f60cf95029ff18aa8ad1cc3f7b8fe37286f8e473bb29f816b"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -3403,9 +3399,9 @@ dependencies = [
 
 [[package]]
 name = "zlib-rs"
-version = "0.6.8"
+version = "0.6.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b268e58e7c693d7c271f93ffc4ba3b380412554231c85bf61ca7af91042a4112"
+checksum = "aa76918995d776d9dd34d371030be228d021137449771493d56e29f77e4148ac"
 
 [[package]]
 name = "zmij"

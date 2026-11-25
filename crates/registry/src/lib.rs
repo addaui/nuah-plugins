@@ -11,6 +11,7 @@ use std::sync::Arc;
 pub fn plugins() -> Vec<(&'static str, Arc<dyn Plugin>)> {
     let mut v: Vec<(&'static str, Arc<dyn Plugin>)> = vec![
         ("nuah-prefs", Arc::new(nuah_prefs::Prefs)),
+        ("nuah-runs", Arc::new(nuah_runs::Runs::default())),
         ("nuah-entities", Arc::new(nuah_entities::Entities)),
         ("nuah-appearance", Arc::new(nuah_appearance::Appearance)),
         ("nuah-emoji", Arc::new(nuah_emoji::Emoji)),
