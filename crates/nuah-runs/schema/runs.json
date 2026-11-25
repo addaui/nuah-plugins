@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "collections": {
+    "runs.runs": {
+      "type": "object",
+      "per_subject": true,
+      "description": "One run of long work: what started it (executor, input), where it stands, how it ended, and what it used. `ref` is the product's own handle (a thread id, say) so a product can list its runs; `meta` is the product's free notes about the run",
+      "required": ["executor", "status", "started"],
+      "properties": {
+        "kind": {"type": "string", "index": true},
+        "ref": {"type": "string", "index": true},
+        "executor": {"type": "string"},
+        "input": {"type": "object"},
+        "meta": {"type": "object"},
+        "status": {"type": "string", "index": true},
+        "boot": {"type": "string"},
+        "started": {"type": "integer", "index": true},
+        "finished": {"type": "integer"},
+        "error": {"type": "string"},
+        "reason": {"type": "string"},
+        "code": {"type": "integer"},
+        "usage": {"type": "object"},
+        "cost": {"type": "number"}
+      }
+    },
+    "runs.events": {
+      "type": "object",
+      "per_subject": true,
+      "description": "What a run did, step by step, in order",
+      "required": ["run", "kind"],
+      "properties": {
+        "run": {"type": "string", "index": true},
+        "ref": {"type": "string"},
+        "seq": {"type": "integer"},
+        "kind": {"type": "string"},
+        "at": {"type": "integer"},
+        "data": {"type": "object"}
+      }
+    }
+  }
+}
