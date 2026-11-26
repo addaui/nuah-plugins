@@ -40,6 +40,14 @@ fn the_class_of_every_plugin_is_the_one_written_down() {
         ("@nuah/gifs-giphy", Feature),
         ("@nuah/link-analyzer", Platform),
         ("@nuah/metric-prometheus", Platform),
+        ("@nuah/channels", Feature),
+        ("@nuah/channel-inbox", Feature),
+        ("@nuah/channel-telegram", Platform),
+        ("@nuah/channel-whatsapp", Platform),
+        ("@nuah/channel-slack", Platform),
+        ("@nuah/channel-discord", Platform),
+        ("@nuah/channel-sms", Platform),
+        ("@nuah/channel-webhook", Platform),
     ];
     let mut seen = vec![];
     for (_, p) in registry::plugins() {
