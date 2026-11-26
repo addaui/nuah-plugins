@@ -34,6 +34,313 @@
       "version": "0.1.0"
     },
     {
+      "crate": "nuah-channels",
+      "defines": [],
+      "description": "A message to a Discord channel through a webhook",
+      "fills": null,
+      "id": "@nuah/channel-discord",
+      "kind": "plugin",
+      "name": "Discord",
+      "operations": [
+        "discord.add",
+        "discord.remove",
+        "discord.send",
+        "discord.target",
+        "discord.update"
+      ],
+      "provides": [
+        {
+          "extension_point": "channels.kind",
+          "optional": false,
+          "priority": 0
+        }
+      ],
+      "requires": {
+        "capabilities": [
+          "net",
+          "secrets",
+          "call"
+        ],
+        "extension_points": [
+          "channels.kind@^1"
+        ],
+        "plugins": [
+          "@nuah/channels"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
+      "crate": "nuah-channels",
+      "defines": [],
+      "description": "The app itself as a channel: messages kept in your own list, with an unread count",
+      "fills": null,
+      "id": "@nuah/channel-inbox",
+      "kind": "plugin",
+      "name": "Inbox",
+      "operations": [
+        "inbox.add",
+        "inbox.delete",
+        "inbox.list",
+        "inbox.read",
+        "inbox.remove",
+        "inbox.send",
+        "inbox.update"
+      ],
+      "provides": [
+        {
+          "extension_point": "channels.kind",
+          "optional": false,
+          "priority": 0
+        }
+      ],
+      "requires": {
+        "capabilities": [],
+        "extension_points": [
+          "channels.kind@^1"
+        ],
+        "plugins": [
+          "@nuah/channels"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
+      "crate": "nuah-channels",
+      "defines": [],
+      "description": "A message to a Slack channel through an incoming webhook",
+      "fills": null,
+      "id": "@nuah/channel-slack",
+      "kind": "plugin",
+      "name": "Slack",
+      "operations": [
+        "slack.add",
+        "slack.remove",
+        "slack.send",
+        "slack.target",
+        "slack.update"
+      ],
+      "provides": [
+        {
+          "extension_point": "channels.kind",
+          "optional": false,
+          "priority": 0
+        }
+      ],
+      "requires": {
+        "capabilities": [
+          "net",
+          "secrets",
+          "call"
+        ],
+        "extension_points": [
+          "channels.kind@^1"
+        ],
+        "plugins": [
+          "@nuah/channels"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
+      "crate": "nuah-channels",
+      "defines": [],
+      "description": "A text message to your phone through your Twilio account",
+      "fills": null,
+      "id": "@nuah/channel-sms",
+      "kind": "plugin",
+      "name": "SMS (Twilio)",
+      "operations": [
+        "sms.add",
+        "sms.remove",
+        "sms.send",
+        "sms.target",
+        "sms.update"
+      ],
+      "provides": [
+        {
+          "extension_point": "channels.kind",
+          "optional": false,
+          "priority": 0
+        }
+      ],
+      "requires": {
+        "capabilities": [
+          "net",
+          "secrets",
+          "call"
+        ],
+        "extension_points": [
+          "channels.kind@^1"
+        ],
+        "plugins": [
+          "@nuah/channels"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
+      "crate": "nuah-channels",
+      "defines": [],
+      "description": "A message from your own Telegram bot to a chat",
+      "fills": null,
+      "id": "@nuah/channel-telegram",
+      "kind": "plugin",
+      "name": "Telegram",
+      "operations": [
+        "telegram.add",
+        "telegram.remove",
+        "telegram.send",
+        "telegram.target",
+        "telegram.update"
+      ],
+      "provides": [
+        {
+          "extension_point": "channels.kind",
+          "optional": false,
+          "priority": 0
+        }
+      ],
+      "requires": {
+        "capabilities": [
+          "net",
+          "secrets",
+          "call"
+        ],
+        "extension_points": [
+          "channels.kind@^1"
+        ],
+        "plugins": [
+          "@nuah/channels"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
+      "crate": "nuah-channels",
+      "defines": [],
+      "description": "Your own address that receives each message as JSON (title, text, link)",
+      "fills": null,
+      "id": "@nuah/channel-webhook",
+      "kind": "plugin",
+      "name": "Web address",
+      "operations": [
+        "webhook.add",
+        "webhook.remove",
+        "webhook.send",
+        "webhook.target",
+        "webhook.update"
+      ],
+      "provides": [
+        {
+          "extension_point": "channels.kind",
+          "optional": false,
+          "priority": 0
+        }
+      ],
+      "requires": {
+        "capabilities": [
+          "net",
+          "secrets",
+          "call"
+        ],
+        "extension_points": [
+          "channels.kind@^1"
+        ],
+        "plugins": [
+          "@nuah/channels"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
+      "crate": "nuah-channels",
+      "defines": [],
+      "description": "A WhatsApp message through Meta's Cloud API",
+      "fills": null,
+      "id": "@nuah/channel-whatsapp",
+      "kind": "plugin",
+      "name": "WhatsApp",
+      "operations": [
+        "whatsapp.add",
+        "whatsapp.remove",
+        "whatsapp.send",
+        "whatsapp.target",
+        "whatsapp.update"
+      ],
+      "provides": [
+        {
+          "extension_point": "channels.kind",
+          "optional": false,
+          "priority": 0
+        }
+      ],
+      "requires": {
+        "capabilities": [
+          "net",
+          "secrets",
+          "call"
+        ],
+        "extension_points": [
+          "channels.kind@^1"
+        ],
+        "plugins": [
+          "@nuah/channels"
+        ],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
+      "crate": "nuah-channels",
+      "defines": [
+        "channels.kind",
+        "channels.topic"
+      ],
+      "description": "The ways a person is reached outside the app (a bot, a messenger, a web address, the app's own inbox) and one operation for a product to tell them something",
+      "fills": null,
+      "id": "@nuah/channels",
+      "kind": "plugin",
+      "name": "Channels",
+      "operations": [
+        "channels.history",
+        "channels.kinds",
+        "channels.notify",
+        "channels.plan",
+        "channels.record",
+        "channels.route.set",
+        "channels.test",
+        "channels.topics"
+      ],
+      "provides": [],
+      "requires": {
+        "capabilities": [
+          "call"
+        ],
+        "extension_points": [
+          "channels.kind@^1",
+          "channels.topic@^1"
+        ],
+        "plugins": [],
+        "ports": []
+      },
+      "settings_schema": null,
+      "version": "0.1.0"
+    },
+    {
       "crate": "nuah-emoji",
       "defines": [
         "emoji.set"

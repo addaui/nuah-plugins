@@ -1498,6 +1498,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nuah-channels"
+version = "0.15.0"
+dependencies = [
+ "nuah-adapters",
+ "nuah-kernel",
+ "parking_lot 0.12.5",
+ "serde_json",
+]
+
+[[package]]
 name = "nuah-editor"
 version = "0.15.0"
 dependencies = [
@@ -2140,6 +2150,7 @@ version = "0.15.0"
 dependencies = [
  "nuah-adapters",
  "nuah-appearance",
+ "nuah-channels",
  "nuah-emoji",
  "nuah-entities",
  "nuah-fonts",

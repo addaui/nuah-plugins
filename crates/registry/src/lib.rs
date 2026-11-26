@@ -12,6 +12,7 @@ pub fn plugins() -> Vec<(&'static str, Arc<dyn Plugin>)> {
     let mut v: Vec<(&'static str, Arc<dyn Plugin>)> = vec![
         ("nuah-prefs", Arc::new(nuah_prefs::Prefs)),
         ("nuah-runs", Arc::new(nuah_runs::Runs::default())),
+        ("nuah-channels", Arc::new(nuah_channels::Channels)),
         ("nuah-entities", Arc::new(nuah_entities::Entities)),
         ("nuah-appearance", Arc::new(nuah_appearance::Appearance)),
         ("nuah-emoji", Arc::new(nuah_emoji::Emoji)),
@@ -21,6 +22,9 @@ pub fn plugins() -> Vec<(&'static str, Arc<dyn Plugin>)> {
         ("nuah-link-analyzer", Arc::new(nuah_link_analyzer::LinkAnalyzer::default())),
         ("nuah-metric-prometheus", Arc::new(nuah_metric_prometheus::MetricPrometheus)),
     ];
+    for k in nuah_channels::kind_plugins() {
+        v.push(("nuah-channels", k));
+    }
     for t in nuah_appearance::themes() {
         v.push(("nuah-appearance", Arc::new(t)));
     }
