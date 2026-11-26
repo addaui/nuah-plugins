@@ -6,6 +6,47 @@
 use crate::{manifest, text};
 use nuah_kernel::*;
 use serde_json::{json, Map, Value};
+use std::sync::{
+    atomic::{AtomicBool, Ordering},
+    Arc,
+};
+
+/// Who to poll for: one entry for each enabled connection of a kind that receives (Telegram), with the person to act as.
+const WATCH: &str = "telegram.watch";
+
+/// Poll every connection that receives, each as its owner. Answers how many were polled. A person whose account is disabled is skipped.
+pub fn poll_all(core: &Core) -> usize {
+    let system = Identity::new("channels", "Channels", &["admin"]);
+    let Ok(list) = core.call_as(&system, "telegram.watching", json!({}), None) else { return 0 };
+    let accounts = core.call_as(&system, "auth.account.list", json!({}), None).ok().map(|r| r.output["accounts"].as_array().cloned().unwrap_or_default());
+    let mut n = 0;
+    for w in list.output["watch"].as_array().cloned().unwrap_or_default() {
+        let Ok(mut who) = serde_json::from_value::<Identity>(w["who"].clone()) else { continue };
+        if let Some(acc) = &accounts {
+            match acc.iter().find(|a| a["subject"] == who.subject.as_str() && a["disabled"] != true) {
+                Some(a) => who.roles = a["roles"].as_array().map(|r| r.iter().filter_map(|x| x.as_str().map(String::from)).collect()).unwrap_or(who.roles),
+                None => continue,
+            }
+        }
+        if core.call_as(&who, "telegram.poll", json!({"id": w["id"]}), None).is_ok() {
+            n += 1;
+        }
+    }
+    n
+}
+
+struct Poller {
+    stop: Arc<AtomicBool>,
+    handle: Option<std::thread::JoinHandle<()>>,
+}
+impl Service for Poller {
+    fn stop(mut self: Box<Self>) {
+        self.stop.store(true, Ordering::SeqCst);
+        if let Some(h) = self.handle.take() {
+            let _ = h.join();
+        }
+    }
+}
 
 pub struct Field {
     pub name: &'static str,
@@ -190,7 +231,7 @@ impl Plugin for Kind {
         let sp = self.0;
         let ns = sp.ns;
         let by_id = json!({"type": "object", "required": ["id"], "properties": {"id": {"type": "string"}}, "additionalProperties": false});
-        manifest(json!({
+        let mut m = json!({
             "id": sp.id, "version": "0.1.0", "name": sp.title, "namespaces": [ns],
             "description": sp.description,
             "requires": {"capabilities": ["net", "secrets", "call"], "extension_points": ["channels.kind@^1"], "plugins": ["@nuah/channels"]},
@@ -208,7 +249,45 @@ impl Plugin for Kind {
                     "input": {"type": "object", "required": ["id", "text"], "properties": {"id": {"type": "string"}, "title": {"type": ["string", "null"]}, "text": {"type": "string"}, "link": {"type": ["string", "null"]}}, "additionalProperties": false},
                     "reasons": {format!("{ns}.send_failed"): "The service did not accept the message"}}
             }
-        }))
+        });
+        if ns == "telegram" {
+            // Telegram also receives (ADR 0148): the poll is a service, so the plugin needs serve
+            m["requires"]["capabilities"] = json!(["net", "secrets", "call", "serve"]);
+            m["permissions"] = json!({"telegram.watch": {"description": "Read whom the instance polls for (the instance's own clock)", "default": ["admin"]}});
+            m["settings_schema"] = json!({"type": "object", "properties": {"poll_seconds": {"type": "integer", "minimum": 1, "maximum": 60, "default": 3, "title": "Seconds between looks for new messages", "x-tier": "operator", "x-apply": "service"}}, "additionalProperties": false});
+            m["data"]["schema"]["collections"][WATCH] = json!({"type": "object", "required": ["who"], "properties": {"who": {"type": "object"}}});
+            m["data"]["schema"]["collections"][conns(ns)]["properties"]["offset"] = json!({"type": "integer"});
+            m["operations"]["telegram.watching"] = json!({"kind": "query", "permission": "telegram.watch", "description": "Whom to poll for and who to act as"});
+            m["operations"]["telegram.cursor"] = json!({"kind": "command", "permission": "channels.use", "description": "Remember how far the messages were read (used by telegram.poll)",
+                "input": {"type": "object", "required": ["id", "offset"], "properties": {"id": {"type": "string"}, "offset": {"type": "integer"}}, "additionalProperties": false}});
+            m["operations"]["telegram.poll"] = json!({"kind": "outbound", "permission": "channels.use", "description": "Look for new messages from your own chat and hand them to the product (the clock calls it)",
+                "input": {"type": "object", "required": ["id"], "properties": {"id": {"type": "string"}}, "additionalProperties": false}});
+        }
+        manifest(m)
+    }
+    fn serve(&self, ctx: ServiceContext) -> Result<Option<Box<dyn Service>>> {
+        if self.0.ns != "telegram" {
+            return Ok(None);
+        }
+        let secs = ctx.settings["poll_seconds"].as_u64().unwrap_or(3).clamp(1, 60);
+        let stop = Arc::new(AtomicBool::new(false));
+        let flag = stop.clone();
+        let core = ctx.core;
+        let handle = std::thread::Builder::new()
+            .name("channels-telegram-poll".into())
+            .spawn(move || {
+                let mut waited = 0u64;
+                while !flag.load(Ordering::SeqCst) {
+                    std::thread::sleep(std::time::Duration::from_millis(100));
+                    waited += 100;
+                    if waited >= secs * 1000 {
+                        waited = 0;
+                        poll_all(&core);
+                    }
+                }
+            })
+            .map_err(|e| Error::internal(format!("cannot start the Telegram poll: {e}")))?;
+        Ok(Some(Box::new(Poller { stop, handle: Some(handle) })))
     }
     fn bind(&self, b: &mut Bindings) {
         let sp: &'static Spec = self.0;
@@ -217,7 +296,7 @@ impl Plugin for Kind {
             let list: Vec<Value> = tx.query(&c1, &Query::new().limit(100))?.items.iter().map(|d| json!({"id": d.id, "label": d.body["label"], "enabled": d.body["enabled"] != false})).collect();
             let fields: Vec<Value> = sp.fields.iter().map(|f| json!({"name": f.name, "label": f.label, "secret": f.secret, "required": f.required, "help": f.help})).collect();
             Ok(json!({"kind": sp.ns, "title": sp.title, "description": sp.description, "fields": fields,
-                "ops": {"add": format!("{}.add", sp.ns), "update": format!("{}.update", sp.ns), "remove": format!("{}.remove", sp.ns), "send": format!("{}.send", sp.ns)}, "connections": list}))
+                "inbound": sp.ns == "telegram", "ops": {"add": format!("{}.add", sp.ns), "update": format!("{}.update", sp.ns), "remove": format!("{}.remove", sp.ns), "send": format!("{}.send", sp.ns)}, "connections": list}))
         });
         b.op(&format!("{}.add", sp.ns), move |tx, i| {
             let reason = |e: Error| e.with_reason(&format!("{}.bad_field", sp.ns));
@@ -246,6 +325,9 @@ impl Plugin for Kind {
                     tx.set_secret(&secret_name(&d.id, f.name), v)?;
                 }
             }
+            if sp.ns == "telegram" {
+                watch(tx, &d.id, true)?;
+            }
             Ok(json!({"id": d.id}))
         });
         b.op(&format!("{}.update", sp.ns), move |tx, i| {
@@ -257,6 +339,9 @@ impl Plugin for Kind {
                 d.body["enabled"] = json!(e);
             }
             tx.put(&c3, &d.id, d.body.clone(), Expect::Any)?;
+            if sp.ns == "telegram" {
+                watch(tx, &d.id, d.body["enabled"] != false)?;
+            }
             Ok(json!({"id": d.id}))
         });
         b.op(&format!("{}.remove", sp.ns), move |tx, i| {
@@ -267,11 +352,14 @@ impl Plugin for Kind {
             for f in sp.fields.iter().filter(|f| f.secret) {
                 tx.delete_secret(&secret_name(&id, f.name))?;
             }
+            if sp.ns == "telegram" {
+                watch(tx, &id, false)?;
+            }
             Ok(json!({"deleted": true}))
         });
         b.op(&format!("{}.target", sp.ns), move |tx, i| {
             let d = tx.get(&c5, text(&i, "id"))?.ok_or_else(|| Error::not_found("connection"))?;
-            Ok(json!({"id": d.id, "label": d.body["label"], "enabled": d.body["enabled"] != false, "fields": d.body["fields"]}))
+            Ok(json!({"id": d.id, "label": d.body["label"], "enabled": d.body["enabled"] != false, "fields": d.body["fields"], "offset": d.body["offset"]}))
         });
         b.outbound(&format!("{}.send", sp.ns), move |cx, i| {
             let id = text(&i, "id").to_string();
@@ -297,5 +385,74 @@ impl Plugin for Kind {
             (sp.accept)(&r).map_err(|e| e.with_reason(&format!("{}.send_failed", sp.ns)))?;
             Ok(json!({"ok": true}))
         });
+        if sp.ns == "telegram" {
+            let conn = conns(sp.ns);
+            b.op("telegram.watching", |tx, _| {
+                let list: Vec<Value> = tx.query(WATCH, &Query::new().limit(2000))?.items.iter().map(|d| json!({"id": d.id, "who": d.body["who"]})).collect();
+                Ok(json!({"watch": list}))
+            });
+            b.op("telegram.cursor", move |tx, i| {
+                let mut d = tx.get(&conn, text(&i, "id"))?.ok_or_else(|| Error::not_found("connection"))?;
+                d.body["offset"] = i["offset"].clone();
+                tx.put(&conn, &d.id, d.body.clone(), Expect::Any)?;
+                Ok(json!({"ok": true}))
+            });
+            b.outbound("telegram.poll", |cx, i| poll(cx, i));
+        }
     }
+}
+
+/// Keep the index of connections to poll for in step with the connection (ADR 0148).
+fn watch(tx: &mut Tx, id: &str, on: bool) -> Result<()> {
+    if on {
+        let w = tx.who();
+        tx.put(WATCH, id, json!({"who": {"subject": w.subject, "display": w.display, "roles": w.roles}}), Expect::Any)?;
+    } else {
+        tx.delete(WATCH, id)?;
+    }
+    Ok(())
+}
+
+/// One look at the bot's new messages (ADR 0148). Only a message in a private chat with the connection's own chat id is handed on;
+/// the position is saved first, so a message is handled at most once, and what was waiting before the first look is skipped.
+fn poll(cx: &Outbound, i: Value) -> Result<Value> {
+    let id = text(&i, "id").to_string();
+    let t = cx.call("telegram.target", json!({"id": id}))?;
+    if t["enabled"] == false {
+        return Ok(json!({"handled": 0}));
+    }
+    let Some(token) = cx.secret(&secret_name(&id, "token"))? else { return Ok(json!({"handled": 0})) };
+    let mut url = format!("https://api.telegram.org/bot{token}/getUpdates?timeout=0&limit=20&allowed_updates=%5B%22message%22%5D");
+    if let Some(o) = t["offset"].as_i64() {
+        url.push_str(&format!("&offset={o}"));
+    }
+    let mut req = NetRequest::get(&url);
+    req.max_bytes = 1 << 18;
+    req.timeout_ms = 15_000;
+    // the token is in the address: never in an error
+    let r = cx.net()?.fetch(&req).map_err(|_| failed("Telegram cannot be reached".into()))?;
+    let v: Value = serde_json::from_slice(&r.body).unwrap_or(Value::Null);
+    if !(200..300).contains(&r.status) || v["ok"] != true {
+        return Err(failed(format!("Telegram refused to hand over messages: {}", v["description"].as_str().unwrap_or("no reason given"))));
+    }
+    let updates = v["result"].as_array().cloned().unwrap_or_default();
+    let next = updates.iter().filter_map(|u| u["update_id"].as_i64()).max().map(|m| m + 1);
+    let first = t["offset"].is_null();
+    if let Some(n) = next.or(if first { Some(1) } else { None }) {
+        cx.call("telegram.cursor", json!({"id": id, "offset": n}))?;
+    }
+    if first {
+        return Ok(json!({"handled": 0, "skipped": updates.len()}));
+    }
+    let own = text(&t["fields"], "chat_id");
+    let mut handled = 0;
+    for u in &updates {
+        let m = &u["message"];
+        let said = m["text"].as_str().unwrap_or("");
+        if m["chat"]["type"] == "private" && m["chat"]["id"].to_string() == own && !said.trim().is_empty() {
+            let _ = cx.call("channels.receive", json!({"kind": "telegram", "id": id, "text": said.chars().take(1000).collect::<String>()}));
+            handled += 1;
+        }
+    }
+    Ok(json!({"handled": handled}))
 }

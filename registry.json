@@ -197,10 +197,13 @@
       "name": "Telegram",
       "operations": [
         "telegram.add",
+        "telegram.cursor",
+        "telegram.poll",
         "telegram.remove",
         "telegram.send",
         "telegram.target",
-        "telegram.update"
+        "telegram.update",
+        "telegram.watching"
       ],
       "provides": [
         {
@@ -213,7 +216,8 @@
         "capabilities": [
           "net",
           "secrets",
-          "call"
+          "call",
+          "serve"
         ],
         "extension_points": [
           "channels.kind@^1"
@@ -223,7 +227,21 @@
         ],
         "ports": []
       },
-      "settings_schema": null,
+      "settings_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "poll_seconds": {
+            "default": 3,
+            "maximum": 60,
+            "minimum": 1,
+            "title": "Seconds between looks for new messages",
+            "type": "integer",
+            "x-apply": "service",
+            "x-tier": "operator"
+          }
+        },
+        "type": "object"
+      },
       "version": "0.1.0"
     },
     {
@@ -307,6 +325,7 @@
     {
       "crate": "nuah-channels",
       "defines": [
+        "channels.inbound",
         "channels.kind",
         "channels.topic"
       ],
@@ -316,10 +335,12 @@
       "kind": "plugin",
       "name": "Channels",
       "operations": [
+        "channels.handlers",
         "channels.history",
         "channels.kinds",
         "channels.notify",
         "channels.plan",
+        "channels.receive",
         "channels.record",
         "channels.route.set",
         "channels.test",
@@ -332,7 +353,8 @@
         ],
         "extension_points": [
           "channels.kind@^1",
-          "channels.topic@^1"
+          "channels.topic@^1",
+          "channels.inbound@^1"
         ],
         "plugins": [],
         "ports": []

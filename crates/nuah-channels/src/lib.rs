@@ -13,7 +13,7 @@ use std::sync::Arc;
 mod inbox;
 mod kinds;
 pub use inbox::Inbox;
-pub use kinds::{Field, Kind, Msg, Req, Spec, SPECS};
+pub use kinds::{poll_all, Field, Kind, Msg, Req, Spec, SPECS};
 
 pub const ROUTES: &str = "channels.routes";
 pub const HISTORY: &str = "channels.history";
@@ -45,7 +45,7 @@ fn answers(tx: &mut Tx, point: &str, key: &str) -> Vec<Value> {
     for a in all.as_array().into_iter().flatten().filter(|a| a["ok"] == true) {
         match a["output"].get(key) {
             Some(Value::Array(list)) => out.extend(list.iter().cloned()),
-            Some(v) if v.is_object() => out.push(v.clone()),
+            Some(v) if v.is_object() || v.is_string() => out.push(v.clone()),
             _ => {
                 if a["output"].is_object() && key == "kind" {
                     out.push(a["output"].clone());
@@ -68,10 +68,12 @@ impl Plugin for Channels {
         manifest(json!({
             "id": "@nuah/channels", "version": "0.1.0", "name": "Channels", "namespaces": ["channels"],
             "description": "The ways a person is reached outside the app (a bot, a messenger, a web address, the app's own inbox) and one operation for a product to tell them something",
-            "requires": {"capabilities": ["call"], "extension_points": ["channels.kind@^1", "channels.topic@^1"]},
+            "requires": {"capabilities": ["call"], "extension_points": ["channels.kind@^1", "channels.topic@^1", "channels.inbound@^1"]},
             "defines": {"extension_points": {
                 "channels.kind": {"policy": "many", "version": "1.0.0", "input": {"type": "object"},
                     "description": "A kind of channel. Input {}; each provider answers {kind, title, description, fields: [{name, label, secret, required, help}], ops: {add, update, remove, send}, connections: [{id, label, enabled}]}. Its send operation takes {id, title, text, link} and sends to that connection"},
+                "channels.inbound": {"policy": "many", "version": "1.0.0", "input": {"type": "object"},
+                    "description": "What a product does with words a person wrote on one of their connections (ADR 0148). Input {}; each provider answers {op}, an operation taking {kind, id, label, text} and answering {handled, reply}. The first that says handled wins and its reply goes back on the same connection"},
                 "channels.topic": {"policy": "many", "version": "1.0.0", "input": {"type": "object"},
                     "description": "What a product can tell a person about. Input {}; each provider answers {topics: [{topic, title, description, default}]}"}}},
             "permissions": {"channels.use": {"description": "Manage your own channels and be notified through them", "default": ["admin", "member"]}},
@@ -90,7 +92,10 @@ impl Plugin for Channels {
                 "channels.record": {"kind": "command", "permission": "channels.use", "description": "Note a delivery (used by channels.notify)",
                     "input": {"type": "object", "required": ["topic", "ok"], "properties": {"topic": {"type": "string"}, "kind": {"type": "string"}, "label": {"type": "string"}, "ok": {"type": "boolean"}, "error": {"type": "string"}, "title": {"type": "string"}}, "additionalProperties": false}},
                 "channels.notify": {"kind": "outbound", "permission": "channels.use", "description": "Tell the person something on the channels they chose for the topic; a failing channel never fails the caller",
-                    "input": {"type": "object", "required": ["topic", "text"], "properties": {"topic": {"type": "string", "maxLength": 80}, "title": {"type": "string", "maxLength": 200}, "text": {"type": "string", "maxLength": 3000}, "link": {"type": "string", "maxLength": 500}}, "additionalProperties": false}},
+                    "input": {"type": "object", "required": ["topic", "text"], "properties": {"topic": {"type": "string", "maxLength": 80}, "title": {"type": "string", "maxLength": 200}, "text": {"type": "string", "maxLength": 3000}, "link": {"type": "string", "maxLength": 500}, "reply_hint": {"type": "string", "maxLength": 300}}, "additionalProperties": false}},
+                "channels.handlers": {"kind": "query", "permission": "channels.use", "description": "The operations that handle what a person writes (used by channels.receive)"},
+                "channels.receive": {"kind": "outbound", "permission": "channels.use", "description": "Words a person wrote on one of their connections: a product's handler decides what they mean and the reply goes back on that connection",
+                    "input": {"type": "object", "required": ["kind", "id", "text"], "properties": {"kind": {"type": "string"}, "id": {"type": "string"}, "text": {"type": "string", "maxLength": 1000}}, "additionalProperties": false}},
                 "channels.test": {"kind": "outbound", "permission": "channels.use", "description": "Send a test message to one of your connections",
                     "input": kind_in}
             }
@@ -141,7 +146,7 @@ impl Plugin for Channels {
             for k in kinds_of(tx) {
                 for c in k["connections"].as_array().into_iter().flatten().filter(|c| c["enabled"] != false) {
                     if chosen.as_ref().is_none_or(|ch| ch.iter().any(|x| x == text(c, "id"))) {
-                        targets.push(json!({"kind": k["kind"], "id": c["id"], "label": c["label"], "send_op": k["ops"]["send"]}));
+                        targets.push(json!({"kind": k["kind"], "id": c["id"], "label": c["label"], "send_op": k["ops"]["send"], "inbound": k["inbound"] == true}));
                     }
                 }
             }
@@ -165,7 +170,12 @@ impl Plugin for Channels {
             let plan = cx.call("channels.plan", json!({"topic": topic}))?;
             let (mut sent, mut failed) = (0, 0);
             for t in plan["targets"].as_array().into_iter().flatten() {
-                let r = cx.call(text(t, "send_op"), json!({"id": t["id"], "title": i["title"], "text": i["text"], "link": i["link"]}));
+                // a hint on how to answer goes only where an answer can come back
+                let said = match text(&i, "reply_hint") {
+                    h if t["inbound"] == true && !h.is_empty() => format!("{}\n{h}", text(&i, "text")),
+                    _ => text(&i, "text").to_string(),
+                };
+                let r = cx.call(text(t, "send_op"), json!({"id": t["id"], "title": i["title"], "text": said, "link": i["link"]}));
                 let (ok, error) = match &r {
                     Ok(_) => (true, String::new()),
                     Err(e) => (false, e.message.chars().take(300).collect()),
@@ -174,6 +184,27 @@ impl Plugin for Channels {
                 let _ = cx.call("channels.record", json!({"topic": topic, "kind": text(t, "kind"), "label": text(t, "label"), "ok": ok, "error": error, "title": text(&i, "title")}));
             }
             Ok(json!({"sent": sent, "failed": failed, "limited": plan["limited"] == true}))
+        });
+        b.op("channels.handlers", |tx, _| {
+            let ops: Vec<Value> = answers(tx, "channels.inbound", "op").into_iter().filter(|o| o.is_string()).collect();
+            Ok(json!({"ops": ops}))
+        });
+        b.outbound("channels.receive", |cx, i| {
+            let kinds = cx.call("channels.kinds", json!({}))?;
+            let k = kinds["kinds"].as_array().into_iter().flatten().find(|k| k["kind"] == i["kind"]).ok_or_else(|| Error::not_found("channel kind"))?;
+            let label = k["connections"].as_array().and_then(|c| c.iter().find(|c| c["id"] == i["id"])).map(|c| text(c, "label").to_string()).ok_or_else(|| Error::not_found("connection"))?;
+            let handlers = cx.call("channels.handlers", json!({}))?;
+            for op in handlers["ops"].as_array().into_iter().flatten().filter_map(|o| o.as_str()) {
+                // a handler that fails is passed over, so one broken product plugin cannot silence the others
+                let Ok(r) = cx.call(op, json!({"kind": i["kind"], "id": i["id"], "label": label, "text": i["text"]})) else { continue };
+                if r["handled"] != true {
+                    continue;
+                }
+                let reply = text(&r, "reply");
+                let replied = !reply.is_empty() && cx.call(text(&k["ops"], "send"), json!({"id": i["id"], "text": reply})).is_ok();
+                return Ok(json!({"handled": true, "replied": replied}));
+            }
+            Ok(json!({"handled": false, "replied": false}))
         });
         b.outbound("channels.test", |cx, i| {
             let kinds = cx.call("channels.kinds", json!({}))?;
