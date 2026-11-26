@@ -1489,7 +1489,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-appearance"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1499,7 +1499,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-channels"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1509,7 +1509,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-editor"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1518,7 +1518,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-editor-basic"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1528,7 +1528,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-emoji"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1538,7 +1538,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-entities"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1548,7 +1548,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-excalidraw"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1558,7 +1558,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-features"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-emoji",
@@ -1573,7 +1573,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-fonts"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "base64 0.22.1",
  "nuah-adapters",
@@ -1584,7 +1584,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-gifs"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1593,7 +1593,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-gifs-giphy"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-gifs",
@@ -1615,7 +1615,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-link-analyzer"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "base64 0.22.1",
  "nuah-adapters",
@@ -1627,7 +1627,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-live"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "base64 0.22.1",
  "loro",
@@ -1639,7 +1639,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-mcp"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "axum",
  "nuah-adapters",
@@ -1652,7 +1652,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-mermaid"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1662,7 +1662,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-metric-prometheus"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1671,7 +1671,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-notebook"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1681,7 +1681,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-prefs"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -1690,7 +1690,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-previews"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1702,7 +1702,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-python"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-editor",
@@ -1712,7 +1712,7 @@ dependencies = [
 
 [[package]]
 name = "nuah-runs"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-kernel",
@@ -2146,7 +2146,7 @@ checksum = "d902046e6a28a1e4c3cab97258a0ce11e994903f01c2d97a9447a0b3df85f4f6"
 
 [[package]]
 name = "registry"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "nuah-adapters",
  "nuah-appearance",
