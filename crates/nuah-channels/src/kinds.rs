@@ -255,6 +255,8 @@ impl Plugin for Kind {
             m["requires"]["capabilities"] = json!(["net", "secrets", "call", "serve"]);
             m["permissions"] = json!({"telegram.watch": {"description": "Read whom the instance polls for (the instance's own clock)", "default": ["admin"]}});
             m["settings_schema"] = json!({"type": "object", "properties": {"poll_seconds": {"type": "integer", "minimum": 1, "maximum": 60, "default": 3, "title": "Seconds between looks for new messages", "x-tier": "operator", "x-apply": "service"}}, "additionalProperties": false});
+            // a new collection and a new field of the connections: schema version 2
+            m["data"]["schema"]["version"] = json!(2);
             m["data"]["schema"]["collections"][WATCH] = json!({"type": "object", "required": ["who"], "properties": {"who": {"type": "object"}}});
             m["data"]["schema"]["collections"][conns(ns)]["properties"]["offset"] = json!({"type": "integer"});
             m["operations"]["telegram.watching"] = json!({"kind": "query", "permission": "telegram.watch", "description": "Whom to poll for and who to act as"});
