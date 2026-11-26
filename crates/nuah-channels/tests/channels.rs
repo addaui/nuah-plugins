@@ -205,7 +205,10 @@ fn a_runaway_sender_is_stopped_after_an_hour_s_worth() {
 
 const TOKEN_A: &str = "111111:token-for-the-receive-test";
 fn update(id: i64, chat: i64, kind: &str, text: &str) -> Value {
-    json!({"update_id": id, "message": {"message_id": id, "chat": {"id": chat, "type": kind}, "text": text}})
+    update_at(id, chat, kind, text, std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_secs() as i64 + 5)
+}
+fn update_at(id: i64, chat: i64, kind: &str, text: &str, date: i64) -> Value {
+    json!({"update_id": id, "message": {"message_id": id, "date": date, "chat": {"id": chat, "type": kind}, "text": text}})
 }
 fn sent_texts(seen: &Seen) -> Vec<String> {
     seen.lock().iter().filter(|(u, _, _)| u.contains("/sendMessage")).map(|(_, _, b)| b.clone()).collect()
@@ -222,7 +225,8 @@ fn a_telegram_connection_receives_only_from_its_own_private_chat_skips_the_backl
     assert_eq!(call(&c, &ana, "telegram.poll", json!({"id": id})).unwrap()["handled"], 0);
     assert!(sent_texts(&seen).is_empty(), "no reply to the backlog");
     // a stranger, a group and a plain word are not answered; the person's own yes is, once
-    queue_updates(TOKEN_A, json!({"ok": true, "result": [update(11, 99, "private", "yes"), update(12, 42, "group", "yes"), update(13, 42, "private", "hello"), update(14, 42, "private", "yes")]}));
+    queue_updates(TOKEN_A, json!({"ok": true, "result": [update(11, 99, "private", "yes"), update(12, 42, "group", "yes"), update(13, 42, "private", "hello"), update_at(15, 42, "private", "yes", 1000), update(14, 42, "private", "yes")]}));
+    // the old yes (written long before the connection existed) is not counted either
     assert_eq!(call(&c, &ana, "telegram.poll", json!({"id": id})).unwrap()["handled"], 2);
     let texts = sent_texts(&seen);
     assert_eq!(texts.len(), 1, "{texts:?}");
@@ -230,7 +234,7 @@ fn a_telegram_connection_receives_only_from_its_own_private_chat_skips_the_backl
     // the next look asks from where it stopped, and nothing is handled twice
     let before = seen.lock().len();
     assert_eq!(call(&c, &ana, "telegram.poll", json!({"id": id})).unwrap()["handled"], 0);
-    assert!(seen.lock()[before].0.contains("offset=15"), "{:?}", seen.lock()[before].0);
+    assert!(seen.lock()[before].0.contains("offset=16"), "{:?}", seen.lock()[before].0);
     // nobody else can poll for the connection, and the token is not in anything that comes back
     assert!(call(&c, &ben, "telegram.poll", json!({"id": id})).is_err());
     assert!(!call(&c, &ana, "channels.history", json!({})).unwrap().to_string().contains(TOKEN_A));

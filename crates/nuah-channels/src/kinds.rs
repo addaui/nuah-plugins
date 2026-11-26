@@ -359,7 +359,7 @@ impl Plugin for Kind {
         });
         b.op(&format!("{}.target", sp.ns), move |tx, i| {
             let d = tx.get(&c5, text(&i, "id"))?.ok_or_else(|| Error::not_found("connection"))?;
-            Ok(json!({"id": d.id, "label": d.body["label"], "enabled": d.body["enabled"] != false, "fields": d.body["fields"], "offset": d.body["offset"]}))
+            Ok(json!({"id": d.id, "label": d.body["label"], "enabled": d.body["enabled"] != false, "fields": d.body["fields"], "offset": d.body["offset"], "created": d.body["created"]}))
         });
         b.outbound(&format!("{}.send", sp.ns), move |cx, i| {
             let id = text(&i, "id").to_string();
@@ -445,11 +445,13 @@ fn poll(cx: &Outbound, i: Value) -> Result<Value> {
         return Ok(json!({"handled": 0, "skipped": updates.len()}));
     }
     let own = text(&t["fields"], "chat_id");
+    // nothing written before the connection was made counts, however long the backlog was
+    let since = t["created"].as_i64().unwrap_or(0);
     let mut handled = 0;
     for u in &updates {
         let m = &u["message"];
         let said = m["text"].as_str().unwrap_or("");
-        if m["chat"]["type"] == "private" && m["chat"]["id"].to_string() == own && !said.trim().is_empty() {
+        if m["chat"]["type"] == "private" && m["chat"]["id"].to_string() == own && !said.trim().is_empty() && m["date"].as_i64().unwrap_or(0) * 1000 >= since {
             let _ = cx.call("channels.receive", json!({"kind": "telegram", "id": id, "text": said.chars().take(1000).collect::<String>()}));
             handled += 1;
         }
